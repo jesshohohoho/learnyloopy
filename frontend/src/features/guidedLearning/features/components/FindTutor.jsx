@@ -1,0 +1,322 @@
+// src/features/tutors/components/FindTutor.jsx
+import React from "react";
+import { useFindTutor } from "../hooks/useFindTutor";
+import { useNavigate } from 'react-router-dom'
+
+function FindTutor({ onClose }) {
+
+  const navigate = useNavigate();
+
+  const {
+    formData,
+    updateField,
+    findTutor,
+    result,
+    loading,
+    error,
+    availableSubjects,
+    loadingSubjects,
+    availableTeachingStyles,
+    loadingTeachingStyles
+  } = useFindTutor();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // FIXED: Navigate immediately with search criteria
+    localStorage.setItem('searchCriteria', JSON.stringify(formData));
+    
+    onClose(); // Close the modal first
+    navigate('/recommendation'); // Navigate immediately to show animated loading
+    
+    // Then perform the search in the background
+    const response = await findTutor();
+    if (response.success) {
+      localStorage.setItem('recommendedTutors', JSON.stringify(response.data));
+    }
+  };
+
+  const handleModeToggle = (mode) => {
+    updateField('tutoringMode', mode);
+  };
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black/20">
+      <div
+        className="relative rounded-lg"
+        style={{
+          width: "574px",
+          minHeight: "675px",
+          background: "#F3F3F3",
+          borderRadius: "18px",
+          padding: "0",
+          boxSizing: "border-box",
+        }}
+      >
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          style={{
+            position: "absolute",
+            top: "0px",
+            right: "-10px",
+            fontSize: "28px",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            color: "#888",
+          }}
+          aria-label="Close"
+        >
+          ×
+        </button>
+
+    
+        {/* Title */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-start", // CHANGED: From "center" to "flex-start" for left alignment
+            alignItems: "center",
+            height: "80px",
+            paddingLeft: "24px", // ADDED: Left padding to match form sections
+            fontFamily: "Open Sans, sans-serif",
+            fontWeight: "bold",
+            fontSize: "24px",
+            background: "linear-gradient(90deg, #432B99 12%, #7048FF 40%, #E69696 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            color: "transparent"
+          }}
+        >
+          Customized Your Experience
+        </div>
+
+        {/* Error Display */}
+        {error && (
+          <div style={{
+            margin: "0 24px 16px 24px",
+            padding: "8px 12px",
+            background: "#ffebee",
+            color: "#c62828",
+            borderRadius: "8px",
+            fontSize: "14px"
+          }}>
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit}>
+          {/* BASIC Section - FIXED: Consistent spacing */}
+          <div
+            style={{
+              width: "518px",
+              height: "180px",
+              margin: "0 24px 24px 24px", // Equal spacing above and below cards
+              background: "#F1EDED",
+              borderRadius: "15px",
+              boxShadow: "2px 2px 6px #DDD3D3",
+              padding: "12px 0 0 12px", // Added top padding for better spacing
+            }}
+          >
+            <span className="text-[#808080] text-[15px] font-bold mb-3 block text-left">BASIC</span>
+            
+            <div className="mb-3 flex items-center">
+              <span style={{width: "157px", minWidth: "157px", fontFamily: "Open Sans, sans-serif", fontWeight: 600, fontSize: "20px", color: "#222", margin: "6px 12px 6px 0", textAlign: "left"}}>Name</span>
+              <input 
+                style={{width: "307px", height: "33px", background: "#D9D9D9", borderRadius: "10px", padding: "0 12px", border: "none", fontFamily: "Open Sans, sans-serif", fontWeight: 400, fontSize: "18px", color: "#222"}} 
+                value={formData.name} 
+                onChange={e => updateField('name', e.target.value)} 
+                type="text" 
+              />
+            </div>
+            
+            <div className="mb-3 flex items-center">
+              <span style={{width: "157px", minWidth: "157px", fontFamily: "Open Sans, sans-serif", fontWeight: 600, fontSize: "20px", color: "#222", margin: "12px 12px 6px 0", textAlign: "left"}}>Phone Number</span>
+              <input 
+                style={{width: "307px", height: "33px", background: "#D9D9D9", borderRadius: "10px", padding: "0 12px", border: "none", fontFamily: "Open Sans, sans-serif", fontWeight: 400, fontSize: "18px", color: "#222"}} 
+                value={formData.phone} 
+                onChange={e => updateField('phone', e.target.value)} 
+                type="text" 
+              />
+            </div>
+            
+            <div className="flex items-center">
+              <span style={{width: "157px", minWidth: "157px", fontFamily: "Open Sans, sans-serif", fontWeight: 600, fontSize: "20px", color: "#222", margin: "12px 12px 6px 0", textAlign: "left"}}>Email Address</span>
+              <input 
+                style={{width: "307px", height: "33px", background: "#D9D9D9", borderRadius: "10px", padding: "0 12px", border: "none", fontFamily: "Open Sans, sans-serif", fontWeight: 400, fontSize: "18px", color: "#222"}} 
+                value={formData.email} 
+                onChange={e => updateField('email', e.target.value)} 
+                type="email" 
+              />
+            </div>
+          </div>
+
+          {/* PREFERENCE Section - FIXED: Consistent spacing */}
+          <div
+            style={{
+              width: "519px",
+              minHeight: "320px", // Increased height to accommodate ranking field
+              margin: "0 24px 24px 24px", // Equal spacing above and below cards
+              background: "#F1EDED",
+              borderRadius: "15px",
+              boxShadow: "2px 2px 6px #DDD3D3",
+              padding: "12px 0 16px 12px", // Added top and bottom padding for better spacing
+            }}
+          >
+            <span className="text-[#808080] text-[15px] font-bold mb-3 block text-left">PREFERENCE</span>
+            
+            {/* Subject field dropdown  */}
+            <div className="mb-3 flex items-center">
+              <span style={{width: "157px", minWidth: "157px", fontFamily: "Open Sans, sans-serif", fontWeight: 600, fontSize: "20px", color: "#222", margin: "12px 12px 6px 0", textAlign: "left"}}>Subject</span>
+              <select 
+                style={{width: "307px", height: "33px", background: "#D9D9D9", borderRadius: "10px", padding: "0 12px", border: "none", fontFamily: "Open Sans, sans-serif", fontWeight: 400, fontSize: "18px", color: "#222"}} 
+                value={formData.subject} 
+                onChange={e => updateField('subject', e.target.value)}
+                disabled={loadingSubjects}
+              >
+                <option value="">Select a subject</option>
+                {availableSubjects.map((subject, index) => (
+                  <option key={index} value={subject}>{subject}</option>
+                ))}
+              </select>
+            </div>
+            
+            {/* FIXED: Centered text in Online/Offline buttons */}
+            <div className="mb-3 flex items-center">
+              <span style={{width: "157px", minWidth: "157px", fontFamily: "Open Sans, sans-serif", fontWeight: 600, fontSize: "20px", color: "#222", margin: "12px 12px 6px 0", textAlign: "left"}}>Tutoring Mode</span>
+              <button 
+                type="button" 
+                style={{
+                  width: "140px", 
+                  height: "33px", 
+                  background: formData.tutoringMode === "Online" ? "#6F48FF" : "#D9D9D9", 
+                  color: formData.tutoringMode === "Online" ? "#fff" : "#222",
+                  borderRadius: "10px", 
+                  border: "none", 
+                  fontFamily: "Open Sans, sans-serif", 
+                  fontWeight: formData.tutoringMode === "Online" ? 600 : 400, 
+                  fontSize: "18px", 
+                  marginRight: "12px",
+                  cursor: "pointer",
+                  display: "flex", // FIXED: Use flex for perfect centering
+                  alignItems: "center", // FIXED: Center vertically
+                  justifyContent: "center" // FIXED: Center horizontally
+                }} 
+                onClick={() => handleModeToggle("Online")}
+              >
+                Online
+              </button>
+              <button 
+                type="button" 
+                style={{
+                  width: "140px", 
+                  height: "33px", 
+                  background: formData.tutoringMode === "Offline" ? "#6F48FF" : "#D9D9D9", 
+                  color: formData.tutoringMode === "Offline" ? "#fff" : "#222",
+                  borderRadius: "10px", 
+                  border: "none", 
+                  fontFamily: "Open Sans, sans-serif", 
+                  fontWeight: formData.tutoringMode === "Offline" ? 600 : 400, 
+                  fontSize: "18px",
+                  cursor: "pointer",
+                  display: "flex", // FIXED: Use flex for perfect centering
+                  alignItems: "center", // FIXED: Center vertically
+                  justifyContent: "center" // FIXED: Center horizontally
+                }} 
+                onClick={() => handleModeToggle("Offline")}
+              >
+                Offline
+              </button>
+            </div>
+
+            <div className="mb-3 flex items-center">
+              <span style={{width: "157px", minWidth: "157px", fontFamily: "Open Sans, sans-serif", fontWeight: 600, fontSize: "20px", color: "#222", margin: "12px 12px 6px 0", textAlign: "left"}}>Min Experience</span>
+              <input 
+                style={{width: "307px", height: "33px", background: "#D9D9D9", borderRadius: "10px", padding: "0 12px", border: "none", fontFamily: "Open Sans, sans-serif", fontWeight: 400, fontSize: "18px", color: "#222"}} 
+                value={formData.minExperience} 
+                onChange={e => updateField('minExperience', e.target.value)} 
+                type="number" 
+                placeholder="Enter minimum experience (year)" 
+              />
+            </div>
+            
+            <div className="mb-3 flex items-center">
+              <span style={{width: "157px", minWidth: "157px", fontFamily: "Open Sans, sans-serif", fontWeight: 600, fontSize: "20px", color: "#222", margin: "12px 12px 6px 0", textAlign: "left"}}>Max Hourly Rate</span>
+              <input 
+                style={{width: "307px", height: "33px", background: "#D9D9D9", borderRadius: "10px", padding: "0 12px", border: "none", fontFamily: "Open Sans, sans-serif", fontWeight: 400, fontSize: "18px", color: "#222"}} 
+                value={formData.maxHourlyRate} 
+                onChange={e => updateField('maxHourlyRate', e.target.value)} 
+                type="number" 
+                placeholder="Enter maximum hourly rate (RM)" 
+              />
+            </div>
+            
+            {/* Teaching Style dropdown */}
+            <div className="mb-3 flex items-center">
+              <span style={{width: "157px", minWidth: "157px", fontFamily: "Open Sans, sans-serif", fontWeight: 600, fontSize: "20px", color: "#222", margin: "12px 12px 6px 0", textAlign: "left"}}>Teaching Style</span>
+              <select 
+                style={{width: "307px", height: "33px", background: "#D9D9D9", borderRadius: "10px", padding: "0 12px", border: "none", fontFamily: "Open Sans, sans-serif", fontWeight: 400, fontSize: "18px", color: "#222"}} 
+                value={formData.teachingStyle} 
+                onChange={e => updateField('teachingStyle', e.target.value)}
+                disabled={loadingTeachingStyles}
+              >
+                <option value="">Select teaching style</option>
+                {availableTeachingStyles.map((style, index) => (
+                  <option key={index} value={style}>{style}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Ranking Option */}
+            <div className="flex items-center">
+              <span style={{width: "157px", minWidth: "157px", fontFamily: "Open Sans, sans-serif", fontWeight: 600, fontSize: "20px", color: "#222", margin: "12px 12px 6px 0", textAlign: "left"}}>Ranking</span>
+              <select 
+                style={{width: "307px", height: "33px", background: "#D9D9D9", borderRadius: "10px", padding: "0 12px", border: "none", fontFamily: "Open Sans, sans-serif", fontWeight: 400, fontSize: "18px", color: "#222"}} 
+                value={formData.rankingOption} 
+                onChange={e => updateField('rankingOption', e.target.value)}
+              >
+                <option value="best_overall">Best Overall</option>
+                <option value="most_affordable">Most Affordable</option>
+                <option value="most_experienced">Most Experienced</option>
+                <option value="most_active">Most Active (Highest Credits)</option>
+              </select>
+            </div>
+          </div>
+          
+     
+          <div style={{
+            margin: "24px 0",
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "60px" 
+          }}>
+            <button 
+              type="submit" 
+              style={{
+                padding: "10px 32px", 
+                background: "#6F48FF", 
+                color: "#fff", 
+                border: "none", 
+                borderRadius: "15px", 
+                fontSize: "18px", 
+                fontWeight: "bold", 
+                cursor: "pointer", 
+                boxShadow: "2px 2px 6px #DDD3D3"
+              }} 
+
+            >
+              Find Tutor
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  );
+}
+
+export default FindTutor;

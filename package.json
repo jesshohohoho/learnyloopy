@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@chakra-ui/react": "^3.27.0",
+    "@emotion/react": "^11.14.0",
+    "@supabase/supabase-js": "^2.57.4",
+    "axios": "^1.12.2",
+    "lucide-react": "^0.544.0"
+  }
+}

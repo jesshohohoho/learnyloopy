@@ -43,34 +43,19 @@ function Sidebar() {
 
   // clear token in local storage when sign out
   const handleSignOut = async () => {
-    try {
-      console.log('Starting sign out process...'); // Debug log
-      
-      // Sign out from Supabase
-      const { error } = await supabase.auth.signOut();
-      
-      if (error) {
-        console.error('Error signing out:', error);
-        return;
-      }
-      
-      console.log('Supabase signout successful'); // Debug log
-      
-      // Clear localStorage
-      localStorage.removeItem('access_token');
-      localStorage.clear(); // Clear all stored data
-      
-      console.log('localStorage cleared'); // Debug log
-      
-      // FIXED: Use React Router navigate instead of window.location
-      navigate('/auth', { replace: true });
-      
-      console.log('Navigation to /auth completed'); // Debug log
-      
-    } catch (error) {
-      console.error('Error during sign out process:', error);
-    }
-  };
+  try {
+    console.log('Starting sign out process...');
+    await supabase.auth.signOut();
+  } catch (error) {
+    console.error('Error signing out:', error);
+    // Ignore AuthSessionMissingError
+  } finally {
+    localStorage.removeItem('access_token');
+    localStorage.clear();
+    navigate('/auth', { replace: true });
+    console.log('localStorage cleared and navigation to /auth completed');
+  }
+};
 
   // Use the PNGs as <img>
   const DashboardIcon = (

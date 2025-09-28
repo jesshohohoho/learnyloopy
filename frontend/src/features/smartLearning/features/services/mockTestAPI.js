@@ -1,5 +1,7 @@
 import { authenticatedFetch, authenticatedFetchFormData } from '../../../../utils/auth';
-const API_BASE = "http://localhost:8000/smart-learning/test";
+import { API_ENDPOINTS } from "../../../../config/api";
+const API_BASE = `${API_ENDPOINTS.smartLearning}/test`
+
 
 export const mockTestAPI = {
   getMockTest: async (subjectName) => {

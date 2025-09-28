@@ -1,6 +1,6 @@
 import { authenticatedFetch } from "../../../utils/auth";
-
-const API_BASE_URL = "http://localhost:8000/guided-learning";
+import { API_ENDPOINTS } from "../../../config/api";
+const API_BASE_URL = `${API_ENDPOINTS.guidedLearning}`
 
 export const listTutorAPI = {
 

@@ -1,6 +1,6 @@
 import { authenticatedFetch } from "../../../utils/auth";
-
-const API_BASE = "http://localhost:8000/past-performance";
+import { API_ENDPOINTS } from "../../../config/api";
+const API_BASE = `${API_ENDPOINTS.pastPerformance}`
 
 export const pastPerformanceService = {
   async loadSubjectsWithPerformance() {

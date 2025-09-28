@@ -1,6 +1,7 @@
 import { authenticatedFetch } from '../../../../utils/auth';
+import { API_ENDPOINTS } from "../../../../config/api";
+const API_BASE = `${API_ENDPOINTS.smartLearning}`
 
-const API_BASE = "http://localhost:8000/smart-learning";
 
 export const subjectsAPI = {
   getUserSubjects: async () => {

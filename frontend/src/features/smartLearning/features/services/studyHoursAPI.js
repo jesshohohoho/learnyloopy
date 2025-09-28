@@ -1,7 +1,8 @@
 import { supabase } from '../../../../lib/supabase';
 import { authenticatedFetch } from '../../../../utils/auth'
+import { API_ENDPOINTS } from "../../../../config/api";
+const API_BASE = `${API_ENDPOINTS.pastPerformance}`
 
-const API_BASE = 'http://localhost:8000/past-performance';
 
 export const updateSubjectStudyHours = async (subjectName, additionalHours) => {
   try {

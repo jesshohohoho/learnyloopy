@@ -1,5 +1,3 @@
-from transformers import AutoTokenizer, AutoModel
-import torch
 from groq import Groq
 import re
 import json
@@ -13,7 +11,6 @@ from features.smartLearning.schemas import ReviewRequest
 import numpy as np
 from typing import List, Dict
 import os
-from dotenv import load_dotenv
 
 # --- Document Service ---
 
@@ -134,10 +131,46 @@ class DocumentService:
         }
 
 # --- Embedding model ---
-tokenizer = AutoTokenizer.from_pretrained("jinaai/jina-embeddings-v3", trust_remote_code=True)
-model = AutoModel.from_pretrained("jinaai/jina-embeddings-v3", trust_remote_code=True, torch_dtype=torch.float32)
+# use lazy loading to save memory
+_tokenizer = None
+_model = None
+_model_loaded = False
+
+# only load when needed
+def load_embedding_model():
+    global _tokenizer, _model, _model_loaded
+    
+    if _model_loaded:
+        return _tokenizer, _model
+    print("Loading embedding model...")
+    
+    try:
+        from transformers import AutoTokenizer, AutoModel
+        import torch
+        
+        # Use smaller model to fit in memory
+        _tokenizer = AutoTokenizer.from_pretrained(
+            "jinaai/jina-embeddings-v3",
+            trust_remote_code=True
+        )
+        _model = AutoModel.from_pretrained(
+            "jinaai/jina-embeddings-v3",
+            trust_remote_code=True,
+            torch_dtype=torch.float32  
+        )
+        _model_loaded = True
+        print("Embedding model loaded!")
+        return _tokenizer, _model
+        
+    except Exception as e:
+        print(f"Embedding Model loading failed: {e}")
+        _model_loaded = True  
+        return None, None
 
 def get_embedding(text: str):
+    tokenizer, model = load_embedding_model()
+    # since torch is large package, we import it only when needed
+    import torch
     inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True)
     with torch.no_grad():
         outputs = model(**inputs)

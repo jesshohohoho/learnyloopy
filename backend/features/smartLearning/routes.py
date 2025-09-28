@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from config.database import get_supabase
 from features.smartLearning.schemas import Question, ReviewRequest
-from features.smartLearning.services import query_groq, extract_json_array, read_pdf, read_docx, FlashcardService, DocumentService, MockTestService
+from features.smartLearning.services import read_pdf, read_docx, FlashcardService, DocumentService, MockTestService
 from datetime import datetime, timezone
 from auth.dependencies import require_user_id, get_current_user
 from typing import Dict, Any, List

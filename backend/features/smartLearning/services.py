@@ -150,11 +150,11 @@ def load_embedding_model():
         
         # Use smaller model to fit in memory
         _tokenizer = AutoTokenizer.from_pretrained(
-            "jinaai/jina-embeddings-v3",
+            "sentence-transformers/all-MiniLM-L6-v2",
             trust_remote_code=True
         )
         _model = AutoModel.from_pretrained(
-            "jinaai/jina-embeddings-v3",
+            "sentence-transformers/all-MiniLM-L6-v2",
             trust_remote_code=True,
             torch_dtype=torch.float32  
         )

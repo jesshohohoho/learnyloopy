@@ -1,5 +1,7 @@
 // forum/features/services/addQuestionAPI.js
-const API_BASE_URL = "http://localhost:8000";
+import { API_ENDPOINTS } from "../../../../config/api";
+const API_BASE_URL = `${API_ENDPOINTS.forum}`
+
 
 
 // Utility function to get auth token
@@ -52,7 +54,7 @@ export const addQuestionAPI = {
   // Submit new question
   async createQuestion(questionData) {
     try {
-      const response = await authenticatedFetch(`${API_BASE_URL}/forum/questions`, {
+      const response = await authenticatedFetch(`${API_BASE_URL}/questions`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

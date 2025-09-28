@@ -6,9 +6,6 @@ from collections import Counter
 from typing import List, Dict, Optional
 import nltk
 from nltk.corpus import stopwords
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
-import torch
-from transformers.pipelines import pipeline
 import numpy as np
 from typing import List, Dict
 
@@ -50,7 +47,10 @@ def update_tutor_rating(tutor_id: int):
         print(f"Error updating tutor rating: {e}")
         return 0.0, 0
 
-# --- Teaching Style Classification (Keep your existing ML logic) ---
+# --- Teaching Style Classification ---
+# use lazy loading to save memory
+_classifier = None
+_classifier_loaded = False
 
 class MLTeachingStyleClassifier:
     def __init__(self):
@@ -62,31 +62,46 @@ class MLTeachingStyleClassifier:
             "expertise", "adaptability", "feedback"            
         ]
         
+        # only load when needed
         self.classifier = None
-        self._initialize_model()
 
-    def _initialize_model(self):
+    def _load_classifier(self):
+        """Load classifier only when first needed"""
+        global _classifier, _classifier_loaded
+        
+        if _classifier_loaded:
+            self.classifier = _classifier
+            return
+        
+        print("Loading classification model...")
+        
         try:
-            self.classifier = pipeline(
+            from transformers.pipelines import pipeline
+            import torch
+            
+            _classifier = pipeline(
                 "zero-shot-classification",
                 model="facebook/bart-large-mnli",  
-                device=0 if torch.cuda.is_available() else -1 
+                device=-1  # Force CPU to save memory
             )
-            print("Hugging Face model loaded successfully!")
+            self.classifier = _classifier
+            _classifier_loaded = True
+            print("Classification model loaded successfully!")
+            
         except Exception as e:
-            print(f"Error loading model: {e}")
+            print(f"Classification model loading failed: {e}")
+            _classifier_loaded = True  
             self.classifier = None
 
-    def extract_keywords(self, text: str, top_n: int = 10) -> List[str]:
-        if not text:
-            return []
-        
-        words = re.findall(r'\b[a-zA-Z]{3,}\b', text.lower())
-        word_counts = Counter(word for word in words if word not in self.stop_words)
-        return [word for word, count in word_counts.most_common(top_n)]
-
     def classify_with_ml(self, text: str) -> List[str]:
-        if not text or not self.classifier:
+        if not text:
+            return self.fallback_classification(text)
+        
+        # Load classifier only when needed
+        if not _classifier_loaded:
+            self._load_classifier()
+        
+        if not self.classifier:
             return self.fallback_classification(text)
         
         try:
@@ -141,6 +156,14 @@ class MLTeachingStyleClassifier:
     
     def get_teaching_style_traits(self, text: str) -> List[str]:
         return self.classify_with_ml(text)
+
+    def extract_keywords(self, text: str, top_n: int = 10) -> List[str]:
+        if not text:
+            return []
+        
+        words = re.findall(r'\b[a-zA-Z]{3,}\b', text.lower())
+        word_counts = Counter(word for word in words if word not in self.stop_words)
+        return [word for word, count in word_counts.most_common(top_n)]
 
 ml_teaching_classifier = MLTeachingStyleClassifier()
 

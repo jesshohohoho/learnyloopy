@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
+from fastapi import APIRouter, Depends, HTTPException
 from config.database import get_supabase
 from auth.dependencies import require_user_id
 from .services import grade_predictor  

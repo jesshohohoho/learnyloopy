@@ -81,7 +81,7 @@ class MLTeachingStyleClassifier:
             
             _classifier = pipeline(
                 "zero-shot-classification",
-                model="facebook/bart-large-mnli",  
+                model="typeform/distilbert-base-uncased-mnli",  
                 device=-1  # Force CPU to save memory
             )
             self.classifier = _classifier

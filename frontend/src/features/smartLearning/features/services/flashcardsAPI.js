@@ -1,5 +1,7 @@
 import { authenticatedFetch, authenticatedFetchFormData } from '../../../../utils/auth';
-const API_BASE = "http://localhost:8000/smart-learning/flashcards";
+import { API_ENDPOINTS } from "../../../../config/api";
+const API_BASE = `${API_ENDPOINTS.smartLearning}/flashcards`
+
 
 export const flashcardsAPI = {
   // Get due flashcards for review

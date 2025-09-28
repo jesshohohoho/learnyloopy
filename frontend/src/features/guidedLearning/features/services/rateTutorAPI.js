@@ -1,5 +1,6 @@
 import { authenticatedFetch } from "../../../../utils/auth";
-const API_BASE = "http://localhost:8000/guided-learning";
+import { API_ENDPOINTS } from "../../../../config/api";
+const API_BASE = `${API_ENDPOINTS.guidedLearning}`
 
 export const rateTutorAPI = {
   // Find tutor by name to get their ID

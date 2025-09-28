@@ -1,6 +1,7 @@
 import { authenticatedFetch } from "../../../utils/auth";
+import { API_ENDPOINTS } from "../../../config/api";
+const API_BASE_URL = `${API_ENDPOINTS.forum}`
 
-const API_BASE_URL = "http://localhost:8000/forum";
 
 export const postsAPI = {
   // Fetch all questions (require auth depending)

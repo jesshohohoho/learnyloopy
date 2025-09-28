@@ -1,6 +1,6 @@
 import { authenticatedFetch, authenticatedFetchFormData } from '../../../../utils/auth';
-
-const API_BASE = "http://localhost:8000/smart-learning/documents";
+import { API_ENDPOINTS } from "../../../../config/api";
+const API_BASE = `${API_ENDPOINTS.smartLearning}/documents`
 
 export const documentsAPI = {
   uploadMaterial: async (file, subject) => {

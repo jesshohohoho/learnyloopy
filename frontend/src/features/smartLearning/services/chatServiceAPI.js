@@ -1,8 +1,10 @@
 import { authenticatedFetch, authenticatedFetchFormData } from '../../../utils/auth';
+import { API_ENDPOINTS } from "../../../config/api";
+const API_BASE = `${API_ENDPOINTS.smartLearning}`
 
 export const askQuestion = async (subject, text) => {
   try {
-    const response = await authenticatedFetch("http://localhost:8000/smart-learning/ask_question", {
+    const response = await authenticatedFetch(`${API_BASE}/ask_question`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

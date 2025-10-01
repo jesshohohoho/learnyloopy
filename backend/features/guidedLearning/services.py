@@ -8,6 +8,10 @@ import nltk
 from nltk.corpus import stopwords
 import numpy as np
 from typing import List, Dict
+from dotenv import load_dotenv
+from google import genai
+from google.genai.types import HttpOptions
+
 
 try:
     nltk.data.find('corpora/stopwords')
@@ -48,82 +52,40 @@ def update_tutor_rating(tutor_id: int):
         return 0.0, 0
 
 # --- Teaching Style Classification ---
-# use lazy loading to save memory
-_classifier = None
-_classifier_loaded = False
 
+load_dotenv()
 class MLTeachingStyleClassifier:
     def __init__(self):
+        self.style_categories = [
+            "Knowledgeable", "Clear communicator", "Patient", "Approachable", "Organized", "Encouraging", "Flexible", "Respectful", "Supportive", "Creative", "Professional", "Adaptable", "Empathetic", "Reliable", "Engaging", "Good listener", "Motivational", "Honest", "Detail-oriented", "Fair", "Open-minded", "Enthusiastic", "Positive attitude", "Disciplined", "Resourceful", "Accessible", "Collaborative", "Critical thinker", "Responsive", "Trustworthy"
+        ]
         self.stop_words = set(stopwords.words('english'))
         self.stop_words.update(['tutor', 'teacher', 'teaching', 'class', 'lesson', 'subject', 'thank', 'thanks'])
-        
-        self.style_categories = [
-            "communication", "engagement", "structure", "support", 
-            "expertise", "adaptability", "feedback"            
-        ]
-        
-        # only load when needed
-        self.classifier = None
 
-    def _load_classifier(self):
-        """Load classifier only when first needed"""
-        global _classifier, _classifier_loaded
-        
-        if _classifier_loaded:
-            self.classifier = _classifier
-            return
-        
-        print("Loading classification model...")
-        
-        try:
-            from transformers.pipelines import pipeline
-            import torch
-            
-            _classifier = pipeline(
-                "zero-shot-classification",
-                model="typeform/distilbert-base-uncased-mnli",  
-                device=-1  # Force CPU to save memory
-            )
-            self.classifier = _classifier
-            _classifier_loaded = True
-            print("Classification model loaded successfully!")
-            
-        except Exception as e:
-            print(f"Classification model loading failed: {e}")
-            _classifier_loaded = True  
-            self.classifier = None
-
-    def classify_with_ml(self, text: str) -> List[str]:
+    def classify_with_ml(self, text: str) -> list[str]:
         if not text:
             return self.fallback_classification(text)
-        
-        # Load classifier only when needed
-        if not _classifier_loaded:
-            self._load_classifier()
-        
-        if not self.classifier:
-            return self.fallback_classification(text)
-        
         try:
-            result = self.classifier(
-                text,
-                candidate_labels=self.style_categories,
-                multi_label=True,
-                hypothesis_template="This tutor is {} in their teaching style.",
+            prompt = (
+                "Classify the following review into up to 3 teaching style categories from this list:\n"
+                f"{', '.join(self.style_categories)}.\n"
+                "Return only a comma-separated list of the most relevant categories.\n"
+                f"Review: \"{text}\""
             )
-
-            if not result or 'labels' not in result or 'scores' not in result:
+            client = genai.Client(http_options=HttpOptions(api_version="v1"))
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt,
+            )
+            result = response.text.strip()
+            categories = [cat.strip() for cat in result.split(",") if cat.strip()]
+            categories = [cat for cat in categories if cat in self.style_categories]
+            if categories:
+                return categories[:3]
+            else:
                 return self.fallback_classification(text)
-
-            top_categories = []
-            for label, score in zip(result['labels'], result['scores']):
-                if score > 0.3 and len(top_categories) < 3:
-                    top_categories.append(label)
-
-            return top_categories
-
         except Exception as e:
-            print(f"ML Classification error: {e}")
+            print(f"Gemini Classification error: {e}")
             return self.fallback_classification(text)
         
     def fallback_classification(self, text: str) -> List[str]:
@@ -133,16 +95,63 @@ class MLTeachingStyleClassifier:
         keywords = self.extract_keywords(text)
         
         keyword_to_category = {
+            # Knowledge
+            "knowledgeable": "Knowledgeable", "expert": "Knowledgeable", "experienced": "Knowledgeable",
+            "critical": "Critical thinker", "analyze": "Critical thinker", "problem-solving": "Critical thinker",
+            "resourceful": "Resourceful", "solutions": "Resourceful",
+
             # Communication
-            "clear": "communication", "explains": "communication", "patient": "communication",
-            # Engagement  
-            "engaging": "engagement", "fun": "engagement", "interesting": "engagement",
-            # Structure
-            "organized": "structure", "structured": "structure", "prepared": "structure",
+            "clear": "Clear communicator", "explains": "Clear communicator", "explain": "Clear communicator",
+            "listener": "Good listener", "listens": "Good listener",
+
+            # Patience
+            "patient": "Patient", "understanding": "Patient",
+
+            # Approachability
+            "approachable": "Approachable", "friendly": "Approachable",
+            "accessible": "Accessible", "available": "Accessible",
+
+            # Organization
+            "organized": "Organized", "prepared": "Organized", "structured": "Organized",
+            "discipline": "Disciplined", "disciplined": "Disciplined",
+            "detail": "Detail-oriented", "precise": "Detail-oriented",
+
+            # Encouragement / Positivity
+            "encouraging": "Encouraging", "cheerful": "Encouraging",
+            "positive": "Positive attitude", "optimistic": "Positive attitude",
+
+            # Adaptability / Flexibility
+            "adaptable": "Adaptable", "adjust": "Adaptable",
+            "flexible": "Flexible", "versatile": "Flexible",
+            "open-minded": "Open-minded", "accepting": "Open-minded",
+
+            # Respect / Trust
+            "respectful": "Respectful", "polite": "Respectful",
+            "trustworthy": "Trustworthy", "reliable": "Trustworthy",
+
             # Support
-            "helpful": "support", "supportive": "support", "encouraging": "support",
-            # Expertise
-            "knowledgeable": "expertise", "expert": "expertise", "experienced": "expertise",
+            "supportive": "Supportive", "helpful": "Supportive", "guidance": "Supportive",
+            "empathetic": "Empathetic", "caring": "Empathetic",
+            "responsive": "Responsive", "quick": "Responsive",
+
+            # Creativity
+            "creative": "Creative", "innovative": "Creative",
+
+            # Professionalism
+            "professional": "Professional", "formal": "Professional",
+            "reliable": "Reliable", "dependable": "Reliable",
+
+            # Engagement / Collaboration
+            "engaging": "Engaging", "fun": "Engaging", "interesting": "Engaging",
+            "collaborative": "Collaborative", "teamwork": "Collaborative",
+
+            # Motivation / Enthusiasm
+            "motivational": "Motivational", "inspiring": "Motivational",
+            "enthusiastic": "Enthusiastic", "energetic": "Enthusiastic",
+
+            # Honesty / Fairness
+            "honest": "Honest", "transparent": "Honest",
+            "fair": "Fair", "just": "Fair",
         }
         
         categories = set()
@@ -196,6 +205,9 @@ def update_tutor_keywords(tutor_id: int):
         supabase.table("tutors").update({
             "teaching_style": teaching_style_traits
         }).eq("id", tutor_id).execute()
+
+        print("All comments:", all_comments)
+        print("Teaching style traits:", teaching_style_traits)
 
         return teaching_style_traits
         

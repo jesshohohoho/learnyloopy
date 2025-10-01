@@ -11,6 +11,9 @@ from features.smartLearning.schemas import ReviewRequest
 import numpy as np
 from typing import List, Dict
 import os
+from dotenv import load_dotenv
+from vertexai.language_models import TextEmbeddingInput, TextEmbeddingModel
+
 
 # --- Document Service ---
 
@@ -131,58 +134,16 @@ class DocumentService:
         }
 
 # --- Embedding model ---
-# use lazy loading to save memory
-_tokenizer = None
-_model = None
-_model_loaded = False
 
-# only load when needed
-def load_embedding_model():
-    global _tokenizer, _model, _model_loaded
-    
-    if _model_loaded:
-        return _tokenizer, _model
-    print("Loading embedding model...")
-    
-    try:
-        from transformers import AutoTokenizer, AutoModel
-        import torch
-        
-        # Use smaller model to fit in memory
-        _tokenizer = AutoTokenizer.from_pretrained(
-            "sentence-transformers/all-MiniLM-L6-v2",
-            trust_remote_code=True
-        )
-        _model = AutoModel.from_pretrained(
-            "sentence-transformers/all-MiniLM-L6-v2",
-            trust_remote_code=True,
-            torch_dtype=torch.float32  
-        )
-        _model_loaded = True
-        print("Embedding model loaded!")
-        return _tokenizer, _model
-        
-    except Exception as e:
-        print(f"Embedding Model loading failed: {e}")
-        _model_loaded = True  
-        return None, None
+load_dotenv()
+# Switch to google cloud api for embedding task
+def get_embedding(text: str, dimensionality: int = 768) -> list[float]:
+    task = "RETRIEVAL_DOCUMENT"
+    model = TextEmbeddingModel.from_pretrained("gemini-embedding-001")
+    text_input = TextEmbeddingInput(text, task)
+    embedding = model.get_embeddings([text_input], output_dimensionality=dimensionality)
 
-def get_embedding(text: str):
-    tokenizer, model = load_embedding_model()
-    # since torch is large package, we import it only when needed
-    import torch
-    inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True)
-    with torch.no_grad():
-        outputs = model(**inputs)
-        embeddings = outputs.last_hidden_state 
-        attention_mask = inputs["attention_mask"]
-
-        mask = attention_mask.unsqueeze(-1).expand(embeddings.size()).float()
-        summed = torch.sum(embeddings * mask, 1)
-        counts = torch.clamp(mask.sum(1), min=1e-9)
-        mean_pooled = summed / counts  
-
-    return mean_pooled[0].cpu().numpy().astype("float32").tolist()
+    return embedding[0].values
 
 # --- Groq Large Language Model ---
 

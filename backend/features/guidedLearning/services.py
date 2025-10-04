@@ -11,7 +11,10 @@ from typing import List, Dict
 from dotenv import load_dotenv
 from google import genai
 from google.genai.types import HttpOptions
-
+import os
+import vertexai
+from google.oauth2 import service_account
+import json
 
 try:
     nltk.data.find('corpora/stopwords')
@@ -54,6 +57,21 @@ def update_tutor_rating(tutor_id: int):
 # --- Teaching Style Classification ---
 
 load_dotenv()
+
+# Initialize credentials once at module level
+def _init_google_credentials():
+    """Ensure Google credentials are properly set up"""
+    creds_path = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+    
+    if creds_path and os.path.exists(creds_path):
+        # File exists, credentials should work automatically
+        print(f"✅ Google credentials loaded from: {creds_path}")
+    else:
+        print(f"⚠️ Credentials file not found at: {creds_path}")
+
+# Call once at import
+_init_google_credentials()
+
 class MLTeachingStyleClassifier:
     def __init__(self):
         self.style_categories = [
@@ -61,7 +79,7 @@ class MLTeachingStyleClassifier:
         ]
         self.stop_words = set(stopwords.words('english'))
         self.stop_words.update(['tutor', 'teacher', 'teaching', 'class', 'lesson', 'subject', 'thank', 'thanks'])
-
+     
     def classify_with_ml(self, text: str) -> list[str]:
         if not text:
             return self.fallback_classification(text)

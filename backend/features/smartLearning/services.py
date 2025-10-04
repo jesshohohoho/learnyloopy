@@ -13,6 +13,8 @@ from typing import List, Dict
 import os
 from dotenv import load_dotenv
 from vertexai.language_models import TextEmbeddingInput, TextEmbeddingModel
+from google.oauth2 import service_account
+import vertexai
 
 
 # --- Document Service ---
@@ -136,6 +138,39 @@ class DocumentService:
 # --- Embedding model ---
 
 load_dotenv()
+
+# Initialize Vertex AI with explicit credentials
+def init_vertex_ai():
+    # Get configuration from environment variables
+    creds_path = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+    project_id = os.getenv('GOOGLE_CLOUD_PROJECT')
+    location = os.getenv('GOOGLE_CLOUD_LOCATION')
+    
+    if not creds_path:
+        raise ValueError("GOOGLE_APPLICATION_CREDENTIALS not set!")
+    
+    if not os.path.exists(creds_path):
+        raise ValueError(f"Credentials file not found at: {creds_path}")
+    
+    # Load credentials from file
+    credentials = service_account.Credentials.from_service_account_file(creds_path)
+    
+    # Get project_id from file if not in env
+    if not project_id:
+        with open(creds_path) as f:
+            project_id = json.load(f).get('project_id')
+    
+    if not project_id:
+        raise ValueError("GOOGLE_CLOUD_PROJECT not set and not found in credentials!")
+    
+    # Initialize Vertex AI
+    vertexai.init(project=project_id, credentials=credentials, location=location)
+    print(f"✅ Vertex AI initialized: project={project_id}, location={location}")
+
+# Call this once when your app starts
+init_vertex_ai()
+
+
 # Switch to google cloud api for embedding task
 def get_embedding(text: str, dimensionality: int = 768) -> list[float]:
     task = "RETRIEVAL_DOCUMENT"

@@ -49,7 +49,15 @@ export const usePastPerformance = () => {
             totalStudyHours: subject.performance?.total_study_hours || null
           }));
           
-          setSubjects(transformedSubjects);
+          const subjectsWithData = transformedSubjects.filter(subject => 
+            subject.test1 !== null || 
+            subject.test2 !== null || 
+            subject.assignment !== null || 
+            subject.mockTest !== null ||
+            subject.totalStudyHours !== null
+          );
+          
+          setSubjects(subjectsWithData);
         } else {
           console.error("Failed to load subjects:", subjectsData.error);
         }
@@ -134,37 +142,47 @@ export const usePastPerformance = () => {
   };
 
   const addSubject = async () => {
-    if (newSubjectName.trim()) {
-      if (!currentUserId) {
+    const trimmedName = newSubjectName.trim();
+
+    if(!trimmedName){
+      alert("Subject name cannot be empty");
+      return;
+    }
+
+    if(trimmedName.length>20){
+      alert("Subject name must be 20 characters or less");
+      return;
+    }
+
+    if (!currentUserId) {
         console.error("User not authenticated");
         return;
-      }
+    }
 
-      try {
-        const data = await pastPerformanceService.createSubject(newSubjectName.trim());
-        
-        if (data.success) {
-          const newSubject = {
-            id: data.data.subject_id,
-            name: newSubjectName.trim(),
-            target: "A",
-            test1: null,
-            test2: null,
-            assignment: null,
-            mockTest: null
-          };
+    try {
+      const data = await pastPerformanceService.createSubject(trimmedName);
+      
+      if (data.success) {
+        const newSubject = {
+          id: data.data.subject_id,
+          name: trimmedName,
+          target: "A",
+          test1: null,
+          test2: null,
+          assignment: null,
+          mockTest: null
+        };
           
-          setSubjects([...subjects, newSubject]);
-          setNewSubjectName('');
-          setShowAddForm(false);
+        setSubjects([...subjects, newSubject]);
+        setNewSubjectName('');
+        setShowAddForm(false);
 
-          await refreshSummaryData();
-        } else {
-          console.error("Failed to create performance record:", data.error);
-        }
-      } catch (error) {
-        console.error("Error creating subject:", error);
+        await refreshSummaryData();
+      } else {
+        console.error("Failed to create performance record:", data.error);
       }
+    } catch (error) {
+      console.error("Error creating subject:", error);
     }
   };
 
@@ -218,12 +236,11 @@ export const usePastPerformance = () => {
       const data = await pastPerformanceService.deletePerformance(subjectToDelete.name);
       
       if (data.success) {
-        setSubjects(subjects.map(subject => 
-          subject.id === id 
-            ? { ...subject, test1: null, test2: null, assignment: null, mockTest: null, totalStudyHours: null }
-            : subject
-        ));
-        console.log("Performance data cleared successfully!");
+      // Remove the subject completely from the list
+      setSubjects(subjects.filter(subject => subject.id !== id));
+      console.log("Subject and performance data deleted successfully!");
+      
+      await refreshSummaryData();
       } else {
         console.error("Failed to delete performance record:", data.error);
       }

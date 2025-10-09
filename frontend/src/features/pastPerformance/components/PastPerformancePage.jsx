@@ -758,7 +758,7 @@ export default function PastPerformancePage({
                   </td>
 
                   {editingSubject?.id === subject.id ? (
-                    // Edit mode - keep existing edit functionality
+   
                     <>
                       <td style={{ padding: "16px 24px", textAlign: "center" }}>
                         <input
@@ -835,25 +835,20 @@ export default function PastPerformancePage({
                           (Auto-updated)
                         </div>
                       </td>
-                      <td style={{ padding: "16px 24px", textAlign: "center" }}>
-                        <input
-                          type="number"
-                          min="0"
-                          step="0.1"
-                          value={editingSubject.totalStudyHours || ""}
-                          onChange={(e) =>
-                            handleMarkChange("totalStudyHours", e.target.value)
-                          }
-                          style={{
-                            width: "60px",
-                            padding: "4px",
-                            border: "1px solid #D1D5DB",
-                            borderRadius: "4px",
-                            textAlign: "center",
-                            fontSize: "12px",
-                          }}
-                          placeholder="--"
-                        />
+                      <td 
+                        style={{
+                          padding: "16px 24px",
+                          textAlign: "center",
+                          color: "#000000ff",
+                          fontStyle: "italic",
+                        }}
+                      >
+                        {editingSubject.totalStudyHours !== null
+                          ? `${editingSubject.totalStudyHours}h`
+                          : "--"}
+                        <div style={{ fontSize: "10px", color: "#9CA3AF" }}>
+                          (Auto-updated)
+                        </div>
                       </td>
                       <td style={{ padding: "16px 24px", textAlign: "center" }}>
                         <button

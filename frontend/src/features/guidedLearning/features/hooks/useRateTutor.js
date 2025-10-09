@@ -3,10 +3,10 @@ import { useState } from 'react';
 import { rateTutorAPI } from '../services/rateTutorAPI';
 
 export const useRateTutor = () => {
-  // Form states - changed tutorID to tutorName
+  // Rate tutor form
   const [formData, setFormData] = useState({
     courseName: "",
-    tutorName: "", // Changed from tutorID to tutorName
+    tutorName: "", // 
     rating: 0,
     comment: "",
   });

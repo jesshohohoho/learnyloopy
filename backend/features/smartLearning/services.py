@@ -186,7 +186,7 @@ groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 def query_groq(user_text: str, context: str = "") -> str:
     completion = groq_client.chat.completions.create(
-        model="deepseek-r1-distill-llama-70b",
+        model="llama-3.3-70b-versatile",
         messages=[
             {"role": "system", "content": "You are a helpful assistant using RAG."},
             {"role": "user", "content": f"Context: {context}\n\nQuestion: {user_text}"}
@@ -197,7 +197,6 @@ def query_groq(user_text: str, context: str = "") -> str:
         stream=False,
     )
     return completion.choices[0].message.content
-# ...existing imports and code...
 
 def query_guidance_tutor(question_text: str, context: str = "") -> str:
     """Query the guidance-focused AI tutor that gives hints instead of direct answers"""

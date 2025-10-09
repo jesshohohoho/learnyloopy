@@ -20,8 +20,8 @@ export const useForumQuestion = (questionId) => {
     try {
       const result = await postAPI.toggleLike(targetQuestionId);
       
-      // Update the current post's likes if it's the same question
-      if (targetQuestionId === questionId) {
+      // Update the current post's likes 
+      if (targetQuestionId == questionId) {
         setPost(prevPost => ({
           ...prevPost,
           likes: result.liked 

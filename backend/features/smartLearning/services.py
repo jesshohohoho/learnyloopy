@@ -224,28 +224,64 @@ def query_guidance_tutor(question_text: str, context: str = "") -> str:
     return completion.choices[0].message.content
 
 def extract_json_array(text):
-    # Try to find a JSON array inside ```json ... ```
-    match = re.search(r'```json\s*(\[[\s\S]*?\])\s*```', text)
-    if not match:
-        # Try to find a JSON array anywhere in the text
-        match = re.search(r'(\[[\s\S]*?\])', text)
-        if not match:
-            raise ValueError("No JSON array found in text.")
+    """Extract and parse JSON array from LLM response"""
+    
+    # 1. Try to find JSON in code blocks
+    match = re.search(r'```(?:json)?\s*(\[[\s\S]*?\])\s*```', text, re.IGNORECASE)
+    if match:
         json_str = match.group(1)
     else:
-        json_str = match.group(1)
-    # Remove any trailing commas before the closing bracket (common LLM mistake)
-    json_str = re.sub(r',\s*([\]}])', r'\1', json_str)
-    # Try to load JSON, if fails, try to recover partial array
+        # 2. Try to find raw JSON array (match balanced brackets)
+        # Find the first [ and then find its matching ]
+        start = text.find('[')
+        if start == -1:
+            raise ValueError("No JSON array found in text.")
+        
+        bracket_count = 0
+        end = start
+        for i in range(start, len(text)):
+            if text[i] == '[':
+                bracket_count += 1
+            elif text[i] == ']':
+                bracket_count -= 1
+                if bracket_count == 0:
+                    end = i + 1
+                    break
+        
+        if bracket_count != 0:
+            raise ValueError("Unbalanced brackets in JSON array.")
+        
+        json_str = text[start:end]
+    
+    # 3. Clean up common LLM mistakes
+    json_str = re.sub(r',\s*([}\]])', r'\1', json_str)  # Remove trailing commas
+    json_str = re.sub(r'\n\s*\n', '\n', json_str)  # Remove extra newlines
+    
+    # 4. Try to parse
     try:
-        return json.loads(json_str)
-    except json.JSONDecodeError:
-        # Try to recover: find the last complete object
-        items = re.findall(r'\{[\s\S]*?\}', json_str)
-        if not items:
-            raise ValueError("No valid JSON objects found.")
-        partial = "[" + ",".join(items) + "]"
-        return json.loads(partial)
+        data = json.loads(json_str)
+        if isinstance(data, list):
+            return data
+        else:
+            raise ValueError("Parsed JSON is not an array.")
+    except json.JSONDecodeError as e:
+        # 5. Fallback: try to extract individual objects
+        print(f"JSON parse error: {e}")
+        print(f"Trying to recover partial data...")
+        
+        objects = []
+        # Find all complete JSON objects
+        for match in re.finditer(r'\{[^{}]*"question"[^{}]*"options"[^{}]*"answer"[^{}]*\}', json_str):
+            try:
+                obj = json.loads(match.group(0))
+                objects.append(obj)
+            except:
+                continue
+        
+        if objects:
+            return objects
+        else:
+            raise ValueError(f"Could not parse JSON: {e}\nText: {json_str[:500]}")
 
 # --- PDF/DOCX readers ---
 def read_pdf(file=UploadFile):
@@ -485,9 +521,9 @@ class MockTestService:
             Return only a valid JSON array of 5 mock test questions in this format:
             [
                 {{
-            "question": "Question text",
-            "options": ["a) ...", "b) ...", "c) ...", "d) ..."],
-            "answer": "a) ..."
+                    "question": "Question text",
+                    "options": ["a) ...", "b) ...", "c) ...", "d) ..."],
+                    "answer": "a) ..."
                 }},
                 ...
             ]

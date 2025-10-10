@@ -98,14 +98,14 @@ export const useMockTest = () => {
     };
   };
 
-   const submitResult = async (subjectName, resultPercentage, createFlashcards = false) => {
+   const submitResult = async (subjectName, createFlashcards = false) => {
     setLoading(true);
     setError("");
     try {
       const scoreData = calculateScore(); // Get the wrong answers
       
       const response = await storeMockTestResult(subjectName, {
-        result_percentage: resultPercentage,
+        result_percentage: scoreData.percentage,
         wrong_answers: scoreData.wrongAnswers, // Send wrong answers
         create_flashcards_from_wrong: createFlashcards // Send flashcard option
       });

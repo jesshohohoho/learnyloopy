@@ -75,11 +75,12 @@ export const useFindTutor = () => {
         teachingStyle: formData.teachingStyle,
         subject: formData.subject,
         tutoringMode: formData.tutoringMode,
-        maxHourlyRate: formData.maxHourlyRate,
-        minExperience: formData.minExperience,
+        maxHourlyRate: parseFloat(formData.maxHourlyRate),
+        minExperience: parseInt(formData.minExperience),
         rankingOption: formData.rankingOption // rank based on overall similarity, price, experience, or credits
       });
-      
+
+   
       setResult(tutors);
       return { success: true, data: tutors };
     } catch (err) {

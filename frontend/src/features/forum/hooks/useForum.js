@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { postsAPI } from "../services/postsAPI";
 import { postAPI } from "../services/postAPI";
-import { checkAuthAndPrompt } from "../shared/utils/authHelpers";
+import { checkAuthAndPrompt } from "../../../utils/authHelpers";
 
 export const useForum = () => {
   const navigate = useNavigate();

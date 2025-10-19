@@ -1,5 +1,4 @@
 import React from "react";
-import { checkAuthAndPrompt } from "../shared/utils/authHelpers";
 import { useForum } from "../hooks/useForum";
 import AddQuestion from "../features/components/AddQuestion";
 import LoadingSpinner from "../../../components/Loading";

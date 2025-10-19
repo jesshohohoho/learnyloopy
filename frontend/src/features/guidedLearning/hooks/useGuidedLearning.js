@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { listTutorAPI } from '../services/listTutorAPI';
 import { findTutorAPI } from '../features/services/findTutorAPI';
+import {checkAuthAndPrompt} from '../../../utils/authHelpers'
 
 export const useGuidedLearning = () => {
   const [showFindTutor, setShowFindTutor] = useState(false);
@@ -206,16 +207,22 @@ export const useGuidedLearning = () => {
     return '★'.repeat(fullStars) + '☆'.repeat(emptyStars);
   };
 
-  const handleFindTutorClick = () => {
-    setShowFindTutor(true);
+  const handleFindTutorClick = async () => {
+    if(await checkAuthAndPrompt('find a tutor')){
+      setShowFindTutor(true);
+    }
   };
 
-  const handleRateTutorClick = () => {
-    setShowRateTutor(true);
+  const handleRateTutorClick = async () => {
+    if(await checkAuthAndPrompt('rate a tutor')){
+      setShowRateTutor(true);
+    }
   };
 
-  const handleBecomeTutorClick = () => {
-    setShowBecomeTutor(true);
+  const handleBecomeTutorClick = async () => {
+    if(await checkAuthAndPrompt('registered as tutor')){
+      setShowBecomeTutor(true);
+    }
   };
 
   const handleSearchChange = (query) => {

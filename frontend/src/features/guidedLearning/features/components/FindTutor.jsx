@@ -213,21 +213,21 @@ function FindTutor({ onClose }) {
                 style={{
                   width: "140px", 
                   height: "33px", 
-                  background: formData.tutoringMode === "Offline" ? "#6F48FF" : "#D9D9D9", 
-                  color: formData.tutoringMode === "Offline" ? "#fff" : "#222",
+                  background: formData.tutoringMode === "Physical" ? "#6F48FF" : "#D9D9D9", 
+                  color: formData.tutoringMode === "Physical" ? "#fff" : "#222",
                   borderRadius: "10px", 
                   border: "none", 
                   fontFamily: "Open Sans, sans-serif", 
-                  fontWeight: formData.tutoringMode === "Offline" ? 600 : 400, 
+                  fontWeight: formData.tutoringMode === "Physical" ? 600 : 400, 
                   fontSize: "18px",
                   cursor: "pointer",
                   display: "flex", // FIXED: Use flex for perfect centering
                   alignItems: "center", // FIXED: Center vertically
                   justifyContent: "center" // FIXED: Center horizontally
                 }} 
-                onClick={() => handleModeToggle("Offline")}
+                onClick={() => handleModeToggle("Physical")}
               >
-                Offline
+                Physical
               </button>
             </div>
 

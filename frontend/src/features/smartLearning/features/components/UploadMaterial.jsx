@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useUploadMaterial } from "../hooks/useUploadMaterial";
 import LoadingSpinner from '../../../../components/Loading';
+import {subjectsAPI} from '../services/subjectsAPI'
 
 const UploadMaterial = ({ onClose }) => {
   const {
@@ -14,6 +15,59 @@ const UploadMaterial = ({ onClose }) => {
   } = useUploadMaterial();
 
   const [success, setSuccess] = useState(false); // ADD: Success state
+
+  // NEW: Autocomplete states
+  const [existingSubjects, setExistingSubjects] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [filteredSubjects, setFilteredSubjects] = useState([]);
+  const inputRef = useRef(null);
+
+  // NEW: Fetch existing subjects on mount
+  useEffect(() => {
+    const fetchSubjects = async () => {
+      try {
+        const subjects = await subjectsAPI.getUserSubjects();
+        setExistingSubjects(subjects);
+      } catch (error) {
+        console.error("Failed to fetch subjects:", error);
+      }
+    };
+    fetchSubjects();
+  }, []);
+
+  // NEW: Handle subject input change with autocomplete
+  const handleSubjectChange = (e) => {
+    const value = e.target.value;
+    setSubject(value);
+
+    if (value.trim()) {
+      const filtered = existingSubjects.filter(subj =>
+        subj.toLowerCase().startsWith(value.toLowerCase())
+      );
+      setFilteredSubjects(filtered);
+      setShowSuggestions(filtered.length > 0);
+    } else {
+      setShowSuggestions(false);
+    }
+  };
+
+  // NEW: Handle subject selection from dropdown
+  const handleSelectSubject = (selectedSubject) => {
+    setSubject(selectedSubject);
+    setShowSuggestions(false);
+    inputRef.current?.focus();
+  };
+
+  // NEW: Close suggestions when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (inputRef.current && !inputRef.current.contains(event.target)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleSubmit = async () => {
     try {
@@ -242,7 +296,7 @@ const UploadMaterial = ({ onClose }) => {
                   </span>
 
                   {/* Subject Input */}
-                  <div className="mb-6 flex items-center">
+                  <div className="mb-6 flex items-center" style={{ position: "relative" }} ref={inputRef}>
                     <span
                       style={{
                         width: "140px",
@@ -274,8 +328,55 @@ const UploadMaterial = ({ onClose }) => {
                       }}
                       placeholder="Type subject here"
                       value={subject}
-                      onChange={(e) => setSubject(e.target.value)}
+                      onChange={handleSubjectChange}
+                      onFocus={() => {
+                        if (subject.trim() && filteredSubjects.length > 0) {
+                          setShowSuggestions(true);
+                        }
+                      }}
                     />
+
+                    {/* Autocomplete Dropdown */}
+                      {showSuggestions && filteredSubjects.length > 0 && (
+                        <div
+                          style={{
+                            position: "absolute",
+                            top: "39px",
+                            left: "0",
+                            width: "100%",
+                            maxHeight: "150px",
+                            overflowY: "auto",
+                            background: "#fff",
+                            border: "1px solid #D9D9D9",
+                            borderRadius: "8px",
+                            boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+                            zIndex: 100,
+                          }}
+                        >
+                          {filteredSubjects.map((subj, index) => (
+                            <div
+                              key={index}
+                              onClick={() => handleSelectSubject(subj)}
+                              style={{
+                                padding: "8px 12px",
+                                cursor: "pointer",
+                                fontFamily: "Open Sans, sans-serif",
+                                fontSize: "16px",
+                                color: "#222",
+                                borderBottom: index < filteredSubjects.length - 1 ? "1px solid #f0f0f0" : "none",
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.background = "#f5f5f5";
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.background = "#fff";
+                              }}
+                            >
+                              {subj}
+                            </div>
+                          ))}
+                        </div>
+                      )}
                   </div>
 
                   {/* Upload Box */}

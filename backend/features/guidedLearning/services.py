@@ -323,16 +323,16 @@ def rank_tutors(tutors: List[Dict], student_req: StudentRequirements) -> Dict:
     if not results:
         return {
             "best_similarity": [],
-            "best_price": None,
-            "best_experience": None,
-            "best_credits": None
+            "best_price": [],
+            "best_experience": [],
+            "best_credits": []
         }
     
     # Different ranking strategies
     best_similarity = sorted(results, key=lambda x: x["similarity"], reverse=True)
-    best_price = min(results, key=lambda x: x["rate"])
-    best_experience = max(results, key=lambda x: x["experience"])
-    best_credits = max(results, key=lambda x: x["credits"])
+    best_price = sorted(results, key=lambda x: x["rate"])
+    best_experience = sorted(results, key=lambda x: x["experience"], reverse=True)
+    best_credits = sorted(results, key=lambda x: x["credits"], reverse=True)
     
     return {
         "best_similarity": best_similarity,   # Full sorted list

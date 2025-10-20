@@ -28,15 +28,15 @@ export const findTutorAPI = {
       if (criteria.rankingOption === "best_overall") {
         return data; 
       } else {
-        // Extract specific ranking
+        // Return the ranked arrays of matched tutors
         const rankings = data;
         switch (criteria.rankingOption) {
           case "most_affordable":
-            return rankings.best_price ? [rankings.best_price.tutor_data] : [];
+            return rankings.best_price?.map(item => item.tutor_data) || [];
           case "most_experienced":
-            return rankings.best_experience ? [rankings.best_experience.tutor_data] : [];
+            return rankings.best_experience?.map(item => item.tutor_data) || [];
           case "most_active":
-            return rankings.best_credits ? [rankings.best_credits.tutor_data] : [];
+            return rankings.best_credits?.map(item => item.tutor_data) || [];
           default:
             return rankings.best_similarity?.map(item => item.tutor_data) || [];
         }

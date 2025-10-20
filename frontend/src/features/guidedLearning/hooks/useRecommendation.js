@@ -12,33 +12,15 @@ export const useRecommendation = () => {
       try {
         setLoading(true);
         
-        // Check if we already have tutors in localStorage
+        // load from localStorage (latest search results)
         const storedTutors = localStorage.getItem('recommendedTutors');
         
         if (storedTutors) {
-          // We have cached results
-          setTutors(JSON.parse(storedTutors));
-          setLoading(false);
+          const parsedTutors = JSON.parse(storedTutors);
+          setTutors(parsedTutors);
         } else {
-          // We need to search - get criteria and search
-          const searchCriteria = localStorage.getItem('searchCriteria');
-          
-          if (searchCriteria) {
-            const criteria = JSON.parse(searchCriteria);
-            
-            // Perform the actual search here
-            const { data, error } = await supabase
-              .from('tutors')
-              .select('*')
-              // Add your filtering logic based on criteria
-              .limit(3);
-              
-            if (error) throw error;
-            
-            setTutors(data || []);
-            // Cache the results
-            localStorage.setItem('recommendedTutors', JSON.stringify(data || []));
-          }
+          // If no cached results, show empty
+          setTutors([]);
         }
       } catch (err) {
         console.error('Error loading tutors:', err);
@@ -58,7 +40,6 @@ export const useRecommendation = () => {
     let stars = '★'.repeat(fullStars);
     if (hasHalfStar) stars += '☆';
     
-    // Pad with empty stars to make 5 total
     const remainingStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
     stars += '☆'.repeat(remainingStars);
     

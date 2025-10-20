@@ -75,6 +75,10 @@ async def find_tutor(requirement: StudentRequirements, current_user: Dict[str, A
     """
     try:
         supabase = get_supabase()
+
+        # ✅ ADD THIS DEBUG
+        print(f"🔍 Requirement subject: {requirement.subject}")
+        print(f"🔍 Requirement subject type: {type(requirement.subject)}")
         
         # Get all tutors
         tutors_response = supabase.table("tutors").select("*").execute()
@@ -84,8 +88,11 @@ async def find_tutor(requirement: StudentRequirements, current_user: Dict[str, A
         
         scored_tutors = []
         for tutor_data in tutors_response.data:
+            print(f"📋 Checking tutor: {tutor_data['name']}")
+            print(f"   Tutor subjects: {tutor_data.get('subject', [])}")
+
             score = calculate_similarity(tutor_data, requirement)
-            print(f"Tutor: {tutor_data['name']}, Score: {score}")
+            print(f"   Score: {score}")
             
             if score > 0:
                 scored_tutors.append((tutor_data, score))
@@ -95,7 +102,7 @@ async def find_tutor(requirement: StudentRequirements, current_user: Dict[str, A
 
         # Return just the tutor data
         result_tutors = [tutor_data for tutor_data, score in scored_tutors]
-        
+        print(f"✅ Returning {len(result_tutors)} tutors")
         return result_tutors
         
     except Exception as e:
@@ -113,9 +120,9 @@ async def find_tutor_ranked(requirement: StudentRequirements, current_user: Dict
         if not tutors_response.data:
             return {
                 "best_similarity": [],
-                "best_price": None,
-                "best_experience": None,
-                "best_credits": None
+                "best_price": [],
+                "best_experience": [],
+                "best_credits": []
             }
         
         rankings = rank_tutors(tutors_response.data, requirement)

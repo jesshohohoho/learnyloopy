@@ -80,7 +80,7 @@ export const useFindTutor = () => {
         rankingOption: formData.rankingOption // rank based on overall similarity, price, experience, or credits
       });
 
-   
+      localStorage.setItem('recommendedTutors', JSON.stringify(tutors));
       setResult(tutors);
       return { success: true, data: tutors };
     } catch (err) {

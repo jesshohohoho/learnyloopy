@@ -3,7 +3,7 @@ import { useUploadMaterial } from "../hooks/useUploadMaterial";
 import LoadingSpinner from '../../../../components/Loading';
 import {subjectsAPI} from '../services/subjectsAPI'
 
-const UploadMaterial = ({ onClose }) => {
+const UploadMaterial = ({ onClose, onUploadSuccess }) => {
   const {
     subject,
     setSubject,
@@ -12,7 +12,7 @@ const UploadMaterial = ({ onClose }) => {
     uploadMaterial,
     loading,
     error
-  } = useUploadMaterial();
+  } = useUploadMaterial(onUploadSuccess);
 
   const [success, setSuccess] = useState(false); // ADD: Success state
 
@@ -255,22 +255,6 @@ const UploadMaterial = ({ onClose }) => {
                   Upload Class Materials
                 </div>
               </div>
-
-              {/* Error Display */}
-              {error && (
-                <div
-                  style={{
-                    margin: "0 24px 12px 24px",
-                    padding: "8px 12px",
-                    background: "#ffebee",
-                    color: "#c62828",
-                    borderRadius: "8px",
-                    fontSize: "14px",
-                  }}
-                >
-                  {error}
-                </div>
-              )}
 
               {/* Form wrapper */}
               <div style={{ 

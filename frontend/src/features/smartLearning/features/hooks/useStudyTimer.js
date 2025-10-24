@@ -7,7 +7,7 @@ export const useStudyTimer = ({ subjects, onUpdateStudyHours }) => {
   const [isRunning, setIsRunning] = useState(false);
 
   // Use less time for testing
-  const TESTING_MODE = false;
+  const TESTING_MODE = true;
   // Timer intervals (in seconds)
   const FOCUS_TIME = TESTING_MODE ? 5 : 25 * 60; // 25 minutes
   const BREAK_TIME = TESTING_MODE ? 1: 5 * 60;  // 5 minutes

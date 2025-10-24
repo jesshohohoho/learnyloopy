@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import CustomChat from "../features/components/CustomChat"
 import uploadIcon from "../../../assets/Upload.png";
 import pomodoroIcon from "../../../assets/pomodoro.png";
-import infoIcon from "../../../assets/Info.png";
 import UploadMaterial from "../features/components/UploadMaterial";
 import FlashcardModal from "../features/components/Flashcards";
 import MockTest from "../features/components/MockTest";
@@ -164,6 +163,7 @@ function SmartLearningPage() {
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <img
               src={uploadIcon}
+              title="Upload material"
               style={{ width: '24px', height: '24px', cursor: 'pointer' }}
               alt="upload"
               onClick={() => setIsUploadModalOpen(true)}
@@ -223,9 +223,6 @@ function SmartLearningPage() {
             </AppButton>
           </div>
           
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <img src={infoIcon} style={{ width: '24px', height: '24px' }} alt="info" />
-          </div>
         </div>
 
         {/* Pomodoro Timer Card */}

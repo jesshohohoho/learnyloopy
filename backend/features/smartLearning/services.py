@@ -4,7 +4,7 @@ import json
 from PyPDF2 import PdfReader
 import docx
 from io import BytesIO
-from fastapi import UploadFile
+from fastapi import UploadFile, HTTPException
 from fsrs import Scheduler, Card, Rating
 from datetime import datetime, timedelta
 from features.smartLearning.schemas import ReviewRequest
@@ -72,68 +72,81 @@ class DocumentService:
         return [doc["text"] for doc in top_docs]
 
     def ask_question(self, supabase, user_id: str, subject_name: str, question_text: str):
-        # Get subject for this user
-        subject_response = supabase.table("subjects").select("*").eq("name", subject_name).eq("user_id", user_id).execute()
-        if not subject_response.data:
-            raise ValueError("Subject not found")
-        
-        subject = subject_response.data[0]
-        
-        # Get embedding for question
-        q_emb = get_embedding(question_text)
-        
-        # Get documents for this subject
-        documents_response = supabase.table("uploaded_documents").select("*").eq("subject_id", subject["id"]).execute()
-        
-        if not documents_response.data:
-            raise ValueError(f"No documents found for subject '{subject_name}'")
-        
-        # Calculate similarities and get top 3
-        similarities = []
-        for doc in documents_response.data:
-            if doc["embedding"]:
-                # Handle case where embedding might be stored as string
-                doc_embedding = doc["embedding"]
-                if isinstance(doc_embedding, str):
-                    try:
-                        doc_embedding = json.loads(doc_embedding)
-                    except:
-                        continue
-                
-                doc_emb = np.array(doc_embedding, dtype=np.float32)
-                query_emb = np.array(q_emb, dtype=np.float32)
-                distance = np.linalg.norm(doc_emb - query_emb)
-                similarities.append((distance, doc))
-        
-        # Sort by distance and take top 3
-        similarities.sort(key=lambda x: x[0])
-        top_docs = [doc for _, doc in similarities[:3]]
-        
-        docs = [doc["text"] for doc in top_docs]
-        context = "\n".join(docs)
-        guidance_response = query_guidance_tutor(question_text, context)
-        
-         # Parse the JSON response
         try:
-            guidance_json = json.loads(guidance_response)
+            # Get subject for this user
+            subject_response = supabase.table("subjects").select("*").eq("name", subject_name).eq("user_id", user_id).execute()
+            if not subject_response.data:
+                raise ValueError(f"Subject '{subject_name}' not found. Please upload study materials first. ")
             
-            # Extract the actual guidance text
-            if "hint" in guidance_json:
-                answer_text = guidance_json["hint"]
-            elif "steps" in guidance_json:
-                answer_text = guidance_json["steps"]
-            else:
-                answer_text = "I'm having trouble processing your question. Try rephrasing it or asking more specifically."
+            subject = subject_response.data[0]
+            
+            # Get embedding for question
+            q_emb = get_embedding(question_text)
+            
+            # Get documents for this subject
+            documents_response = supabase.table("uploaded_documents").select("*").eq("subject_id", subject["id"]).execute()
+            
+            if not documents_response.data:
+                raise ValueError(f"No documents found for subject '{subject_name}'. Please upload study materials first. ")
+            
+            # Calculate similarities and get top 3
+            similarities = []
+            for doc in documents_response.data:
+                if doc["embedding"]:
+                    # Handle case where embedding might be stored as string
+                    doc_embedding = doc["embedding"]
+                    if isinstance(doc_embedding, str):
+                        try:
+                            doc_embedding = json.loads(doc_embedding)
+                        except:
+                            continue
+                    
+                    doc_emb = np.array(doc_embedding, dtype=np.float32)
+                    query_emb = np.array(q_emb, dtype=np.float32)
+                    distance = np.linalg.norm(doc_emb - query_emb)
+                    similarities.append((distance, doc))
+            
+            # Sort by distance and take top 3
+            similarities.sort(key=lambda x: x[0])
+            top_docs = [doc for _, doc in similarities[:3]]
+            
+            docs = [doc["text"] for doc in top_docs]
+            context = "\n".join(docs)
+            guidance_response = query_guidance_tutor(question_text, context)
+            
+            # Parse the JSON response
+            try:
+                guidance_json = json.loads(guidance_response)
                 
-        except json.JSONDecodeError:
-            answer_text = "I'm having trouble processing your question. Try rephrasing it or asking more specifically."
+                # Extract the actual guidance text
+                if "hint" in guidance_json:
+                    answer_text = guidance_json["hint"]
+                elif "steps" in guidance_json:
+                    answer_text = guidance_json["steps"]
+                else:
+                    answer_text = "I'm having trouble processing your question. Try rephrasing it or asking more specifically."
+                    
+            except json.JSONDecodeError:
+                answer_text = "I'm having trouble processing your question. Try rephrasing it or asking more specifically."
 
-        return {
-            "question": question_text,
-            "subject": subject_name,
-            "answer": answer_text,
-            "retrieved_docs": docs,
-        }
+            return {
+                "question": question_text,
+                "subject": subject_name,
+                "answer": answer_text,
+                "retrieved_docs": docs,
+            }
+        except HTTPException:
+            # Re-raise HTTP exceptions (rate limit, auth errors, etc.)
+            raise
+        except ValueError:
+            # Re-raise value errors (subject not found, etc.)
+            raise
+        except Exception as e:
+            # Catch unexpected errors
+            raise HTTPException(
+                status_code=500,
+                detail=f"Failed to process your question: {str(e)}"
+            )
 
 # --- Embedding model ---
 
@@ -185,43 +198,104 @@ def get_embedding(text: str, dimensionality: int = 768) -> list[float]:
 groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 def query_groq(user_text: str, context: str = "") -> str:
-    completion = groq_client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
-        messages=[
-            {"role": "system", "content": "You are a helpful assistant using RAG."},
-            {"role": "user", "content": f"Context: {context}\n\nQuestion: {user_text}"}
-        ],
-        temperature=0.3,
-        max_completion_tokens=1300,
-        top_p=0.95,
-        stream=False,
-    )
-    return completion.choices[0].message.content
+    try:
+        completion = groq_client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant using RAG."},
+                {"role": "user", "content": f"Context: {context}\n\nQuestion: {user_text}"}
+            ],
+            temperature=0.3,
+            max_completion_tokens=1300,
+            top_p=0.95,
+            stream=False,
+        )
+        return completion.choices[0].message.content
+    except Exception as e:
+        error_message = str(e).lower()
+        
+        # Handle rate limit / quota errors (Error 413)
+        if 'rate_limit' in error_message or 'quota' in error_message or '413' in error_message:
+            raise HTTPException(
+                status_code=503,  # Service Unavailable
+                detail="Sorry! Our AI service is currently busy. Please try again in a few moments."
+            )
+        
+        # Handle authentication errors
+        elif 'authentication' in error_message or 'unauthorized' in error_message or '401' in error_message:
+            raise HTTPException(
+                status_code=401,
+                detail="Session expired. Please sign out and log in again."
+            )
+        
+        # Handle token/content too large
+        elif 'token' in error_message or 'too large' in error_message:
+            raise HTTPException(
+                status_code=400,
+                detail="Your question or document is too long. Please try with shorter content."
+            )
+        
+        # Generic error
+        else:
+            raise HTTPException(
+                status_code=500,
+                detail="Failed to get an answer. Please try rephrasing your question or try again later."
+            )
 
 def query_guidance_tutor(question_text: str, context: str = "") -> str:
     """Query the guidance-focused AI tutor that gives hints instead of direct answers"""
-    
-    completion = groq_client.chat.completions.create(
-        model="qwen/qwen3-32b",
-        messages=[
-            {
-                "role": "system",
-                "content": "You are a guidance-focused AI tutor. \nDo NOT give direct solutions or definitions. \nInstead, give hints or guiding steps that help the student think for themselves. \nAlways output valid JSON.\n\nSchema:\n- For conceptual/explanatory questions: { \"hint\": string }\n- For procedural/problem-solving questions: { \"steps\": string }\n\nExamples:\n\nQ: What is the difference between correlation and causation?  \nA (correct): { \"hint\": \"Ask yourself: do the variables just move together, or does one actually make the other happen?\" }  \nA (incorrect): { \"hint\": \"Correlation is when two variables change together, while causation means one causes the other.\" }  # Too direct\n\nQ: Solve x² + 3x + 2 = 0  \nA (correct): { \"steps\": \"1. Think about factoring the quadratic. 2. What two numbers multiply to 2 and add to 3?\" }  \nA (incorrect): { \"steps\": \"The factors are (x+1)(x+2), so the solutions are -1 and -2.\" }  # Too direct"
-            },
-            {
-                "role": "user",
-                "content": f"Context from materials: {context}\n\nStudent question: {question_text}"
-            }
-        ],
-        temperature=0.6,
-        max_completion_tokens=1024,
-        top_p=0.95,
-        stream=False,
-        response_format={"type": "json_object"},
-        stop=None
-    )
-    
-    return completion.choices[0].message.content
+    try:
+        completion = groq_client.chat.completions.create(
+            model="qwen/qwen3-32b",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a guidance-focused AI tutor. \nDo NOT give direct solutions or definitions. \nInstead, give hints or guiding steps that help the student think for themselves. \nAlways output valid JSON.\n\nSchema:\n- For conceptual/explanatory questions: { \"hint\": string }\n- For procedural/problem-solving questions: { \"steps\": string }\n\nExamples:\n\nQ: What is the difference between correlation and causation?  \nA (correct): { \"hint\": \"Ask yourself: do the variables just move together, or does one actually make the other happen?\" }  \nA (incorrect): { \"hint\": \"Correlation is when two variables change together, while causation means one causes the other.\" }  # Too direct\n\nQ: Solve x² + 3x + 2 = 0  \nA (correct): { \"steps\": \"1. Think about factoring the quadratic. 2. What two numbers multiply to 2 and add to 3?\" }  \nA (incorrect): { \"steps\": \"The factors are (x+1)(x+2), so the solutions are -1 and -2.\" }  # Too direct"
+                },
+                {
+                    "role": "user",
+                    "content": f"Context from materials: {context}\n\nStudent question: {question_text}"
+                }
+            ],
+            temperature=0.6,
+            max_completion_tokens=1024,
+            top_p=0.95,
+            stream=False,
+            response_format={"type": "json_object"},
+            stop=None
+        )
+        
+        return completion.choices[0].message.content
+    except Exception as e:
+        error_message = str(e).lower()
+        
+        # Handle rate limit / quota errors (Error 413)
+        if 'rate_limit' in error_message or 'quota' in error_message or '413' in error_message:
+            raise HTTPException(
+                status_code=503,
+                detail="Sorry! Our AI service is currently busy. Please try again in a few moments."
+            )
+        
+        # Handle authentication errors
+        elif 'authentication' in error_message or 'unauthorized' in error_message or '401' in error_message:
+            raise HTTPException(
+                status_code=401,
+                detail="Session expired. Please sign out and log in again."
+            )
+        
+        # Handle token/content too large
+        elif 'token' in error_message or 'too large' in error_message:
+            raise HTTPException(
+                status_code=400,
+                detail="Your question or document is too long. Please try with shorter content."
+            )
+        
+        # Generic error
+        else:
+            raise HTTPException(
+                status_code=500,
+                detail="Failed to get guidance. Please try rephrasing your question or try again later."
+            )
 
 def extract_json_array(text):
     """Extract and parse JSON array from LLM response"""

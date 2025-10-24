@@ -2,7 +2,6 @@
 // components/shared/Sidebar.jsx
 import React from "react";
 import { TrendingTopics } from "./TrendingTopics";
-import { InvolvementSection } from "./InvolvementSection";
 
 export const Sidebar = ({ 
   trendingTopics, 
@@ -22,9 +21,7 @@ export const Sidebar = ({
         topics={trendingTopics} 
         onTopicClick={onTopicClick} 
       />
-      <InvolvementSection 
-        onItemClick={onInvolvementClick} 
-      />
+    
     </div>
   );
 };

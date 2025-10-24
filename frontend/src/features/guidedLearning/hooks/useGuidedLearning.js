@@ -8,6 +8,7 @@ export const useGuidedLearning = () => {
   const [showRateTutor, setShowRateTutor] = useState(false);
   const [showBecomeTutor, setShowBecomeTutor] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState("");
   const [subjects, setSubjects] = useState([]);
   const [allTutors, setAllTutors] = useState([]); // all tutors
   const [tutors, setTutors] = useState([]); // filtered tutors based on subjects
@@ -20,27 +21,28 @@ export const useGuidedLearning = () => {
 
   useEffect(() => {
     filterTutors();
-  }, [searchQuery, allTutors]);
+  }, [selectedSubject, searchQuery, allTutors]);
 
-  const filterTutors = () => {
-    if (!searchQuery.trim()) {
-      // No search query - show all tutors
-      setTutors(allTutors);
-      return;
+  // Filter tutors based on search query & subject
+    const filterTutors = () => {
+    let filtered = [...allTutors];
+
+    // Filter by selected subject
+    if (selectedSubject) {
+      filtered = filtered.filter(tutor => 
+        tutor.subject && tutor.subject.includes(selectedSubject)
+      );
     }
 
-    // Filter tutors based on search query
-    const filtered = allTutors.filter(tutor => {
+    // Filter by search query
+    if (searchQuery) {
       const query = searchQuery.toLowerCase();
-      return (
-        tutor.name.toLowerCase().includes(query) ||
-        tutor.description.toLowerCase().includes(query) ||
-        // Search in subjects if available
-        (tutor.subject && tutor.subject.some(subject => 
-          subject.toLowerCase().includes(query)
-        ))
+      filtered = filtered.filter(tutor => 
+        tutor.name?.toLowerCase().includes(query) ||
+        tutor.subject?.some(s => s.toLowerCase().includes(query)) ||
+        tutor.description?.toLowerCase().includes(query)
       );
-    });
+    }
 
     setTutors(filtered);
   };
@@ -207,6 +209,18 @@ export const useGuidedLearning = () => {
     return '★'.repeat(fullStars) + '☆'.repeat(emptyStars);
   };
 
+  // handle subject tag click
+  const handleSubjectClick = (subject) => {
+    if (selectedSubject === subject) {
+      // If clicking the same subject, deselect it (show all)
+      setSelectedSubject("");
+    } else {
+      // Select new subject
+      setSelectedSubject(subject);
+      setSearchQuery(""); // Clear search when selecting a subject
+    }
+  };
+
   const handleFindTutorClick = async () => {
     if(await checkAuthAndPrompt('find a tutor')){
       setShowFindTutor(true);
@@ -236,6 +250,7 @@ export const useGuidedLearning = () => {
     showRateTutor,
     showBecomeTutor,
     searchQuery,
+    selectedSubject,
     subjects,
     tutors,
     testimonials,
@@ -249,6 +264,7 @@ export const useGuidedLearning = () => {
     handleRateTutorClick,
     handleBecomeTutorClick,
     handleSearchChange,
+    handleSubjectClick,
     getStarRating, 
 
     refreshData: loadInitialData 

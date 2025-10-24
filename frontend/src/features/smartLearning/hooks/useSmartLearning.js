@@ -62,9 +62,13 @@ export const useSmartLearning = () => {
       console.error("Error sending data to backend:", error);
       setMessages((prev) => [
         ...prev,
-        { message: "Failed to get an answer.", sender: "bot" },
+        { 
+          message: error.message || "Failed to get an answer.", 
+          sender: "bot",
+          isError: true  // ✅ ADD: Flag as error for styling
+        },
       ]);
-    }
+      }
   };
 
   const handleFlashcardsClick = () => {

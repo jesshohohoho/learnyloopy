@@ -11,13 +11,14 @@ import Png8 from "../assets/S image 8.png";
 import { supabase } from "../lib/supabase"; // Import supabase
 import { useNavigate } from "react-router-dom";
 
-function SidebarButton({ icon, link, onClick }) {
+function SidebarButton({ icon, link, onClick, tooltip }) {
   // If onClick is provided, use button instead of anchor
   if (onClick) {
     return (
       <button 
         onClick={onClick} 
         className="sidebar-button"
+        title={tooltip}
         style={{ 
           background: 'transparent', 
           border: 'none', 
@@ -32,7 +33,7 @@ function SidebarButton({ icon, link, onClick }) {
   }
   
   return (
-    <a href={link} className="sidebar-button">
+    <a href={link} className="sidebar-button" title={tooltip}>
       <div className="icon">{icon}</div>
     </a>
   );
@@ -90,25 +91,17 @@ function Sidebar() {
       <div className="sidebar-divider"></div>          {/* first divider */}
       
       <div className="sidebar-buttons">
-        <SidebarButton icon={DashboardIcon} link="/performance" />
-        <SidebarButton icon={LeaderboardIcon} link="/leaderboard" />
-        <SidebarButton icon={ForumIcon} link="/forum" />
-        <SidebarButton icon={ResourcesIcon} link="/resources" />
-        <SidebarButton icon={GrowthIcon} link="/performance" />
+        <SidebarButton icon={DashboardIcon} link="/performance" tooltip="Past Performance" />
+        <SidebarButton icon={LeaderboardIcon} link="/leaderboard" tooltip="Leaderboard" />
+        <SidebarButton icon={ForumIcon} link="/forum" tooltip="Forum" />
+        <SidebarButton icon={SmartLearningIcon} link="/learn" tooltip="Smart Learning" />
+        <SidebarButton icon={GuideLearningIcon} link="/guided" tooltip="Guided Learning" />
       </div>
-
-      <div className="sidebar-divider second"></div>   {/* second divider */}
-
-      <div className="sidebar-buttons_2">
-        <SidebarButton icon={SmartLearningIcon} link="/learn" />
-        <SidebarButton icon={GuideLearningIcon} link="/guided" />
-      </div>
-
-      <div className="sidebar-divider third"></div>    {/* third divider */}
-
+      
+      
       <div className="sidebar-buttons_3">
         {/* Use onClick instead of link for sign out */}
-        <SidebarButton icon={SettingIcon} onClick={handleSignOut} />
+        <SidebarButton icon={SettingIcon} onClick={handleSignOut} tooltip="Sign Out" />
       </div>
     </div>
   );

@@ -153,10 +153,10 @@ export function Flashcards({ subject, onClose }) {
         </div>
 
         <div className="flashcard-response">
-          <button className="response-btn again" onClick={() => handleResponse('again')} disabled={!isFlipped}>Again (1)</button>
-          <button className="response-btn hard" onClick={() => handleResponse('hard')} disabled={!isFlipped}>Hard (2)</button>
-          <button className="response-btn good" onClick={() => handleResponse('good')} disabled={!isFlipped}>Good (3)</button>
-          <button className="response-btn easy" onClick={() => handleResponse('easy')} disabled={!isFlipped}>Easy (4)</button>
+          <button className="response-btn again" onClick={() => handleResponse('again')} disabled={!isFlipped}>Again</button>
+          <button className="response-btn hard" onClick={() => handleResponse('hard')} disabled={!isFlipped}>Hard</button>
+          <button className="response-btn good" onClick={() => handleResponse('good')} disabled={!isFlipped}>Good</button>
+          <button className="response-btn easy" onClick={() => handleResponse('easy')} disabled={!isFlipped}>Easy</button>
         </div>
 
         <div className="flashcard-navigation">

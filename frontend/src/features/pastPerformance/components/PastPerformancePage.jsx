@@ -946,6 +946,7 @@ export default function PastPerformancePage({
                             padding: "0.1px",
                             fontSize: "20px",
                           }}
+                          title="Edit subject"
                         >
                           ✏️
                         </button>
@@ -960,6 +961,7 @@ export default function PastPerformancePage({
                             padding: "0.1px",
                             fontSize: "20px",
                           }}
+                          title="Remove subject"
                         >
                           🗑️
                         </button>

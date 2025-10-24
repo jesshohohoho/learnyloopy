@@ -20,8 +20,17 @@ def ask_question(q: Question, user_id: str = Depends(require_user_id)):
         supabase = get_supabase()
         result = document_service.ask_question(supabase, user_id, q.subject, q.text)
         return result
+    except HTTPException:
+        # Re-raise HTTP exceptions with proper error messages
+        raise
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        # Catch any unexpected errors
+        raise HTTPException(
+            status_code=500,
+            detail="An unexpected error occurred. Please try again later."
+        )
 
 # --- Upload/retrieve documents ---
 @router.post("/documents/upload")
@@ -38,6 +47,13 @@ async def upload_material(subject: str = Form(...), file: UploadFile = File(...)
         else:
             raise HTTPException(status_code=400, detail="Unsupported file type")
         
+        # Check if document is too large
+        if len(text) > 5000:  # ~50k characters limit
+            raise HTTPException(
+                status_code=400,
+                detail="Document is too large. Please upload a smaller document or split it into parts."
+            )
+
         # Add document to database
         supabase = get_supabase()
         doc = document_service.add_document_to_db(supabase, user_id, text, subject)
@@ -66,6 +82,10 @@ async def upload_material(subject: str = Form(...), file: UploadFile = File(...)
                     "flashcard_details": flashcard_result
                 }
                 
+        except HTTPException:
+            # If flashcard generation hits rate limit, still return success for upload
+            raise
+
         except Exception as flashcard_error:
             # Document uploaded but flashcard generation encountered an exception
             print(f"Flashcard generation error: {str(flashcard_error)}")
@@ -76,7 +96,9 @@ async def upload_material(subject: str = Form(...), file: UploadFile = File(...)
                 "flashcard_status": "failed",
                 "flashcard_error": str(flashcard_error)
             }
-            
+    
+    except HTTPException:
+            raise
     except Exception as e:
         # Document upload failed
         raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
@@ -192,13 +214,22 @@ def view_flashcards(subject_name: str, user_id: str = Depends(require_user_id)):
 @router.post("/test/generate/{subject_name}")
 async def generate_mock_test(subject_name: str, user_id: str = Depends(require_user_id)):
     """Generate mock test questions for a subject"""
-    supabase = get_supabase()
-    result = mock_test_service.generate_mock_test(supabase, user_id, subject_name)
+    try:
+        supabase = get_supabase()
+        result = mock_test_service.generate_mock_test(supabase, user_id, subject_name)
+        
+        if "error" in result:
+            raise HTTPException(status_code=404, detail=result["error"])
+        
+        return result
     
-    if "error" in result:
-        raise HTTPException(status_code=404, detail=result["error"])
-    
-    return result
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail="Failed to generate mock test. Please try again later."
+        )
 
 @router.post("/test/result/{subject_name}")
 async def store_mock_test_result(

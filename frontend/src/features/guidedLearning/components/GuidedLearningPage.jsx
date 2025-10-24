@@ -15,6 +15,7 @@ export default function GuidedLearningPage() {
     showRateTutor,
     showBecomeTutor,
     searchQuery,
+    selectedSubject,
     subjects,
     tutors,
     testimonials,
@@ -26,6 +27,7 @@ export default function GuidedLearningPage() {
     handleRateTutorClick,
     handleBecomeTutorClick,
     handleSearchChange,
+    handleSubjectClick,
     getStarRating
   } = useGuidedLearning();
 
@@ -108,14 +110,20 @@ export default function GuidedLearningPage() {
           {subjects.length > 0 ? subjects.map((tag) => (
             <span
               key={tag}
+              onClick={() => handleSubjectClick(tag)}
               style={{
                 flex: "0 0 auto",
-                background: "rgba(199, 199, 199, 0.3)",
+                background: selectedSubject === tag 
+                  ? "linear-gradient(90deg, #7048FF 0%, #E69696 100%)" // Clicked state
+                  : "rgba(199, 199, 199, 0.3)", // Unclicked state
                 borderRadius: "16px",
                 padding: "8px 18px",
                 fontSize: "20px",
-                color: "#000000",
+                color: selectedSubject === tag ? "#FFFFFF" : "#000000", // White text when clicked
                 boxShadow: "0 4px 4px rgba(0, 0, 0, 0.25)",
+                cursor: "pointer", // clickable
+                transition: "all 0.3s ease", 
+                fontWeight: selectedSubject === tag ? "600" : "normal", // Bold when clicked
               }}
             >
               {tag}
@@ -145,14 +153,16 @@ export default function GuidedLearningPage() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              {searchQuery 
-                ? `Search Results for "${searchQuery}"` 
-                : '"Your Perfect Tutor Match—Anytime, Anywhere"'
+              {selectedSubject 
+                ? `${selectedSubject} Tutors` 
+                : searchQuery 
+                  ? `Search Results for "${searchQuery}"` 
+                  : '"Your Perfect Tutor Match—Anytime, Anywhere"'
               }
             </span>
           </div>
 
-          {/* ✅ Horizontal scrollable tutor cards - With fallback */}
+          {/* Horizontal scrollable tutor cards With fallback */}
           <div
             style={{
               display: "flex",

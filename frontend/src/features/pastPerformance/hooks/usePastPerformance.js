@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { getCurrentUserId } from "../../../utils/auth";
 import { pastPerformanceService } from "../services/pastPerformanceAPI";
 
-const API_BASE = "http://localhost:8000/past-performance";
 
 export const usePastPerformance = () => {
   const currentUserId = getCurrentUserId();
@@ -151,6 +150,17 @@ export const usePastPerformance = () => {
 
     if(trimmedName.length>20){
       alert("Subject name must be 20 characters or less");
+      return;
+    }
+
+    // check for duplicated subjects
+    const isDuplicate = subjects.some(
+      subject => subject.name.toLowerCase() === trimmedName.toLowerCase()
+    );
+
+    if (isDuplicate) {
+      alert(`Subject "${trimmedName}" already exists. Please use a different name.`);
+      setNewSubjectName(''); // Clear the input
       return;
     }
 

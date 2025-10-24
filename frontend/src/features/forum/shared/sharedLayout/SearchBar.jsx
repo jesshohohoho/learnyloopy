@@ -55,6 +55,7 @@ export const SearchBar = ({
       {/* Add Button */}
       <button
         onClick={onAddClick}
+        title="Add Question"
         style={{
           background: "transparent",
           border: "none",

@@ -12,11 +12,19 @@ export const askQuestion = async (subject, text) => {
       body: JSON.stringify({ subject, text }),
     });
     
+    const data = await response.json();
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      if (response.status === 401) {
+        throw new Error("Session expired. Please sign out and log in again.");
+      } else if (response.status === 503) {
+        throw new Error(data.detail || "Sorry! Our AI service is currently busy. Please try again in a few moments.");
+      } else if (response.status === 400) {
+        throw new Error(data.detail || "Your question is too long. Please try with a shorter question.");
+      } else {
+        throw new Error(data.detail || "Failed to get an answer. Please try again later.");
+      }
     }
     
-    const data = await response.json();
     return data;
   } catch (error) {
     console.error("Error in askQuestion service:", error);

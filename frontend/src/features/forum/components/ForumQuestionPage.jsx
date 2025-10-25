@@ -32,13 +32,16 @@ export default function ForumQuestionPage() {
     return (
       <div style={{
         position: "relative",
-        width: "1440px", // Match page dimensions
-        height: "1025px", // Match page dimensions
+        marginLeft: "129px",            
+        width: "calc(100% - 129px)",
+        minHeight: "100vh", 
         background: "#F3F3F3",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        margin: "0 auto"
+        overflowX: "hidden", 
+        padding: "20px", 
+        boxSizing: "border-box" 
       }}>
         <LoadingSpinner message="Fetching comments for you..." />
       </div>

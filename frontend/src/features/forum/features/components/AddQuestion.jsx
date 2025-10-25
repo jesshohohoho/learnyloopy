@@ -15,16 +15,39 @@ export default function AddQuestion({ isOpen, onClose, onQuestionAdded }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/20">
+    // click outside to close
+    <div 
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        background: "rgba(0, 0, 0, 0.5)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: 9999,
+        padding: "20px",
+        boxSizing: "border-box",
+        overflowY: "auto" // Allow scrolling
+      }}
+      onClick={handleClose}
+    >
       <div
         className="relative rounded-lg"
+         onClick={(e) => e.stopPropagation()} // Prevent close when clicking inside
         style={{
-          width: "574px",
+          width: "100%",
+          maxWidth: "574px",
           minHeight: "580px",
           background: "#F3F3F3",
           borderRadius: "18px",
           padding: "0",
           boxSizing: "border-box",
+          maxHeight: "90vh", 
+          overflowY: "auto",
+          margin: "auto" 
         }}
       >
         {/* Close button */}
@@ -33,8 +56,8 @@ export default function AddQuestion({ isOpen, onClose, onQuestionAdded }) {
           disabled={isSubmitting}
           style={{
             position: "absolute",
-            top: "0px",
-            right: "-10px",
+            top: "12px",
+            right: "12px",
             fontSize: "28px",
             background: "none",
             border: "none",
@@ -69,13 +92,15 @@ export default function AddQuestion({ isOpen, onClose, onQuestionAdded }) {
           {/* Main content section */}
           <div
             style={{
-              width: "518px",
+              width: "calc(100% - 48px)", // Responsive
+              maxWidth: "518px", 
               minHeight: "400px",
-              margin: "24px 24px 0 24px",
+              margin: "24px auto 0",
               background: "#F1EDED",
               borderRadius: "15px",
               boxShadow: "2px 2px 6px #DDD3D3",
-              padding: "0 0 20px 12px",
+              padding: "20px 12px",
+              boxSizing: "border-box"
             }}
           >
             <span className="text-[#808080] text-[15px] font-bold mb-3 block text-left">QUESTION</span>
@@ -117,7 +142,8 @@ export default function AddQuestion({ isOpen, onClose, onQuestionAdded }) {
                 required
                 disabled={isSubmitting}
                 style={{
-                  width: "307px", 
+                  width: "100%", 
+                  maxWidth: "307px", // flexible width with bound
                   height: "33px", 
                   background: isSubmitting ? "#E5E5E5" : "#D9D9D9", 
                   borderRadius: "10px", 
@@ -128,7 +154,8 @@ export default function AddQuestion({ isOpen, onClose, onQuestionAdded }) {
                   fontSize: "18px", 
                   color: "#222",
                   opacity: isSubmitting ? 0.7 : 1,
-                  cursor: isSubmitting ? "not-allowed" : "text"
+                  cursor: isSubmitting ? "not-allowed" : "text",
+                  boxSizing: "border-box"
                 }}
                 placeholder="e.g., Mathematics, Science, History..."
               />
@@ -155,7 +182,8 @@ export default function AddQuestion({ isOpen, onClose, onQuestionAdded }) {
                 disabled={isSubmitting}
                 rows={6}
                 style={{
-                  width: "307px",
+                  width: "100%", 
+                  maxWidth: "307px", 
                   minHeight: "120px",
                   background: isSubmitting ? "#E5E5E5" : "#D9D9D9", 
                   borderRadius: "10px", 
@@ -167,7 +195,8 @@ export default function AddQuestion({ isOpen, onClose, onQuestionAdded }) {
                   color: "#222",
                   resize: "none",
                   opacity: isSubmitting ? 0.7 : 1,
-                  cursor: isSubmitting ? "not-allowed" : "text"
+                  cursor: isSubmitting ? "not-allowed" : "text",
+                  boxSizing: "border-box"
                 }}
                 placeholder="Describe your question in detail..."
               />

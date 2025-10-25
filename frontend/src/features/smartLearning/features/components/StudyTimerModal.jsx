@@ -1,8 +1,15 @@
-import React from 'react';
-import { Clock, Play, X } from 'lucide-react';
+import React, {useState, useEffect} from 'react';
+import { Clock, Play, X, Minimize2, Maximize2 } from 'lucide-react';
 import { useStudyTimer } from '../hooks/useStudyTimer';
 
 const StudyTimerModal = ({ isOpen, onClose, subjects, onUpdateStudyHours }) => {
+  const [isMinimized, setIsMinimized] = useState(false);
+
+  // State for draggable position
+  const [position, setPosition] = useState({ x: window.innerWidth - 240, y: window.innerHeight - 180 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+
   const {
     currentPhase,
     selectedSubject,
@@ -15,6 +22,40 @@ const StudyTimerModal = ({ isOpen, onClose, subjects, onUpdateStudyHours }) => {
     startTimer,
     resetModal
   } = useStudyTimer({ subjects, onUpdateStudyHours });
+
+  // handle dragging 
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setDragOffset({
+      x: e.clientX - position.x,
+      y: e.clientY - position.y
+    });
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (isDragging) {
+        setPosition({
+          x: e.clientX - dragOffset.x,
+          y: e.clientY - dragOffset.y
+        });
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging, dragOffset]);
 
   const handleClose = () => {
     if (isRunning) {
@@ -38,6 +79,64 @@ const StudyTimerModal = ({ isOpen, onClose, subjects, onUpdateStudyHours }) => {
   const infoText = { ...baseText, color: '#666', marginBottom: 20, textAlign: 'center' };
   const titleText = { ...baseText, fontSize: 24, fontWeight: 600, marginBottom: 20, textAlign: 'center' };
 
+  // Minimized floating widget for running timer
+  if (isMinimized && (currentPhase === 'FOCUS' || currentPhase === 'BREAK')) {
+    return (
+      <div 
+        onMouseDown={handleMouseDown}
+        style={{
+          position: 'fixed',
+          left: position.x,
+          top: position.y,
+          background: currentPhase === 'FOCUS' ? '#7048FF' : '#FF4D86',
+          color: 'white',
+          borderRadius: 12,
+          padding: '16px 20px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+          zIndex: 9999,
+          cursor: isDragging ? 'grabbing' : 'grab', // ✅ Show drag cursor
+          minWidth: 200,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 8,
+          userSelect: 'none' // ✅ Prevent text selection while dragging
+        }}
+      >
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <span style={{ fontSize: 14, fontWeight: 600 }}>
+            {currentPhase === 'FOCUS' ? '🎯 Focus Time' : '☕ Break Time'}
+          </span>
+          <button
+            onClick={(e) => {
+              e.stopPropagation(); // ✅ Prevent drag when clicking button
+              setIsMinimized(false);
+            }}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: 'white',
+              cursor: 'pointer',
+              padding: 0
+            }}
+          >
+            <Maximize2 size={16} />
+          </button>
+        </div>
+        <div style={{
+          fontFamily: 'monospace',
+          fontSize: 28,
+          fontWeight: 'bold',
+          textAlign: 'center'
+        }}>
+          {formatTime(timeLeft)}
+        </div>
+        <div style={{ fontSize: 12, textAlign: 'center', opacity: 0.9 }}>
+          {subjects.find(s => s.id === selectedSubject)?.name}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={{
       position: 'fixed',
@@ -45,37 +144,82 @@ const StudyTimerModal = ({ isOpen, onClose, subjects, onUpdateStudyHours }) => {
       left: 0,
       width: '100%',
       height: '100%',
-      background: 'rgba(0,0,0,0.5)',
+      // transparent except for select & success phase to not block other features
+        background: (currentPhase === 'SELECT' || currentPhase === 'SUCCESS') 
+          ? 'rgba(0,0,0,0.5)' 
+          : 'transparent',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      zIndex: 1000
-    }}>
+      zIndex: 1000,
+      pointerEvents: (currentPhase === 'SELECT' || currentPhase === 'SUCCESS') ? 'auto' : 'none'
+    }}
+      onClick={(e) => {
+        // Only close on backdrop click for SELECT phase
+        if (currentPhase === 'SELECT' && e.target === e.currentTarget) {
+          handleClose();
+        }
+      }}
+    >
       <div style={{
         background: 'white',
         borderRadius: 12,
         padding: 30,
         width: 400,
         maxWidth: '90vw',
-        position: 'relative',
+        // stick to top right as floating window when timer is running
+        position: (currentPhase === 'FOCUS' || currentPhase === 'BREAK') ? 'fixed' : 'relative',
+        top: (currentPhase === 'FOCUS' || currentPhase === 'BREAK') ? 20 : 'auto',
+        right: (currentPhase === 'FOCUS' || currentPhase === 'BREAK') ? 20 : 'auto',
         boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
-        textAlign: 'center'
+        textAlign: 'center',
+        pointerEvents: 'auto',
+        zIndex: 1001
       }}>
-        {/* Close Button */}
-        <button
-          onClick={handleClose}
-          style={{
-            position: 'absolute',
-            top: 15,
-            right: 15,
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            color: '#666'
-          }}
-        >
-          <X size={20} />
-        </button>
+        {/* Close/Minimize Button */}
+        <div style={{
+          position: 'absolute',
+          top: 15,
+          right: 15,
+          display: 'flex',
+          gap: 8,
+          alignItems: 'center'
+        }}>
+          {/* Minimize button (shown when timer is running) */}
+            {(currentPhase === 'FOCUS' || currentPhase === 'BREAK') && (
+              <button
+                onClick={() => setIsMinimized(true)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: '#666',
+                  padding: 4,
+                  display: 'flex',
+                  alignItems: 'center'
+                }}
+                title="Minimize"
+              >
+                <Minimize2 size={20} />
+              </button>
+            )}
+
+          {/* Close Button */}
+          <button
+            onClick={handleClose}
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              color: '#666',
+              padding: 4,
+              display: 'flex',
+              alignItems: 'center'
+            }}
+          >
+            <X size={20} />
+          </button>
+        </div>
 
         {/* SELECT SUBJECT */}
         {currentPhase === 'SELECT' && (

@@ -52,16 +52,21 @@ export default function GuidedLearningPage() {
     <div
       className="guided-learning-container"
       style={{
-        width: "1440px",
+        marginLeft: "129px",              
+        width: "calc(100% - 129px)",      // To include sidebar
         minHeight: "100vh",
         background: "#F3F3F3",
-        padding: "0px",
-        boxSizing: "border-box",
         overflowX: "hidden",
-        overflowY: "hidden",
-        margin: "0 auto",
+        padding: "20px",
+        boxSizing: "border-box"
       }}
     >
+      <style>{`
+        .testimonial-scroll::-webkit-scrollbar {
+          display: none; /* Chrome, Safari, Opera */
+        }
+      `}</style>
+
       {/* Main Content */}
       <main
         style={{
@@ -78,7 +83,8 @@ export default function GuidedLearningPage() {
             value={searchQuery}
             onChange={(e) => handleSearchChange(e.target.value)}
             style={{
-              width: "871px",
+              width: "100%",
+              maxWidth: "871px",
               height: "42px",
               flexShrink: 0,
               padding: "0 20px",
@@ -281,6 +287,7 @@ export default function GuidedLearningPage() {
               paddingBottom: "16px",
               paddingRight: "50px",
               scrollbarWidth: "none",
+              alignItems: "stretch"
             }}
             className="hide-scrollbar"
           >
@@ -289,7 +296,8 @@ export default function GuidedLearningPage() {
               onClick={handleRateTutorClick}
               style={{
                 width: "84px",
-                height: "210px",
+                minHeight: "210px",
+                maxHeight: "210px",
                 flexShrink: 0,
                 background: "#F1EDED",
                 border: "1px solid #DDD3D3",
@@ -299,14 +307,15 @@ export default function GuidedLearningPage() {
                 justifyContent: "center",
                 cursor: "pointer",
                 transition: "all 0.2s ease",
+                boxSizing: "border-box"
               }}
               onMouseEnter={(e) => {
-                e.target.style.background = "#E5E1E1";
-                e.target.style.transform = "scale(1.02)";
+                e.currentTarget.style.background = "#E5E1E1";
+                e.currentTarget.style.transform = "scale(1.02)";
               }}
               onMouseLeave={(e) => {
-                e.target.style.background = "#F1EDED";
-                e.target.style.transform = "scale(1)";
+                e.currentTarget.style.background = "#F1EDED";
+                e.currentTarget.style.transform = "scale(1)";
               }}
             >
               <img
@@ -331,21 +340,43 @@ export default function GuidedLearningPage() {
                   borderRadius: "12px",
                   padding: "35px",
                   width: "270px",
+                  minHeight: "210px",
+                  maxHeight: "210px",
                   textAlign: "center",
                   flex: "0 0 auto",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between", // Distribute content evenly
+                  overflow: "hidden", // Prevent content overflow
+                  boxSizing: "border-box"
                 }}
               >
-                <div style={{ fontSize: "22px", color: "#A5B4FC", marginBottom: "15px" }}>
+                <div style={{ fontSize: "22px", color: "#A5B4FC", marginBottom: "15px" , flexShrink: 0, height: "38px"}}>
                   <img
                     src={idea}
                     alt="Light Bulb"
                     style={{ width: "30px", height: "30px", marginBottom: "8px" }}
                   />
                 </div>
-                <div style={{ fontSize: "16px", color: "#000000", fontStyle: 'italic', fontWeight: 600, marginBottom: "15px" }}>
+                {/* Review text - Scrollable */} 
+                <div style={{ 
+                  fontSize: "16px", 
+                  color: "#000000", 
+                  fontStyle: 'italic', 
+                  fontWeight: 600, 
+                  marginBottom: "15px",
+                  flex: 1, 
+                  overflowY: "auto",
+                  overflowX: "hidden",
+                  paddingRight: "8px",
+                  lineHeight: "1.4",
+                  scrollbarWidth: "none",
+                  msOverflowStyle: "none"
+                }}>
                   "{testimonial.text}"
                 </div>
-                <div style={{ fontSize: "15px", color: "#7048FF", fontStyle: 'italic' }}>
+                {/* Author */}
+                <div style={{ fontSize: "15px", color: "#7048FF", fontStyle: 'italic', flexShrink: 0, height: "21px" }}>
                   {testimonial.author}
                 </div>
               </div>

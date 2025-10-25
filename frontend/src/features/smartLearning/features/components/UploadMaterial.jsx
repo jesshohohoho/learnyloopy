@@ -80,23 +80,43 @@ const UploadMaterial = ({ onClose, onUploadSuccess }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/20">
+    <div 
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        background: "rgba(0, 0, 0, 0.5)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: 9999,
+        padding: "40px",
+        boxSizing: "border-box",
+        overflow: "auto"
+      }}
+      onClick={onClose}
+    >
       {/* show loading gif, only show upload modal when not loading */}
       {loading ? (
         <LoadingSpinner message="Uploading your material..." />
       ) : (
 
         <div
+          onClick={(e) => e.stopPropagation()}
           className="relative rounded-lg"
           style={{
-            width: "574px",
-            height: "580px",
+            width: "100%",
+            maxWidth: "800px",
             background: "#F3F3F3",
             borderRadius: "18px",
             padding: "0",
             boxSizing: "border-box",
             display: "flex",
-            flexDirection: "column"
+            flexDirection: "column",
+            maxHeight: "none",
+            overflowY: "visible"
           }}
         >
           {/* Close button */}
@@ -104,8 +124,8 @@ const UploadMaterial = ({ onClose, onUploadSuccess }) => {
             onClick={onClose}
             style={{
               position: "absolute",
-              top: "0px",
-              right: "-10px",
+              top: "12px",
+              right: "12px",
               fontSize: "28px",
               background: "none",
               border: "none",
@@ -266,13 +286,16 @@ const UploadMaterial = ({ onClose, onUploadSuccess }) => {
                 {/* Main content section */}
                 <div
                   style={{
-                    width: "518px",
-                    minHeight: "355px",
-                    margin: "24px 24px 0 24px",
+                    width: "calc(100% - 48px)",
+                    maxWidth: "744px",
+                    minHeight: "auto",
+                    margin: "24px auto 0",
+                    padding: "20px 12px",
+                    boxSizing: "border-box",
                     background: "#F1EDED",
                     borderRadius: "15px",
                     boxShadow: "2px 2px 6px #DDD3D3",
-                    padding: "0 0 20px 12px",
+                 
                   }}
                 >
                   <span className="text-[#808080] text-[15px] font-bold mb-3 block text-left">
@@ -298,8 +321,10 @@ const UploadMaterial = ({ onClose, onUploadSuccess }) => {
                     <input
                       type="text"
                       style={{
-                        width: "324px",
+                        width: "100%",
+                        maxWidth: "550px",
                         height: "33px",
+                        boxSizing: "border-box",
                         background: "#D9D9D9",
                         borderRadius: "10px",
                         padding: "0 12px",
@@ -326,8 +351,9 @@ const UploadMaterial = ({ onClose, onUploadSuccess }) => {
                           style={{
                             position: "absolute",
                             top: "39px",
-                            left: "0",
-                            width: "100%",
+                            left: "152px",
+                            width: "calc(100% - 152px)",
+                            maxWidth: "550px",
                             maxHeight: "150px",
                             overflowY: "auto",
                             background: "#fff",
@@ -367,8 +393,10 @@ const UploadMaterial = ({ onClose, onUploadSuccess }) => {
                   <div
                     style={{
                       width: "470px",
-                      height: "260px",
-                      margin: "0 12px 0 12px",
+                      height: "470px",
+                      margin: "0 auto",
+                      flexShrink: 0,
+                      boxSizing: "border-box",
                       background: "#F1EDED",
                       borderRadius: "15px",
                       border: "2px dashed #C7C7C7",
@@ -453,14 +481,13 @@ const UploadMaterial = ({ onClose, onUploadSuccess }) => {
                   </div>
                 </div>
 
-                {/* Submit Button - FIXED: Vertically centered in bottom area */}
+                {/* Submit Button*/}
                 <div
                   style={{
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    height: "80px", // FIXED: Fixed height instead of minHeight
-                    margin: "12px 0 24px 0" // FIXED: Push to bottom with equal spacing
+                    padding: "24px 0"
                   }}
                 >
                   <button

@@ -65,9 +65,8 @@ function SmartLearningPage() {
     <div style={{
       minHeight: '100vh',
       height: '100%',
-      width: '100%',
-      maxWidth: '1440px',
-      margin: '0 auto',
+      marginLeft: "129px",              
+      width: "calc(100% - 129px)",
       backgroundColor: '#F3F3F3',
       padding: '24px',
       boxSizing: 'border-box',

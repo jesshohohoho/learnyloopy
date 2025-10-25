@@ -1,19 +1,18 @@
 import React from "react";
-import like from "../../../assets/like.png"
+import like from "../../../assets/like.png";
 import LoadingSpinner from "../../../components/Loading";
-
 import { useParams, useNavigate } from "react-router-dom";
 import { useForumQuestion } from "../hooks/useForumQuestion";
 
 // Import reusable components
-import { ForumLayout } from "../shared/sharedLayout/ForumLayout";
 import { QuestionCard } from "../shared/sharedLayout/QuestionCard";
 import { Sidebar } from "../shared/sharedLayout/Sidebar";
+import AddQuestion from "../features/components/AddQuestion";
 
 export default function ForumQuestionPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  
+
   const {
     commentText,
     comments,
@@ -25,24 +24,26 @@ export default function ForumQuestionPage() {
     handleTopicClick,
     handleInvolvementClick,
     handleLike,
-    handleCommentLike
+    handleCommentLike,
   } = useForumQuestion(id);
 
   if (loading) {
     return (
-      <div style={{
-        position: "relative",
-        marginLeft: "129px",            
-        width: "calc(100% - 129px)",
-        minHeight: "100vh", 
-        background: "#F3F3F3",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        overflowX: "hidden", 
-        padding: "20px", 
-        boxSizing: "border-box" 
-      }}>
+      <div
+        style={{
+          position: "relative",
+          marginLeft: "129px",
+          width: "calc(100% - 129px)",
+          minHeight: "100vh",
+          background: "#F3F3F3",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          overflowX: "hidden",
+          padding: "20px",
+          boxSizing: "border-box",
+        }}
+      >
         <LoadingSpinner message="Fetching comments for you..." />
       </div>
     );
@@ -50,24 +51,47 @@ export default function ForumQuestionPage() {
 
   if (!post) {
     return (
-      <div style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        fontSize: "18px",
-        color: "#6B7280"
-      }}>
+      <div
+        style={{
+          marginLeft: "129px",
+          width: "calc(100% - 129px)",
+          minHeight: "100vh",
+          background: "#F3F3F3",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontSize: "18px",
+          color: "#6B7280",
+        }}
+      >
         Question not found
       </div>
     );
   }
 
   return (
-    <ForumLayout>
-      {/* Left Column */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        background: "#F3F3F3",
+        minHeight: "100vh",
+        marginLeft: "129px", // keeps space for fixed sidebar
+        width: "calc(100% - 129px)",
+        boxSizing: "border-box",
+        padding: "20px 45px 20px 20px",
+        gap: "32px", // space between main content & sidebar
+      }}
+    >
+      {/* ===== Left Column ===== */}
+      <div
+        style={{
+          flex: "1 1 auto",
+          display: "flex",
+          flexDirection: "column",
+          minWidth: 0,
+        }}
+      >
         {/* Question Card */}
         <QuestionCard
           post={post}
@@ -78,7 +102,7 @@ export default function ForumQuestionPage() {
         />
 
         {/* Comments Section */}
-        <div style={{ flex: 1 }}>
+        <div style={{ flex: 1, marginTop: "20px" }}>
           <div
             style={{
               fontSize: "16px",
@@ -87,14 +111,14 @@ export default function ForumQuestionPage() {
               marginBottom: "16px",
               textAlign: "left",
               paddingLeft: "6px",
-              width: "800px",
-              alignSelf: "flex-start"
+              width: "100%",
+              alignSelf: "flex-start",
             }}
           >
-            Comment:
+            Comments:
           </div>
 
-          {/* Existing Comments */}
+          {/* Comments Container */}
           <div
             style={{
               background: "#FFFFFF",
@@ -102,31 +126,38 @@ export default function ForumQuestionPage() {
               border: "1px solid #DDD3D3",
               padding: "24px",
               marginBottom: "16px",
-              width: "800px"
+              width: "100%",
+              boxSizing: "border-box",
             }}
           >
             {comments.length === 0 ? (
-              <div style={{
-                textAlign: "center",
-                color: "#6B7280",
-                padding: "20px",
-                fontSize: "14px"
-              }}>
+              <div
+                style={{
+                  textAlign: "center",
+                  color: "#6B7280",
+                  padding: "20px",
+                  fontSize: "14px",
+                }}
+              >
                 No comments yet. Be the first to comment!
               </div>
             ) : (
               comments.map((commentItem, index) => {
-                // Safe access to display name with fallback
-                const displayName = commentItem.display_name || commentItem.student_name || 'Anonymous';
-                const commentText = commentItem.comment || commentItem.content || '';
-                
+                const displayName =
+                  commentItem.display_name ||
+                  commentItem.student_name ||
+                  "Anonymous";
+                const commentText =
+                  commentItem.comment || commentItem.content || "";
+
                 return (
                   <div
                     key={commentItem.id}
                     style={{
                       display: "flex",
                       gap: "12px",
-                      marginBottom: index === comments.length - 1 ? "0" : "20px",
+                      marginBottom:
+                        index === comments.length - 1 ? "0" : "20px",
                       alignItems: "flex-start",
                     }}
                   >
@@ -149,15 +180,14 @@ export default function ForumQuestionPage() {
                       {displayName.charAt(0).toUpperCase()}
                     </div>
 
+                    {/* Comment Body */}
                     <div style={{ flex: 1, textAlign: "left" }}>
-                      {/* Username */}
                       <div
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          gap: "8px",
+                          justifyContent: "space-between",
                           marginBottom: "8px",
-                          justifyContent: "space-between"
                         }}
                       >
                         <span
@@ -170,7 +200,6 @@ export default function ForumQuestionPage() {
                           {displayName}
                         </span>
 
-                        {/* ✅ Add Comment Like Button */}
                         <button
                           onClick={() => handleCommentLike(commentItem.id)}
                           style={{
@@ -184,7 +213,7 @@ export default function ForumQuestionPage() {
                             borderRadius: "4px",
                             fontSize: "12px",
                             color: "#6B7280",
-                            transition: "background-color 0.2s ease"
+                            transition: "background-color 0.2s ease",
                           }}
                           onMouseEnter={(e) => {
                             e.target.style.backgroundColor = "#F3F4F6";
@@ -193,28 +222,24 @@ export default function ForumQuestionPage() {
                             e.target.style.backgroundColor = "transparent";
                           }}
                         >
-                          <img 
-                            src={like} 
-                            alt="like" 
+                          <img
+                            src={like}
+                            alt="like"
                             style={{
                               width: "16px",
                               height: "16px",
-                              objectFit: "contain"
+                              objectFit: "contain",
                             }}
                           />
                           <span>{commentItem.likes || 0}</span>
                         </button>
-
-
                       </div>
 
-                      {/* Comment text */}
                       <div
                         style={{
                           fontSize: "14px",
                           color: "#000000",
                           lineHeight: "1.5",
-                          textAlign: "left",
                         }}
                       >
                         {commentText}
@@ -225,15 +250,15 @@ export default function ForumQuestionPage() {
               })
             )}
           </div>
-          
-          {/* Add Comment Form */}
-          <div style={{ marginTop: "20px", width: "800px" }}>
+
+          {/* Add Comment */}
+          <div style={{ marginTop: "20px", width: "100%" }}>
             <textarea
               value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
               placeholder="Write your comment here..."
               style={{
-                width: "800px",
+                width: "100%",
                 minHeight: "80px",
                 padding: "24px",
                 border: "1px solid #DDD3D3",
@@ -244,10 +269,9 @@ export default function ForumQuestionPage() {
                 outline: "none",
                 marginBottom: "12px",
                 background: "#FFF",
-                textAlign: "left",
               }}
             />
-            
+
             <button
               onClick={handleSubmitComment}
               disabled={!commentText.trim()}
@@ -268,12 +292,24 @@ export default function ForumQuestionPage() {
         </div>
       </div>
 
-      {/* Sidebar */}
-      <Sidebar
-        trendingTopics={trendingTopics}
-        onTopicClick={handleTopicClick}
-        onInvolvementClick={handleInvolvementClick}
-      />
-    </ForumLayout>
+      {/* ===== Sidebar ===== */}
+      <div
+        style={{
+          flex: "0 0 300px",
+          maxWidth: "300px",
+          position: "sticky",
+          top: "20px",
+          alignSelf: "flex-start",
+          height: "fit-content",
+          marginRight: "20px",
+        }}
+      >
+        <Sidebar
+          trendingTopics={trendingTopics}
+          onTopicClick={handleTopicClick}
+          onInvolvementClick={handleInvolvementClick}
+        />
+      </div>
+    </div>
   );
 }

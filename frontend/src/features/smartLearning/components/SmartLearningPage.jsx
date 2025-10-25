@@ -65,8 +65,8 @@ function SmartLearningPage() {
     <div style={{
       minHeight: '100vh',
       height: '100%',
-      marginLeft: "129px",              
-      width: "calc(100% - 129px)",
+      marginLeft: "135px",              
+      width: "calc(99% - 129px)",
       backgroundColor: '#F3F3F3',
       padding: '24px',
       boxSizing: 'border-box',
@@ -243,7 +243,7 @@ function SmartLearningPage() {
             fontSize: '18px',
             textAlign: 'center' 
           }}>
-            Beat the Timer
+            Beat the timer
           </h3>
           
           <div style={{ display: "flex", justifyContent: "center", flex: 1 }}>
@@ -268,35 +268,33 @@ function SmartLearningPage() {
       </div>
 
       {/* Upload Material Modal */}
-      {isUploadModalOpen && (
-        <div
-          style={{
-            position: 'fixed',
-            inset: 0,
-            backgroundColor: 'rgba(0,0,0,0.5)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 50
-          }}
-          onClick={() => setIsUploadModalOpen(false)}
-        >
+        {isUploadModalOpen && (
           <div
             style={{
-              position: 'relative',
-              backgroundColor: 'transparent',
-              top: '-30%',
-              left: '-10%'
+              position: 'fixed',
+              inset: 0,
+              backgroundColor: 'rgba(0,0,0,0.5)', // darker overlay
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 9999, // make sure it's above sidebar
             }}
-            onClick={(e) => e.stopPropagation()}
+            onClick={() => setIsUploadModalOpen(false)}
           >
-            <UploadMaterial 
-              onClose={() => setIsUploadModalOpen(false)}
-              onUploadSuccess={handleUploadSuccess}
-            />
+            <div
+              style={{
+                position: 'relative',
+                backgroundColor: 'transparent',
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <UploadMaterial 
+                onClose={() => setIsUploadModalOpen(false)}
+                onUploadSuccess={handleUploadSuccess}
+              />
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
       {/* Flashcards Modal */}
       {isFlashcardsOpen && (

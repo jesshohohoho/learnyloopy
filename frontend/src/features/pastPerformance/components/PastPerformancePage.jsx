@@ -73,9 +73,13 @@ export default function PastPerformancePage({
     <div
       style={{
         position: "relative",
-        width: "1440px",
-        height: "1028px",
+        marginLeft: "129px",             
+        width: "calc(100% - 129px)", 
+        minHeight: "100vh",
         background: "#F3F3F3",
+        overflowX: "hidden",
+        padding: "20px", 
+        boxSizing: "border-box" 
       }}
     >
       {/* Small Frame */}
@@ -84,7 +88,8 @@ export default function PastPerformancePage({
           position: "absolute",
           top: "43px",
           left: "44px",
-          width: "1210px",
+          width: "calc(100% - 88px)",
+          maxWidth: "1210px", 
           height: "158px",
           background: "#F1EDED",
           borderRadius: "15px",

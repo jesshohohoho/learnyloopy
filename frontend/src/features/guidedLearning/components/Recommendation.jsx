@@ -11,13 +11,16 @@ export default function Recommendation() {
         return (
             <div style={{
                 position: "relative",
-                width: "1440px", // FIXED: Match page dimensions
-                minHeight: "100vh", // FIXED: Match page dimensions
+                marginLeft: "129px",             
+                width: "calc(100% - 129px)",
+                minHeight: "100vh", 
                 background: "#F3F3F3",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                margin: "0 auto" // FIXED: Center the page like actual content
+                margin: "0 auto",
+                padding: "20px", 
+                boxSizing: "border-box" 
             }}>
                 <LoadingSpinner message="Finding suitable tutors for you" />
             </div>
@@ -56,14 +59,14 @@ export default function Recommendation() {
         <div 
             className="recommendation-container" 
             style={{ 
-                width: "1440px",
+                marginLeft: "129px",             
+                width: "calc(100% - 129px)",      
                 minHeight: "100vh",
                 background: "#F3F3F3",
-                padding: "0px",
+                padding: "20px",
                 boxSizing: "border-box",
                 overflowX: "hidden",
-                overflowY: "auto", // CHANGED: Allow vertical scroll for main container
-                margin: "0 auto"
+                overflowY: "auto",
             }}
         >
             {/* Main Content */}

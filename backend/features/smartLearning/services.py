@@ -205,7 +205,7 @@ def query_groq(user_text: str, context: str = "") -> str:
                 {"role": "system", "content": "You are a helpful assistant using RAG."},
                 {"role": "user", "content": f"Context: {context}\n\nQuestion: {user_text}"}
             ],
-            temperature=0.3,
+            temperature=0.9,
             max_completion_tokens=1300,
             top_p=0.95,
             stream=False,

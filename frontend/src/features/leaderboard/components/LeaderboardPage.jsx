@@ -129,12 +129,13 @@ const LeaderboardPage = () => {
   return (
     <div
       style={{
-        maxWidth: "1440px",
-        height: "1025px",
-        margin: "0 auto",
+        marginLeft: "129px",              
+        width: "calc(100% - 129px)",
         padding: "20px",
         fontFamily: "sans-serif",
         background: "#F3F3F3",
+        boxSizing: "border-box",
+        overflowX: "hidden" 
       }}
     >
       <div style={{ 

@@ -22,33 +22,55 @@ export default function ForumPage() {
     handleQuestionAdded,
     handleQuestionClick,
     handleInvolvementClick,
-    handleLike
+    handleLike,
   } = useForum();
 
   if (loading) {
-  return (
-    <div style={{
-      position: "relative",
-      marginLeft: "129px",             
-      width: "calc(100% - 129px)",
-      minHeight: "100vh",
-      background: "#F3F3F3",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      overflowX: "hidden",
-      padding: "20px", 
-      boxSizing: "border-box" 
-    }}>
-      <LoadingSpinner message="Fetching posts for you..." />
-    </div>
-  );
-}
+    return (
+      <div
+        style={{
+          position: "relative",
+          marginLeft: "129px",
+          width: "calc(100% - 129px)",
+          minHeight: "100vh",
+          background: "#F3F3F3",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          overflowX: "hidden",
+          padding: "20px",
+          boxSizing: "border-box",
+        }}
+      >
+        <LoadingSpinner message="Fetching posts for you..." />
+      </div>
+    );
+  }
 
   return (
-    <ForumLayout>
-      {/* Left Column */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        background: "#F3F3F3",
+        minHeight: "100vh",
+        marginLeft: "129px", // keeps space for fixed sidebar
+        width: "calc(100% - 129px)",
+        boxSizing: "border-box",
+        padding: "20px 45px 20px 20px", // right padding for breathing space
+        gap: "32px", // space between main content & sidebar
+      }}
+    >
+      {/* ===== Left Column (Main Content) ===== */}
+      <div
+        style={{
+          flex: "1 1 auto", // ⬅️ fully flexible, grows with screen
+          display: "flex",
+          flexDirection: "column",
+          minWidth: 0, // prevents overflow issues in flexbox
+        }}
+      >
+        {/* Search bar */}
         <SearchBar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
@@ -56,52 +78,77 @@ export default function ForumPage() {
           placeholder="Search questions, topics, or authors..."
         />
 
-        {/* Posts Wrapper (scrollable) */}
+        {/* Posts list */}
         <div
           style={{
             flex: 1,
             overflowY: "auto",
-            paddingRight: "8px",
+            marginTop: "20px",
+            width: "100%", // ⬅️ ensures same width as SearchBar
             maxHeight: "950px",
+            boxSizing: "border-box",
           }}
         >
           {filteredPosts.length === 0 ? (
-            <div style={{
-              textAlign: "center",
-              padding: "48px",
-              color: "#6B7280",
-              fontSize: "18px"
-            }}>
-              {searchTerm ? "No posts found matching your search." : "No posts yet. Be the first to ask a question!"}
+            <div
+              style={{
+                textAlign: "center",
+                padding: "48px",
+                color: "#6B7280",
+                fontSize: "18px",
+              }}
+            >
+              {searchTerm
+                ? "No posts found matching your search."
+                : "No posts yet. Be the first to ask a question!"}
             </div>
           ) : (
             filteredPosts.map((post) => (
-              <QuestionCard
+              <div
                 key={post.id}
-                post={post}
-                onClick={() => handleQuestionClick(post.id)}
-                onLike={handleLike}
-                showPreview={true}
-                showViews={false}
-              />
+                style={{
+                  width: "100%", // ⬅️ post card expands same width as search bar
+                  marginBottom: "20px",
+                }}
+              >
+                <QuestionCard
+                  post={post}
+                  onClick={() => handleQuestionClick(post.id)}
+                  onLike={handleLike}
+                  showPreview={true}
+                  showViews={false}
+                />
+              </div>
             ))
           )}
         </div>
       </div>
 
-      {/* Sidebar */}
-      <Sidebar
-        trendingTopics={trendingTopics}
-        onTopicClick={handleQuestionClick}
-        onInvolvementClick={handleInvolvementClick}
-      />
+      {/* ===== Sidebar ===== */}
+      <div
+        style={{
+          flex: "0 0 300px",
+          maxWidth: "300px",
+          position: "sticky",
+          top: "20px",
+          alignSelf: "flex-start",
+          height: "fit-content",
+          marginRight: "20px", // adds space from right edge
+        }}
+      >
+        <Sidebar
+          trendingTopics={trendingTopics}
+          onTopicClick={handleQuestionClick}
+          onInvolvementClick={handleInvolvementClick}
+        />
+      </div>
 
-      {/* Add Question Popup */}
+      {/* ===== Add Question Modal ===== */}
       <AddQuestion
         isOpen={showAddForm}
         onClose={() => setShowAddForm(false)}
         onQuestionAdded={handleQuestionAdded}
       />
-    </ForumLayout>
+    </div>
   );
 }

@@ -1,7 +1,7 @@
 .custom-chat-container {
   display: flex;
   flex-direction: column;
-  height: 657px; 
+  height: 555px; 
   background: #F1EDED;
   border-radius: 25px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);

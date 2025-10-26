@@ -3,6 +3,7 @@ import like from "../../../assets/like.png";
 import LoadingSpinner from "../../../components/Loading";
 import { useParams, useNavigate } from "react-router-dom";
 import { useForumQuestion } from "../hooks/useForumQuestion";
+import backIcon from "../../../assets/back.png";
 
 // Import reusable components
 import { QuestionCard } from "../shared/sharedLayout/QuestionCard";
@@ -92,6 +93,30 @@ export default function ForumQuestionPage() {
           minWidth: 0,
         }}
       >
+
+      {/* Back Button */}
+      <button
+        onClick={() => navigate(-1)}
+        style={{
+          display: "inline-flex", // shrink to content
+          alignItems: "left",
+          justifyContent: "left",
+          background: "transparent",
+          border: "none",
+          cursor: "pointer",
+          padding: 0,           // remove extra space
+          marginBottom: "16px",
+          width: "10px",        // shrink to image size
+          height: "auto",
+        }}
+      >
+        <img
+          src={backIcon}
+          alt="Back"
+          style={{ width: "50px", height: "50px", objectFit: "contain", display: "block" }}
+        />
+      </button>
+
         {/* Question Card */}
         <QuestionCard
           post={post}

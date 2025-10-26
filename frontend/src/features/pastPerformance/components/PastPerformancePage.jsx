@@ -71,11 +71,29 @@ export default function PastPerformancePage() {
     { icon: Png2, label: "Mock Test Accuracy (avg)", value: `${summaryData.avgMockTest || 0}%` },
   ];
 
+  const buttonStyle = {
+    padding: "6px 12px",
+    borderRadius: "4px",
+    border: "1px solid #7048FF",
+    cursor: "pointer",
+    background: "#fff",
+    color: "#7048FF",
+    fontWeight: 600,
+    transition: "all 0.2s",
+    minWidth: "60px",
+    outline: "none",
+  };
+
+  const hoverButtonStyle = {
+    background: "#7048FF",
+    color: "#fff",
+  };
+
   return (
     <div
       style={{
         marginLeft: "129px",
-        width: "calc(100% - 129px)",
+        width: "calc(99% - 129px)",
         minHeight: "100vh",
         background: "#F3F3F3",
         padding: "25px",
@@ -150,7 +168,7 @@ export default function PastPerformancePage() {
       <div
         style={{
           width: "100%",
-          maxHeight: "400px",
+          maxHeight: "330px",
           background: "linear-gradient(360deg, #ecf0fbff 0%, #F1EDED 95%)",
           borderRadius: "15px",
           border: "1px solid #DDD3D3",
@@ -158,6 +176,7 @@ export default function PastPerformancePage() {
           padding: "20px",
           boxSizing: "border-box",
           overflowX: "auto",
+          overflowY: "hidden"
         }}
       >
         {subjects.some(
@@ -191,7 +210,7 @@ export default function PastPerformancePage() {
                   mockTest: subject.mockTest || 0,
                   totalStudyHours: subject.totalStudyHours || 0,
                 }))}
-              margin={{ top: 10, right: 30, left: 10, bottom: 55 }}
+              margin={{ top: 10, right: 30, left: 10, bottom: 60 }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
               <XAxis
@@ -225,7 +244,12 @@ export default function PastPerformancePage() {
                     : `Subject: ${label}`
                 }
               />
-              <Legend wrapperStyle={{ fontSize: "16px", paddingTop: "1px" }} />
+              <Legend
+                layout="horizontal"
+                verticalAlign="bottom"
+                align="center"
+                wrapperStyle={{ fontSize: "14px", padding: "0px", margin: 0 }}
+              />
               <Bar dataKey="test1" fill="#9846e5ff" name="Test 1" radius={[2, 2, 0, 0]} />
               <Bar dataKey="test2" fill="#2563EB" name="Test 2" radius={[2, 2, 0, 0]} />
               <Bar dataKey="assignment" fill="#10B981" name="Assignment" radius={[2, 2, 0, 0]} />
@@ -323,20 +347,20 @@ export default function PastPerformancePage() {
               padding: "8px",
               border: "1px solid #DDD3D3",
               borderRadius: "4px",
-              marginBottom: "10px"
+              marginBottom: "10px",
             }}
           />
           <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px" }}>
             <button
               onClick={addSubject}
               style={{
-                background: "#22C55E",
+                background: "#7048FF",
                 color: "white",
                 border: "none",
                 padding: "8px 12px",
                 borderRadius: "4px",
                 cursor: "pointer",
-                fontSize: "12px"
+                fontSize: "12px",
               }}
             >
               Add
@@ -370,6 +394,8 @@ export default function PastPerformancePage() {
             borderCollapse: "collapse",
             fontFamily: "Open Sans, sans-serif",
             fontSize: "16px",
+            background: "#ffffff2d",
+            borderBottom: "1px solid #DDD3D3",
           }}
         >
           <thead>
@@ -377,30 +403,44 @@ export default function PastPerformancePage() {
               style={{
                 background: "linear-gradient(360deg, #ecf0fbff 0%, #f6ebffff 95%)",
                 borderBottom: "1px solid #DDD3D3",
-                borderTop: "1px solid #DDD3D3"
+                borderTop: "1px solid #DDD3D3",
               }}
             >
-              {["Subject", "Test 1 (0-20)", "Test 2 (0-20)", "Assignment (0-20)", "Mock Test (0-100%)", "Total Study Hours", "Actions"].map(
-                (header) => (
-                  <th
-                    key={header}
-                    style={{
-                      padding: "12px",
-                      textAlign: "center",
-                      fontWeight: 600,
-                      color: "#374151",
-                    }}
-                  >
-                    {header}
-                  </th>
-                )
-              )}
+              {[
+                "Subject",
+                "Test 1 (0-20)",
+                "Test 2 (0-20)",
+                "Assignment (0-20)",
+                "Mock Test (0-100%)",
+                "Total Study Hours",
+                "Actions",
+              ].map((header) => (
+                <th
+                  key={header}
+                  style={{
+                    padding: "12px",
+                    textAlign: "center",
+                    fontWeight: 600,
+                    color: "#374151",
+                  }}
+                >
+                  {header}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
             {subjects.length === 0 && (
               <tr>
-                <td colSpan={7} style={{ padding: "20px", textAlign: "center", color: "#6B7280", fontStyle: "italic" }}>
+                <td
+                  colSpan={7}
+                  style={{
+                    padding: "20px",
+                    textAlign: "center",
+                    color: "#6B7280",
+                    fontStyle: "italic",
+                  }}
+                >
                   No subjects added yet. Click "Add Subject" to get started.
                 </td>
               </tr>
@@ -409,11 +449,18 @@ export default function PastPerformancePage() {
               const isEditing = editingSubject?.id === subject.id;
               return (
                 <tr key={subject.id} style={{ borderBottom: "1px solid #F3F4F6" }}>
-                  <td style={{ padding: "12px", fontWeight: 600, color: "#7048FF", textAlign: "center" }}>
+                  <td
+                    style={{
+                      padding: "12px",
+                      fontWeight: 600,
+                      color: "#7048FF",
+                      textAlign: "center",
+                    }}
+                  >
                     {subject.name}
                   </td>
                   {isEditing ? (
-                    ["test1", "test2", "assignment"].map((field) => (
+                    ["test1", "test2", "assignment", "mockTest", "totalStudyHours"].map((field) => (
                       <td key={field} style={{ padding: "12px", textAlign: "center" }}>
                         <input
                           type="number"
@@ -441,25 +488,51 @@ export default function PastPerformancePage() {
                     </>
                   )}
                   <td style={{ padding: "12px", textAlign: "center" }}>
-                    {isEditing ? (
-                      <>
-                        <button onClick={saveEdit} style={{ marginRight: "8px", cursor: "pointer" }}>
-                          Save
-                        </button>
-                        <button onClick={cancelEdit} style={{ cursor: "pointer" }}>
-                          Cancel
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        <button onClick={() => startEditing(subject)} style={{ marginRight: "8px", cursor: "pointer" }}>
-                          Edit
-                        </button>
-                        <button onClick={() => deleteSubject(subject.id)} style={{ cursor: "pointer" }}>
-                          Delete
-                        </button>
-                      </>
-                    )}
+                    <div style={{ display: "flex", justifyContent: "center", gap: "8px" }}>
+                      {isEditing ? (
+                        <>
+                          <button
+                            onClick={saveEdit}
+                            style={buttonStyle}
+                            onMouseEnter={(e) => Object.assign(e.target.style, hoverButtonStyle)}
+                            onMouseLeave={(e) => Object.assign(e.target.style, buttonStyle)}
+                            onFocus={(e) => e.target.blur()}
+                          >
+                            Save
+                          </button>
+                          <button
+                            onClick={cancelEdit}
+                            style={buttonStyle}
+                            onMouseEnter={(e) => Object.assign(e.target.style, hoverButtonStyle)}
+                            onMouseLeave={(e) => Object.assign(e.target.style, buttonStyle)}
+                            onFocus={(e) => e.target.blur()}
+                          >
+                            Cancel
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            onClick={() => startEditing(subject)}
+                            style={buttonStyle}
+                            onMouseEnter={(e) => Object.assign(e.target.style, hoverButtonStyle)}
+                            onMouseLeave={(e) => Object.assign(e.target.style, buttonStyle)}
+                            onFocus={(e) => e.target.blur()}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => deleteSubject(subject.id)}
+                            style={buttonStyle}
+                            onMouseEnter={(e) => Object.assign(e.target.style, hoverButtonStyle)}
+                            onMouseLeave={(e) => Object.assign(e.target.style, buttonStyle)}
+                            onFocus={(e) => e.target.blur()}
+                          >
+                            Delete
+                          </button>
+                        </>
+                      )}
+                    </div>
                   </td>
                 </tr>
               );

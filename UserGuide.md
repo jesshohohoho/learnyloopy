@@ -35,7 +35,37 @@ LearnLoop is an online application designed to support both students and tutors,
 - After verification, you will be redirected to the sign-in page. Enter the same email and password you used to register with LearnLoop.
 
 ## 🔑 Log In to LearnLoop
-Once logged in, you will be directed to the main page, which features the Past Performance Dashboard and a sidebar for navigating to other features of LearnLoop. If you are the first user, the dashboard will display everything as blank. You will have to study by our **[Smart Learning Platform](#smart-learning-platform) to get a summary of your study performance.
+Once logged in, you will be directed to the main page, which features the Past Performance Dashboard and a sidebar for navigating to other features of LearnLoop. If you are the first user, the dashboard will display everything as blank. You will have to study by our **[Smart Learning Platform](#smart-learning-platform)** to get a summary of your study performance.
 
 < Image here >
+
+<table align="center">
+  <tr>
+    <td><img src="frontend/src/assets/S%20image%201.png" alt="Past Performance Dashboard" width="100"/></td>
+    <td><b>Past Performance Dashboard</b><br>Displays students' academic statistics and progress through clear visual summaries.</td>
+  </tr>
+  <tr>
+    <td><img src="frontend/src/assets/S%20image%202.png" alt="Leaderboard" width="100"/></td>
+    <td><b>Leaderboard</b><br>Highlights top-performing tutors based on their achievements and activity.</td>
+  </tr>
+  <tr>
+    <td><img src="frontend/src/assets/S%20image%203.png" alt="Forum" width="100"/></td>
+    <td><b>Forum</b><br>Provides a communication platform where tutors and students share questions, resources, and ideas.</td>
+  </tr>
+  <tr>
+    <td><img src="frontend/src/assets/S%20image%206.png" alt="Smart Learning" width="100"/></td>
+    <td><b>Smart Learning</b><br>Offers virtual tutoring support with study material guidance, mock tests, flashcards, and a pomodoro timer.</td>
+  </tr>
+  <tr>
+    <td><img src="frontend/src/assets/S%20image%207.png" alt="Guided Learning" width="100"/></td>
+    <td><b>Guided Learning</b><br>Enables students to select their preferred tutors through a dedicated filtering system.</td>
+  </tr>
+  <tr>
+    <td><img src="frontend/src/assets/S%20image%208.png" alt="Exit" width="100"/></td>
+    <td><b>Exit</b><br>Allows users to securely log out and end their session.</td>
+  </tr>
+</table>
+
+
+
 

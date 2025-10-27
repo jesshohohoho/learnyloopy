@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CustomChat from "../features/components/CustomChat"
+import CustomChat from "../features/components/CustomChat";
 import uploadIcon from "../../../assets/Upload.png";
 import pomodoroIcon from "../../../assets/pomodoro.png";
 import UploadMaterial from "../features/components/UploadMaterial";
@@ -17,7 +17,7 @@ const AppButton = ({ onClick, children, isSelected = false }) => (
       maxWidth: "200px",
       height: "50px",
       background: isSelected ? "#7048FF" : "rgba(199, 199, 199, 0.3)",
-      color: isSelected ? "#fff" : "#000000",
+      color: isSelected ? "#fff" : "#000",
       border: "none",
       borderRadius: "24px",
       padding: "10px 25px",
@@ -29,7 +29,8 @@ const AppButton = ({ onClick, children, isSelected = false }) => (
       alignItems: "center",
       justifyContent: "center",
       textAlign: "center",
-      transition: "all 0.2s ease"
+      transition: "all 0.2s ease",
+      margin: "0 auto"
     }}
   >
     {children}
@@ -46,36 +47,35 @@ function SmartLearningPage() {
     subjects,
     showStudyTimer,
     loading,
-    error,        
+    error,
     setSelectedSubject,
     handleSendClick,
     handleFlashcardsClick,
     setIsUploadModalOpen,
     setIsFlashcardsOpen,
     setShowMockTest,
-    setShowStudyTimer,    
+    setShowStudyTimer,
     handleUpdateStudyHours,
-    handleUploadSuccess 
+    handleUploadSuccess,
   } = useSmartLearning();
 
-  // ✅ Track which feature button is active
   const [selectedFeature, setSelectedFeature] = useState(null);
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      height: '100%',
-      marginLeft: "129px",              
-      width: "calc(100% - 129px)",
-      backgroundColor: '#F3F3F3',
-      padding: '24px',
-      boxSizing: 'border-box',
-      position: 'relative',
-      overflow: 'hidden'
-    }}>
-      
-      {/* REPLACED: Custom Chat Component */}
-      <div className="main-chat-area" style={{marginBottom: '24px'}}>
+    <div
+      style={{
+        minHeight: "100vh",
+        width: "calc(99% - 129px)",
+        marginLeft: "135px",
+        backgroundColor: "#F3F3F3",
+        padding: "24px",
+        boxSizing: "border-box",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      {/* Chat Area */}
+      <div className="main-chat-area" style={{ marginBottom: "24px" }}>
         <CustomChat
           messages={messages}
           onSendMessage={handleSendClick}
@@ -83,40 +83,41 @@ function SmartLearningPage() {
         />
       </div>
 
-      {/* ✅ Bottom Cards Grid */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: '2fr 1fr 1fr',
-        gap: '24px',
-        height: '247px',
-        position: 'relative',
-        zIndex: 1,
-        width: '100%'
-      }}>
-        
+      {/* Bottom Cards Grid */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "2fr 1fr 1fr",
+          gap: "24px",
+          width: "100%",
+        }}
+      >
         {/* Class Materials Card */}
         <div
           style={{
-            backgroundColor: '#F1EDED',
-            borderRadius: '25px',
-            border: '1px solid #DDD3D3',
-            padding: '24px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-            overflowY: "auto"
+            backgroundColor: "#F1EDED",
+            borderRadius: "25px",
+            border: "1px solid #DDD3D3",
+            padding: "24px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+            overflowY: "auto",
+            maxHeight: "500px", // parent card scrollable
           }}
         >
-          <h3 style={{ 
-            fontWeight: 'bold', 
-            fontSize: '18px', 
-            marginBottom: '5px', 
-            textAlign: 'center'  
-          }}>
+          <h3
+            style={{
+              fontWeight: "bold",
+              fontSize: "18px",
+              marginBottom: "20px",
+              textAlign: "center",
+            }}
+          >
             Pick a subject
           </h3>
-          
+
           {loading ? (
             <div style={{ textAlign: "center", color: "#666" }}>
               Loading subjects...
@@ -128,7 +129,7 @@ function SmartLearningPage() {
               style={{
                 textAlign: "center",
                 color: "#666",
-                fontStyle: "italic"
+                fontStyle: "italic",
               }}
             >
               No subjects available.
@@ -139,12 +140,12 @@ function SmartLearningPage() {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
+                gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
                 gap: "12px",
                 justifyContent: "center",
-                alignContent: "center",
-                height: "150px",
-                padding: "0 12px"
+                alignContent: "start",
+                height: "auto",
+                padding: "0 12px",
               }}
             >
               {subjects.map((subject) => (
@@ -158,12 +159,12 @@ function SmartLearningPage() {
               ))}
             </div>
           )}
-          
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+
+          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "12px" }}>
             <img
               src={uploadIcon}
               title="Upload material"
-              style={{ width: '24px', height: '24px', cursor: 'pointer' }}
+              style={{ width: "24px", height: "24px", cursor: "pointer" }}
               alt="upload"
               onClick={() => setIsUploadModalOpen(true)}
             />
@@ -173,34 +174,38 @@ function SmartLearningPage() {
         {/* Other Features Card */}
         <div
           style={{
-            backgroundColor: '#F1EDED',
-            borderRadius: '25px',
-            border: '1px solid #DDD3D3',
-            padding: '24px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-          }}
-        >
-          <h3 style={{ 
-            fontWeight: 'bold', 
-            fontSize: '18px', 
-            marginBottom: '20px', 
-            textAlign: 'center' 
-          }}>
-            Test your knowledge
-          </h3>
-          
-          <div style={{
+            backgroundColor: "#F1EDED",
+            borderRadius: "25px",
+            border: "1px solid #DDD3D3",
+            padding: "24px",
             display: "flex",
             flexDirection: "column",
-            gap: "16px",
-            justifyContent: "center",
-            alignItems: "center",
-            flex: 1,
-            marginBottom: "16px"
-          }}>
+            justifyContent: "space-between",
+            boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+          }}
+        >
+          <h3
+            style={{
+              fontWeight: "bold",
+              fontSize: "18px",
+              marginBottom: "20px",
+              textAlign: "center",
+            }}
+          >
+            Test your knowledge
+          </h3>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "16px",
+              justifyContent: "center",
+              alignItems: "center",
+              flex: 1,
+              marginBottom: "16px",
+            }}
+          >
             <AppButton
               onClick={() => {
                 setSelectedFeature("mock");
@@ -221,31 +226,32 @@ function SmartLearningPage() {
               Flashcards
             </AppButton>
           </div>
-          
         </div>
 
         {/* Pomodoro Timer Card */}
         <div
           style={{
-            backgroundColor: '#F1EDED',
-            borderRadius: '25px',
-            border: '1px solid #DDD3D3',
-            padding: '24px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+            backgroundColor: "#F1EDED",
+            borderRadius: "25px",
+            border: "1px solid #DDD3D3",
+            padding: "24px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            alignItems: "center",
+            boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
           }}
         >
-          <h3 style={{ 
-            fontWeight: 'bold', 
-            fontSize: '18px',
-            textAlign: 'center' 
-          }}>
-            Beat the Timer
+          <h3
+            style={{
+              fontWeight: "bold",
+              fontSize: "18px",
+              textAlign: "center",
+            }}
+          >
+            Beat the timer
           </h3>
-          
+
           <div style={{ display: "flex", justifyContent: "center", flex: 1 }}>
             <img
               src={pomodoroIcon}
@@ -257,40 +263,37 @@ function SmartLearningPage() {
                 cursor: "pointer",
                 marginTop: "20px",
                 objectFit: "contain",
-                transition: "transform 0.2s ease"
+                transition: "transform 0.2s ease",
               }}
               onMouseEnter={(e) => (e.target.style.transform = "scale(1.1)")}
               onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
             />
           </div>
         </div>
-        
       </div>
 
       {/* Upload Material Modal */}
       {isUploadModalOpen && (
         <div
           style={{
-            position: 'fixed',
+            position: "fixed",
             inset: 0,
-            backgroundColor: 'rgba(0,0,0,0.5)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 50
+            backgroundColor: "rgba(0,0,0,0.5)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 9999,
           }}
           onClick={() => setIsUploadModalOpen(false)}
         >
           <div
             style={{
-              position: 'relative',
-              backgroundColor: 'transparent',
-              top: '-30%',
-              left: '-10%'
+              position: "relative",
+              backgroundColor: "transparent",
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <UploadMaterial 
+            <UploadMaterial
               onClose={() => setIsUploadModalOpen(false)}
               onUploadSuccess={handleUploadSuccess}
             />
@@ -302,22 +305,25 @@ function SmartLearningPage() {
       {isFlashcardsOpen && (
         <div
           style={{
-            position: 'fixed',
+            position: "fixed",
             inset: 0,
-            backgroundColor: 'rgba(0,0,0,0.5)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 50
+            backgroundColor: "rgba(0,0,0,0.5)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 50,
           }}
           onClick={() => setIsFlashcardsOpen(false)}
         >
-          <FlashcardModal subject={selectedSubject} onClose={() => setIsFlashcardsOpen(false)} />
+          <FlashcardModal
+            subject={selectedSubject}
+            onClose={() => setIsFlashcardsOpen(false)}
+          />
         </div>
       )}
 
       {/* Mock Test Modal */}
-      <MockTest 
+      <MockTest
         isOpen={showMockTest}
         onClose={() => setShowMockTest(false)}
         subjectName={selectedSubject}
@@ -327,9 +333,9 @@ function SmartLearningPage() {
       <StudyTimerModal
         isOpen={showStudyTimer}
         onClose={() => setShowStudyTimer(false)}
-        subjects={subjects.map(subjectName => ({ 
+        subjects={subjects.map((subjectName) => ({
           id: subjectName,
-          name: subjectName 
+          name: subjectName,
         }))}
         onUpdateStudyHours={handleUpdateStudyHours}
       />

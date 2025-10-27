@@ -1,11 +1,10 @@
 // src/features/guidedLearning/components/GuidedLearningPage.jsx
-
-import React from "react";
-import add2 from '../../../assets/add2.png' ;
-import idea from '../../../assets/idea.png';
-import FindTutor from '../features/components/FindTutor';
+import React, { useEffect } from "react";
+import add2 from "../../../assets/add2.png";
+import idea from "../../../assets/idea.png";
+import FindTutor from "../features/components/FindTutor";
 import RateTutor from "../features/components/RateTutor";
-import BecomeTutor from "../features/components/BecomeTutor"
+import BecomeTutor from "../features/components/BecomeTutor";
 import { useGuidedLearning } from "../hooks/useGuidedLearning";
 import LoadingSpinner from "../../../components/Loading";
 
@@ -28,55 +27,63 @@ export default function GuidedLearningPage() {
     handleBecomeTutorClick,
     handleSearchChange,
     handleSubjectClick,
-    getStarRating
+    getStarRating,
   } = useGuidedLearning();
 
   if (loading) {
     return (
-      <div style={{
-        width: "1440px",
-        minHeight: "100vh",
-        background: "#F3F3F3",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        margin: "0 auto",
-        position: "relative" // ADD: For proper positioning
-      }}>
-        <LoadingSpinner message="Loading amazing tutors for you" />
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "100vh",
+          background: "#F3F3F3",
+        }}
+      >
+        <div style={{ width: "100%", maxWidth: "1200px", padding: "20px" }}>
+          <LoadingSpinner message="Loading amazing tutors for you" />
+        </div>
       </div>
     );
   }
 
   return (
-    <div
-      className="guided-learning-container"
-      style={{
-        marginLeft: "129px",              
-        width: "calc(100% - 129px)",      // To include sidebar
-        minHeight: "100vh",
-        background: "#F3F3F3",
-        overflowX: "hidden",
-        padding: "20px",
-        boxSizing: "border-box"
-      }}
-    >
-      <style>{`
-        .testimonial-scroll::-webkit-scrollbar {
-          display: none; /* Chrome, Safari, Opera */
-        }
-      `}</style>
-
-      {/* Main Content */}
-      <main
+    <div style={{ display: "flex", minHeight: "100vh", background: "#F3F3F3" }}>
+      {/* Sidebar */}
+      <div
         style={{
-          flex: 1,
-          padding: "32px 100px 32px 32px", // ✅ Added extra right padding
+          width: "130px",
+          padding: "20px",
           boxSizing: "border-box",
+          flexShrink: 0,
         }}
       >
+        Sidebar
+      </div>
+
+      {/* Main Content */}
+      <div
+        style={{
+          width: "90vw",
+          maxWidth: "2000px",
+          padding: "20px",
+          boxSizing: "border-box",
+          overflowX: "hidden",
+        }}
+      >
+        <style>{`
+          .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+          }
+          .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+        `}</style>
+
         {/* Search Bar */}
-        <div style={{ marginBottom: "24px", textAlign: "left" }}>
+        <div style={{ marginBottom: "24px" }}>
           <input
             type="text"
             placeholder="Search a subject..."
@@ -84,14 +91,11 @@ export default function GuidedLearningPage() {
             onChange={(e) => handleSearchChange(e.target.value)}
             style={{
               width: "100%",
-              maxWidth: "871px",
               height: "42px",
-              flexShrink: 0,
               padding: "0 20px",
               borderRadius: "20px",
               border: "1px solid #DDD3D3",
               fontSize: "16px",
-              marginBottom: "16px",
               display: "block",
             }}
           />
@@ -101,163 +105,188 @@ export default function GuidedLearningPage() {
         <div
           style={{
             display: "flex",
-            flexWrap: "nowrap",
+            gap: "18px",
             overflowX: "auto",
-            gap: "12px",
-            paddingBottom: "32px",
-            borderRadius: "24px",
-            background: "#f3f3f3",
-            width: "100%",
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
+            paddingBottom: "10px",
           }}
           className="hide-scrollbar"
         >
-          {subjects.length > 0 ? subjects.map((tag) => (
-            <span
-              key={tag}
-              onClick={() => handleSubjectClick(tag)}
-              style={{
-                flex: "0 0 auto",
-                background: selectedSubject === tag 
-                  ? "linear-gradient(90deg, #7048FF 0%, #E69696 100%)" // Clicked state
-                  : "rgba(199, 199, 199, 0.3)", // Unclicked state
-                borderRadius: "16px",
-                padding: "8px 18px",
-                fontSize: "20px",
-                color: selectedSubject === tag ? "#FFFFFF" : "#000000", // White text when clicked
-                boxShadow: "0 4px 4px rgba(0, 0, 0, 0.25)",
-                cursor: "pointer", // clickable
-                transition: "all 0.3s ease", 
-                fontWeight: selectedSubject === tag ? "600" : "normal", // Bold when clicked
-              }}
-            >
-              {tag}
-            </span>
-          )) : (
+          {subjects.length > 0 ? (
+            subjects.map((tag) => (
+              <span
+                key={tag}
+                onClick={() => handleSubjectClick(tag)}
+                style={{
+                  flex: "0 0 auto",
+                  background:
+                    selectedSubject === tag
+                      ? "linear-gradient(90deg, #7048FF 0%, #E69696 100%)"
+                      : "rgba(199, 199, 199, 0.3)",
+                  borderRadius: "16px",
+                  padding: "8px 18px",
+                  fontSize: "20px",
+                  color: selectedSubject === tag ? "#FFFFFF" : "#000000",
+                  boxShadow: "0 4px 4px rgba(0, 0, 0, 0.25)",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  fontWeight: selectedSubject === tag ? "600" : "normal",
+                }}
+              >
+                {tag}
+              </span>
+            ))
+          ) : (
             <span style={{ fontSize: "16px", color: "#666", padding: "8px" }}>
               No subjects available
             </span>
           )}
         </div>
 
-
         {/* Tutor Match Section */}
-        <div style={{ marginBottom: "15px" }}>
+        <div style={{ margin: "20px 0" }}>
           <div
             style={{
               textAlign: "center",
               fontWeight: "bold",
-              fontSize: "25px",
-              marginBottom: "16px",
+              fontSize: "26px",
+              marginBottom: "25px",
+              lineHeight: "1.2",
             }}
           >
             <span
               style={{
-                background: "linear-gradient(90deg, #432B99 11.54%, #7048FF 36.54%, #E69696 83.65%)",
+                background:
+                  "linear-gradient(90deg, #432B99 11.54%, #7048FF 36.54%, #E69696 83.65%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
             >
-              {selectedSubject 
-                ? `${selectedSubject} Tutors` 
-                : searchQuery 
-                  ? `Search Results for "${searchQuery}"` 
-                  : '"Your Perfect Tutor Match—Anytime, Anywhere"'
-              }
+              {selectedSubject
+                ? `${selectedSubject} Tutors`
+                : searchQuery
+                ? `Search Results for "${searchQuery}"`
+                : "Your Perfect Tutor Match — Anytime, Anywhere"}
             </span>
           </div>
 
-          {/* Horizontal scrollable tutor cards With fallback */}
           <div
             style={{
               display: "flex",
               gap: "18px",
               overflowX: "auto",
               paddingBottom: "16px",
-              paddingRight: "50px",
-              scrollbarWidth: "none",
             }}
             className="hide-scrollbar"
           >
-            {tutors.length > 0 ? tutors.map((tutor) => (
-              <div
-                key={tutor.id}
-                style={{
-                  width: '304px', 
-                  height: '301px',
-                  background: "#F1EDED",
-                  border: "1px solid #DDD3D3",
-                  borderRadius: "16px",
-                  padding: "18px",
-                  textAlign: "center",
-                  flex: "0 0 auto",
-                }}
-              >
-                <div style={{ marginBottom: "12px", display: "flex", alignItems: "center", gap: "12px" }}>
-                  {/* Avatar */}
+            {tutors.length > 0 ? (
+              tutors.map((tutor) => (
+                <div
+                  key={tutor.id}
+                  style={{
+                    minWidth: "250px",
+                    maxWidth: "304px",
+                    height: "320px",
+                    background: "#F1EDED",
+                    border: "1px solid #DDD3D3",
+                    borderRadius: "16px",
+                    padding: "18px",
+                    textAlign: "center",
+                    flex: "0 0 auto",
+                  }}
+                >
                   <div
                     style={{
-                      width: "97px",
-                      height: "97px",
-                      borderRadius: "50%",
-                      background: "#E0E7FF",
+                      marginBottom: "12px",
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: "50px",
-                      flexShrink: 0,
-                      marginTop: '20px'
+                      gap: "12px",
                     }}
                   >
-                    👤
-                  </div>
-
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "6px" }}>
-                    <div style={{ fontWeight: 600, fontSize: "20px", marginTop: '30px'}}>
-                      {tutor.name}
+                    <div
+                      style={{
+                        width: "97px",
+                        height: "97px",
+                        borderRadius: "50%",
+                        background: "#E0E7FF",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "50px",
+                        flexShrink: 0,
+                        marginTop: "20px",
+                      }}
+                    >
+                      👤
                     </div>
                     <div
                       style={{
-                        fontSize: "15px",
-                        color: "#000000",
-                        backgroundColor: "#FFFFFF",
-                        borderRadius: "12px",
-                        padding: "4px 12px",
-                        display: "inline-block",
-                        marginBottom: '18px'
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-start",
+                        gap: "6px",
                       }}
                     >
-                      {tutor.username}
+                      <div
+                        style={{
+                          fontWeight: 600,
+                          fontSize: "20px",
+                          marginTop: "30px",
+                        }}
+                      >
+                        {tutor.name}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "15px",
+                          color: "#000000",
+                          backgroundColor: "#FFFFFF",
+                          borderRadius: "12px",
+                          padding: "4px 12px",
+                          display: "inline-block",
+                        }}
+                      >
+                        {tutor.username}
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "5px",
+                          marginLeft: "5px",
+                          marginTop: "-5px",
+                        }}
+                      >
+                        <div style={{ color: "#7048FF", fontSize: "20px" }}>
+                          {getStarRating(tutor.avg_rating)}
+                        </div>
+                        <div style={{ fontSize: "14px", color: "#666" }}>
+                          ({tutor.avg_rating?.toFixed(1) || "0.0"})
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-
-                <div style={{ fontSize: "18px", color: "#374151", marginBottom: "20px", marginTop: "20px", fontStyle: "italic" }}>
-                  "{tutor.description}"
-                </div>
-
-                {/* ✅ Updated star rating display */}
-                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                  <div style={{ color: "#7048FF", fontSize: "28px", textAlign: "left", padding: "4px 0"}}>
-                    {getStarRating(tutor.avg_rating)} {/* ✅ Use helper function */}
+                  <div
+                    style={{
+                      fontSize: "18px",
+                      color: "#374151",
+                      marginTop: "10px",
+                      fontStyle: "italic",
+                    }}
+                  >
+                    "{tutor.description}"
                   </div>
-                  {/* ✅ Show numeric rating */}
-                  <div style={{ fontSize: "14px", color: "#666", marginLeft: "4px" }}>
-                    ({tutor.avg_rating?.toFixed(1) || '0.0'})
-                  </div>
-                  
                 </div>
-              </div>
-            )) : (
-              // ✅ Fallback when no tutors available
-              <div style={{ 
-                fontSize: "16px", 
-                color: "#666", 
-                textAlign: "center", 
-                width: "100%",
-                padding: "40px" 
-              }}>
+              ))
+            ) : (
+              <div
+                style={{
+                  fontSize: "16px",
+                  color: "#666",
+                  textAlign: "center",
+                  width: "100%",
+                  padding: "40px",
+                }}
+              >
                 No tutors available at the moment
               </div>
             )}
@@ -265,29 +294,26 @@ export default function GuidedLearningPage() {
         </div>
 
         {/* Alumni Testimonials */}
-        <div style={{ marginBottom: "15px" }}>
+        <div style={{ marginBottom: "50px" }}>
           <div
             style={{
               textAlign: "center",
               fontWeight: "bold",
-              fontSize: "22.5px",
+              fontSize: "24px",
               color: "#000000",
-              marginBottom: "16px",
+              marginBottom: "25px",
+              lineHeight: "1.3",
             }}
           >
-            Trusted by Thousands: Hear from Our Alumni
+            Trusted by Thousands — Hear from Our Alumni
           </div>
 
-          {/* ✅ Horizontal scrollable testimonial cards - With fallback */}
           <div
             style={{
               display: "flex",
               gap: "18px",
               overflowX: "auto",
-              paddingBottom: "16px",
-              paddingRight: "50px",
-              scrollbarWidth: "none",
-              alignItems: "stretch"
+              alignItems: "stretch",
             }}
             className="hide-scrollbar"
           >
@@ -296,8 +322,7 @@ export default function GuidedLearningPage() {
               onClick={handleRateTutorClick}
               style={{
                 width: "84px",
-                minHeight: "210px",
-                maxHeight: "210px",
+                minHeight: "220px",
                 flexShrink: 0,
                 background: "#F1EDED",
                 border: "1px solid #DDD3D3",
@@ -307,7 +332,7 @@ export default function GuidedLearningPage() {
                 justifyContent: "center",
                 cursor: "pointer",
                 transition: "all 0.2s ease",
-                boxSizing: "border-box"
+                boxSizing: "border-box",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = "#E5E1E1";
@@ -321,17 +346,11 @@ export default function GuidedLearningPage() {
               <img
                 src={add2}
                 alt="Add Review"
-                style={{ 
-                  width: "30px", 
-                  height: "30px", 
-                  objectFit: "contain",
-                  pointerEvents: "none"
-                }}
+                style={{ width: "30px", height: "30px", objectFit: "contain" }}
               />
             </div>
 
-            {/* ✅ Testimonials with fallback */}
-            {testimonials.length > 0 ? testimonials.map((testimonial) => (
+            {testimonials.map((testimonial) => (
               <div
                 key={testimonial.id}
                 style={{
@@ -339,104 +358,131 @@ export default function GuidedLearningPage() {
                   border: "1px solid #DDD3D3",
                   borderRadius: "12px",
                   padding: "35px",
-                  width: "270px",
-                  minHeight: "210px",
-                  maxHeight: "210px",
+                  minWidth: "250px",
+                  maxWidth: "300px",
+                  height: "220px",
                   textAlign: "center",
                   flex: "0 0 auto",
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "space-between", // Distribute content evenly
-                  overflow: "hidden", // Prevent content overflow
-                  boxSizing: "border-box"
+                  justifyContent: "center", // center comment vertically
+                  overflow: "hidden",
+                  boxSizing: "border-box",
                 }}
               >
-                <div style={{ fontSize: "22px", color: "#A5B4FC", marginBottom: "15px" , flexShrink: 0, height: "38px"}}>
+                <div>
                   <img
                     src={idea}
                     alt="Light Bulb"
                     style={{ width: "30px", height: "30px", marginBottom: "8px" }}
                   />
                 </div>
-                {/* Review text - Scrollable */} 
-                <div style={{ 
-                  fontSize: "16px", 
-                  color: "#000000", 
-                  fontStyle: 'italic', 
-                  fontWeight: 600, 
-                  marginBottom: "15px",
-                  flex: 1, 
-                  overflowY: "auto",
-                  overflowX: "hidden",
-                  paddingRight: "8px",
-                  lineHeight: "1.4",
-                  scrollbarWidth: "none",
-                  msOverflowStyle: "none"
-                }}>
+                <div
+                  style={{
+                    fontSize: "16px",
+                    color: "#000000",
+                    fontStyle: "italic",
+                    fontWeight: 600,
+                    padding: "0 8px",
+                    lineHeight: "1.4",
+                    marginBottom: "12px", // spacing before author
+                  }}
+                >
                   "{testimonial.text}"
                 </div>
-                {/* Author */}
-                <div style={{ fontSize: "15px", color: "#7048FF", fontStyle: 'italic', flexShrink: 0, height: "21px" }}>
+                <div style={{ fontSize: "15px", color: "#7048FF", fontStyle: "italic" }}>
                   {testimonial.author}
                 </div>
               </div>
-            )) : null /* Testimonials have fallbacks in hook, so this shouldn't happen */}
+            ))}
           </div>
         </div>
 
         {/* Call to Action Buttons */}
         <div
           style={{
-            display: "flex", // ✅ Added flex container
+            display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            justifyContent: "center",
-            marginBottom: "16px",
+            marginBottom: "20px",
             textAlign: "center",
           }}
         >
           <div
             style={{
               fontWeight: "bold",
-              fontSize: "22.5px",
-              color: "#000000",
-              marginBottom: "16px",
+              fontSize: "clamp(18px, 2vw, 28px)",
+              color: "#000",
+              marginBottom: "20px",
             }}
           >
-            Launch Your Growing Journey Now!
+            Launch Your Growth Journey Now!
           </div>
-          <div style={{ display: "flex", gap: "32px", justifyContent: "center" }}>
+
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "20px",
+              justifyContent: "center",
+              width: "100%",
+              maxWidth: "600px",
+            }}
+          >
             <button
               onClick={handleFindTutorClick}
               style={{
-                background: "rgba(199, 199, 199, 0.3)",
-                color: "#000000",
+                flex: "1 1 200px",
+                minWidth: "180px",
+                background: "rgba(199,199,199,0.3)",
+                color: "#000",
                 border: "none",
                 borderRadius: "24px",
-                padding: "5px 25px",
-                fontSize: "20px",
-                fontWeight: "normal",
+                padding: "10px 25px",
+                fontSize: "clamp(16px, 1.5vw, 20px)",
                 cursor: "pointer",
-                boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.25)"
+                boxShadow: "0 4px 4px rgba(0,0,0,0.25)",
+                transition: "transform 0.2s ease, background 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#7048FF";
+                e.currentTarget.style.transform = "scale(1.05)";
+                e.currentTarget.style.color = "#FFFFFF";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "rgba(199,199,199,0.3)";
+                e.currentTarget.style.transform = "scale(1)";
+                e.currentTarget.style.color = "#000000ff";
               }}
             >
               Learn With Tutor
             </button>
 
-            {/* ✅ Add Become Tutor button if you have the functionality */}
             {handleBecomeTutorClick && (
               <button
                 onClick={handleBecomeTutorClick}
                 style={{
-                  background: "rgba(199, 199, 199, 0.3)",
+                  flex: "1 1 200px",
+                  minWidth: "180px",
+                  background: "rgba(199,199,199,0.3)",
                   color: "#000",
                   border: "none",
                   borderRadius: "24px",
-                  padding: "5px 25px",
-                  fontWeight: "normal",
-                  fontSize: "20px",
+                  padding: "10px 25px",
+                  fontSize: "clamp(16px, 1.5vw, 20px)",
                   cursor: "pointer",
-                  boxShadow: "0 4px 4px 0 rgba(0, 0, 0, 0.25)",
+                  boxShadow: "0 4px 4px rgba(0,0,0,0.25)",
+                  transition: "transform 0.2s ease, background 0.2s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "#7048FF";
+                  e.currentTarget.style.transform = "scale(1.05)";
+                  e.currentTarget.style.color = "#FFFFFF";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "rgba(199,199,199,0.3)";
+                  e.currentTarget.style.transform = "scale(1)";
+                  e.currentTarget.style.color = "#000000ff";
                 }}
               >
                 Become A Tutor
@@ -445,100 +491,69 @@ export default function GuidedLearningPage() {
           </div>
         </div>
 
-        
-
-        {/* Find Tutor Modal */}
+        {/* Modals */}
         {showFindTutor && (
-          <div
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              background: "rgba(0, 0, 0, 0.5)",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            onClick={() => setShowFindTutor(false)}
-          >
-            <div
-              style={{
-                position: 'relative',
-                backgroundColor: 'transparent',
-                top: '-30%',
-                left: '-10%'
-              }}
-              onClick={(e) => e.stopPropagation()}
-            >
-
-              <FindTutor onClose={() => setShowFindTutor(false)} />
-            </div>
-          </div>
+          <ModalWrapper onClose={() => setShowFindTutor(false)}>
+            <FindTutor onClose={() => setShowFindTutor(false)} />
+          </ModalWrapper>
         )}
-
-        {/* Rate Tutor Modal */}
         {showRateTutor && (
-          <div
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              background: "rgba(0, 0, 0, 0.5)",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            onClick={() => setShowRateTutor(false)}
-          >
-            <div
-              style={{
-                position: 'relative',
-                backgroundColor: 'transparent',
-                top: '-30%',
-                left: '-10%'
-              }}
-              onClick={(e) => e.stopPropagation()}
-            >
-
-              <RateTutor onClose={() => setShowRateTutor(false)} />
-            </div>
-          </div>
+          <ModalWrapper onClose={() => setShowRateTutor(false)}>
+            <RateTutor onClose={() => setShowRateTutor(false)} />
+          </ModalWrapper>
         )}
-
-        {/* ✅ Become Tutor Modal (if you have it) */}
         {showBecomeTutor && BecomeTutor && (
-          <div
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              background: "rgba(0, 0, 0, 0.5)",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            onClick={() => setShowBecomeTutor(false)}
-          >
-            <div
-              style={{
-                position: "relative",
-                backgroundColor: "transparent",
-                top: "-40%",
-                left: "-10%",
-              }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <BecomeTutor onClose={() => setShowBecomeTutor(false)} />
-            </div>
-          </div>
+          <ModalWrapper onClose={() => setShowBecomeTutor(false)}>
+            <BecomeTutor onClose={() => setShowBecomeTutor(false)} />
+          </ModalWrapper>
         )}
-      </main>
+      </div>
+    </div>
+  );
+}
+
+function ModalWrapper({ children, onClose }) {
+  useEffect(() => {
+    document.body.style.overflow = "hidden"; // disable background scroll
+    return () => {
+      document.body.style.overflow = "auto"; // restore scroll
+    };
+  }, []);
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        background: "rgba(0, 0, 0, 0.5)",
+        zIndex: 1000,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          position: "relative",
+          borderRadius: "12px",
+          width: "80vw",
+          maxWidth: "800px",
+          maxHeight: "80vh",
+          overflowY: "auto",
+          padding: "30px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          boxSizing: "border-box",
+        }}
+      >
+        {children}
+      </div>
     </div>
   );
 }

@@ -1,17 +1,15 @@
-
 import React from "react";
 import comment from "../../../../assets/comment.png";
 import like from "../../../../assets/like.png";
-import view from "../../../../assets/view.png"
+import view from "../../../../assets/view.png";
 
-export const QuestionCard = ({ 
-  post, 
-  onClick, 
+export const QuestionCard = ({
+  post,
+  onClick,
   onLike,
   showPreview = true,
-  showViews = false 
+  showViews = false,
 }) => {
-
   const handleLikeClick = (e) => {
     e.stopPropagation(); // Prevent card onClick from firing
     if (onLike) {
@@ -26,13 +24,14 @@ export const QuestionCard = ({
         borderRadius: "18px",
         border: "1px solid #DDD3D3",
         padding: "24px",
-        // width: showPreview ? "800px" : "100%",
-        width: "800px",
+        width: "100%", // ✅ Flexible width
+        maxWidth: "99%", // Prevent overflow
         minHeight: "120px",
         marginBottom: "16px",
         cursor: onClick ? "pointer" : "default",
-        transition: "all 0.2s",
-        boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)"
+        transition: "all 0.2s ease",
+        boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+        boxSizing: "border-box", // ✅ ensures padding doesn’t overflow
       }}
       onClick={onClick}
       onMouseOver={(e) => {
@@ -61,26 +60,28 @@ export const QuestionCard = ({
           marginLeft: "15px",
         }}
       >
-        {showPreview && post.question?.length > 120 
-          ? `${post.question.substring(0, 120)}...` 
-          : (post.question || post.title)
-        }
+        {showPreview && post.question?.length > 120
+          ? `${post.question.substring(0, 120)}...`
+          : post.question || post.title}
       </div>
 
-      {/* Author and Date - only show if available */}
+      {/* Author + Date */}
       {post.student_name && (
-        <div style={{
-          fontSize: "14px",
-          color: "#6B7280",
-          marginBottom: "12px",
-          marginLeft: "15px"
-        }}>
+        <div
+          style={{
+            fontSize: "14px",
+            color: "#6B7280",
+            marginBottom: "12px",
+            marginLeft: "15px",
+          }}
+        >
           by <span style={{ fontWeight: "500" }}>{post.student_name}</span>
-          {post.created_at && ` • ${new Date(post.created_at).toLocaleDateString()}`}
+          {post.created_at &&
+            ` • ${new Date(post.created_at).toLocaleDateString()}`}
         </div>
       )}
 
-      {/* Subject/Category */}
+      {/* Subject Tag */}
       <div style={{ textAlign: "left" }}>
         <div
           style={{
@@ -110,33 +111,30 @@ export const QuestionCard = ({
           fontSize: "14px",
         }}
       >
-
-        {/* ✅ Make like button clickable */}
-        <div 
-          style={{ 
-            display: "flex", 
-            alignItems: "center", 
+        {/* Like Button */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
             gap: "4px",
-            cursor: onLike ? "pointer" : "default", // Only show pointer if onLike exists
+            cursor: onLike ? "pointer" : "default",
             padding: "4px 8px",
             borderRadius: "4px",
-            transition: "background-color 0.2s"
+            transition: "background-color 0.2s",
           }}
           onClick={handleLikeClick}
           onMouseOver={(e) => {
-            if (onLike) {
-              e.currentTarget.style.backgroundColor = "#E5E7EB";
-            }
+            if (onLike) e.currentTarget.style.backgroundColor = "#E5E7EB";
           }}
           onMouseOut={(e) => {
-            if (onLike) {
-              e.currentTarget.style.backgroundColor = "transparent";
-            }
+            if (onLike) e.currentTarget.style.backgroundColor = "transparent";
           }}
         >
           <img src={like} alt="likes" style={{ width: "16px" }} />
           <span>{post.likes || 0}</span>
         </div>
+
+        {/* Comment Count */}
         <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
           <img src={comment} alt="comments" style={{ width: "16px" }} />
           <span>{post.comments || post.commentsCount || 0}</span>

@@ -2,35 +2,33 @@
    Sidebar Container
 ====================== */
 .sidebar {
-  position: fixed;       
-  left: 0;               /* Pin to top left edge */
-  top: 0;               
+  position: fixed;
+  left: 0;
+  top: 0;
   width: 129px;
-  min-width: 129px;
-  max-width: 129px;
-  height: 100vh;        
-  min-height: 100vh;     
+  height: 100vh;
   box-sizing: border-box;
   padding-top: 63px;
+  padding-bottom: 28px; /* ensures breathing space at bottom */
   background: linear-gradient(0deg, #FEEAEA 0%, #E3E8FF 70%, #F1EDED 86%);
   outline: 1px solid #DDD3D3;
   flex-shrink: 0;
-  z-index: 1000;         
+  z-index: 1000;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-y: auto;      
+  justify-content: flex-start; /* keeps content stacked top to bottom */
+  overflow-y: auto;
 }
 
-/* Hide scrollbar in sidebar */
+/* Hide scrollbar */
 .sidebar::-webkit-scrollbar {
   display: none;
 }
-
 .sidebar {
-  scrollbar-width: none;  /* Firefox */
-  -ms-overflow-style: none;  /* IE/Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 /* ======================
@@ -43,11 +41,11 @@
   font-weight: 700;
   text-align: center;
   white-space: nowrap;
-  margin-bottom: 35px;    /* Space below logo */
+  margin-bottom: 35px;
 }
 
 /* ======================
-   Divider lines
+   Dividers
 ====================== */
 .sidebar-divider {
   width: 100%;
@@ -56,16 +54,8 @@
   margin: 35px 0;
 }
 
-.sidebar-divider.second {
-  margin-top: 40px;
-}
-
-.sidebar-divider.third {
-  margin-top: 40px;
-}
-
 /* ======================
-   Button Groups
+   Buttons
 ====================== */
 .sidebar-buttons,
 .sidebar-buttons_2 {
@@ -77,32 +67,10 @@
 }
 
 /* ======================
-   Individual Buttons
-====================== */
-.sidebar-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: transform 0.2s ease;  /* Smooth hover effect */
-}
-
-.sidebar-button:hover {
-  transform: scale(1.1);   /* Hover effect */
-}
-
-/* ======================
-   Settings Section
+   Logout (bottom buttons)
 ====================== */
 .sidebar-buttons_3 {
-  position: absolute;
-  bottom: 28px;
-  left: 50%;
-  transform: translateX(-50%);
-  
+  margin-top: 200px; /* pushes to bottom */
   display: flex;
   flex-direction: column;
   align-items: center;

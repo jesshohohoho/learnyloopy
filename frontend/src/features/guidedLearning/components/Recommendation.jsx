@@ -11,7 +11,7 @@ export default function Recommendation() {
         return (
             <div style={{
                 position: "relative",
-                marginLeft: "129px",             
+                marginLeft: "130px",             
                 width: "calc(100% - 129px)",
                 minHeight: "100vh", 
                 background: "#F3F3F3",
@@ -59,8 +59,8 @@ export default function Recommendation() {
         <div 
             className="recommendation-container" 
             style={{ 
-                marginLeft: "129px",             
-                width: "calc(100% - 129px)",      
+                marginLeft: "150px",             
+                width: "calc(100% - 150px)",      
                 minHeight: "100vh",
                 background: "#F3F3F3",
                 padding: "20px",
@@ -177,7 +177,7 @@ export default function Recommendation() {
                     </span>
                 </div>
 
-                {/* FIXED: Horizontal Scrollable Tutor Cards - Same as GuidedLearning */}
+                {/* Tutor Cards */}
                 <div style={{ marginBottom: "12px" }}>
                     <div
                         style={{
@@ -203,14 +203,13 @@ export default function Recommendation() {
                                     width: '299px',
                                     textAlign: 'center',
                                     flex: "0 0 auto",
-                                    display: 'flex', // FIXED: Use flexbox layout
-                                    flexDirection: 'column', // FIXED: Stack items vertically
-                                    justifyContent: 'space-between' // FIXED: Distribute space evenly
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-between'
                                 }}
                             >
                                 {/* Top Section */}
                                 <div>
-                                    {/* Tutor Name */}
                                     <div style={{ 
                                         fontWeight: 'bold', 
                                         fontSize: '22.5px', 
@@ -220,7 +219,6 @@ export default function Recommendation() {
                                         {tutor.name || `Tutor ${index + 1}`}
                                     </div>
 
-                                    {/* Avatar placeholder */}
                                     <div style={{ 
                                         width: '120px', 
                                         height: '120px', 
@@ -231,7 +229,7 @@ export default function Recommendation() {
                                         alignItems: 'center', 
                                         justifyContent: 'center', 
                                         fontSize: '64px',
-                                        lineHeight: '1', // FIXED: Better emoji alignment
+                                        lineHeight: '1',
                                         fontFamily: 'system-ui, -apple-system, sans-serif'
                                     }}>
                                         <span style={{
@@ -245,7 +243,6 @@ export default function Recommendation() {
                                         </span>
                                     </div>
                                     
-                                    {/* Rating */}
                                     <div style={{ 
                                         color: '#6366F1', 
                                         fontSize: '25px', 
@@ -254,7 +251,6 @@ export default function Recommendation() {
                                         {getStarRating(tutor.average_rating)} ({tutor.average_rating || 0})
                                     </div>
 
-                                    {/* Description */}
                                     <div style={{ 
                                         color: '#000000',
                                         fontFamily: '"Open Sans", sans-serif',
@@ -262,7 +258,7 @@ export default function Recommendation() {
                                         fontStyle: 'italic',
                                         fontWeight: 400,
                                         lineHeight: '25px',
-                                        marginBottom: '20px', // FIXED: Reduced margin
+                                        marginBottom: '20px',
                                         marginTop: '25px'
                                     }}>
                                         {formatDescription(tutor)}
@@ -306,8 +302,8 @@ export default function Recommendation() {
                     </div>
                 </div>
 
-                {/* FIXED: Horizontal Scrollable Reviews Section */}
-                <div style={{ marginBottom: "40px" }}> {/* FIXED: Added more bottom margin */}
+                {/* Review Cards */}
+                <div style={{ marginBottom: "40px" }}>
                     <div
                         style={{
                             display: "flex",
@@ -316,7 +312,6 @@ export default function Recommendation() {
                             paddingBottom: "16px",
                             paddingRight: "50px",
                             scrollbarWidth: "none",
-                            alignItems: "flex-start", // FIXED: Align cards to top
                         }}
                         className="hide-scrollbar"
                     >
@@ -329,39 +324,30 @@ export default function Recommendation() {
                                     borderRadius: '12px', 
                                     padding: '24px', 
                                     width: '299px',
-                                    height: '180px', // FIXED: Reduced height to fit better
+                                    height: '180px',
                                     boxShadow: '0 1px 4px #0001', 
                                     textAlign: 'center',
                                     flex: "0 0 auto",
-                                    display: 'flex', // FIXED: Use flexbox
-                                    flexDirection: 'column', // FIXED: Stack vertically
-                                    alignItems: 'center', // FIXED: Center content
-                                    justifyContent: 'center' // FIXED: Center content vertically
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '12px' // space between bulb and text
                                 }}
                             >
-                                {/* Bulb Icon */}
-                                <div style={{ 
-                                    marginBottom: '15px'
-                                }}>
-                                    <img 
-                                        src={bulb}
-                                        alt="Idea"
-                                        style={{ 
-                                            width: '33px', 
-                                            height: '33px', 
-                                            objectFit: 'contain' 
-                                        }}
-                                    />
-                                </div>
+                                <img 
+                                    src={bulb}
+                                    alt="Idea"
+                                    style={{ width: '33px', height: '33px', objectFit: 'contain' }}
+                                />
 
-                                {/* Review Text */}
                                 <div style={{ 
                                     fontSize: '16px', 
                                     color: '#374151', 
                                     fontWeight: "bold", 
                                     fontStyle: 'italic',
                                     textAlign: 'center',
-                                    lineHeight: '1.4' // FIXED: Better line spacing
+                                    lineHeight: '1.4'
                                 }}>
                                     "{tutor.latest_review || 'Excellent tutor with great teaching skills!'}"
                                 </div>
@@ -369,6 +355,7 @@ export default function Recommendation() {
                         ))}
                     </div>
                 </div>
+
             </main>
         </div>
     );

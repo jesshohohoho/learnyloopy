@@ -35,7 +35,7 @@ LearnLoop is an online application designed to support both students and tutors,
 - After verification, you will be redirected to the sign-in page. Enter the same email and password you used to register with LearnLoop.
 
 ## 🔑 Log In to LearnLoop
-Once logged in, you will be directed to the main page, which features the Past Performance Dashboard and a sidebar for navigating to other features of LearnLoop. If you are the first user, the dashboard will display everything as blank. You will have to study by our **[Smart Learning Platform](#smart-learning-platform)** to get a summary of your study performance.
+Once logged in, you will be directed to the main page, which features the Past Performance Dashboard and a sidebar for navigating to other features of LearnLoop. If you are the first user, the dashboard will display everything as blank. You will have to study by our **[Smart Learning](#smart-learning)** Platform to get a summary of your study performance.
 
 < Image here >
 
@@ -67,5 +67,7 @@ Once logged in, you will be directed to the main page, which features the Past P
 </table>
 
 
+## Smart Learning 
 
+sfwwgwergherghe
 

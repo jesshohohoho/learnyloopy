@@ -17,7 +17,7 @@ LearnLoop is an online application designed to support both students and tutors,
     - Students can select their tutors by the dedicated filtering system according to subject, teaching style and ranking options.
     - Stdents can submit feedbacks of tutors to enhance the filtering system.
  
-- **Smart Learning**: Virtual AI tutoring platform for **students**.
+- **[Smart Learning](#smart-learning)**: Virtual AI tutoring platform for **students**.
     - AI chatbox for subject material guidance.
     - Instant Mock Test Generator for self-reflections.
     - Flashcards Generator to revise weak topics from mock test.
@@ -41,27 +41,27 @@ Once logged in, you will be directed to the main page, which features the Past P
 
 <table align="center">
   <tr>
-    <td><img src="frontend/src/assets/S%20image%201.png" alt="Past Performance Dashboard" width="100"/></td>
+    <td><img src="frontend/src/assets/S%20image%201.png" alt="Past Performance Dashboard" width="80"/></td>
     <td><b>Past Performance Dashboard</b><br>Displays students' academic statistics and progress through clear visual summaries.</td>
   </tr>
   <tr>
-    <td><img src="frontend/src/assets/S%20image%202.png" alt="Leaderboard" width="100"/></td>
+    <td><img src="frontend/src/assets/S%20image%202.png" alt="Leaderboard" width="80"/></td>
     <td><b>Leaderboard</b><br>Highlights top-performing tutors based on their achievements and activity.</td>
   </tr>
   <tr>
-    <td><img src="frontend/src/assets/S%20image%203.png" alt="Forum" width="100"/></td>
+    <td><img src="frontend/src/assets/S%20image%203.png" alt="Forum" width="80"/></td>
     <td><b>Forum</b><br>Provides a communication platform where tutors and students share questions, resources, and ideas.</td>
   </tr>
   <tr>
-    <td><img src="frontend/src/assets/S%20image%206.png" alt="Smart Learning" width="100"/></td>
+    <td><img src="frontend/src/assets/S%20image%206.png" alt="Smart Learning" width="80"/></td>
     <td><b>Smart Learning</b><br>Offers virtual tutoring support with study material guidance, mock tests, flashcards, and a pomodoro timer.</td>
   </tr>
   <tr>
-    <td><img src="frontend/src/assets/S%20image%207.png" alt="Guided Learning" width="100"/></td>
+    <td><img src="frontend/src/assets/S%20image%207.png" alt="Guided Learning" width="80"/></td>
     <td><b>Guided Learning</b><br>Enables students to select their preferred tutors through a dedicated filtering system.</td>
   </tr>
   <tr>
-    <td><img src="frontend/src/assets/S%20image%208.png" alt="Exit" width="100"/></td>
+    <td><img src="frontend/src/assets/S%20image%208.png" alt="Exit" width="80"/></td>
     <td><b>Exit</b><br>Allows users to securely log out and end their session.</td>
   </tr>
 </table>
@@ -69,5 +69,4 @@ Once logged in, you will be directed to the main page, which features the Past P
 
 ## Smart Learning 
 
-sfwwgwergherghe
-
+gh

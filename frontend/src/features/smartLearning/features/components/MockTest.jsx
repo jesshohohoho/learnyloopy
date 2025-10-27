@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useMockTest } from '../hooks/useMockTest';
 import LoadingSpinner from '../../../../components/Loading';
 
@@ -18,8 +18,8 @@ export function MockTest({ isOpen, onClose, subjectName }) {
     submitResult
   } = useMockTest();
 
-  const [isSubmittingResults, setIsSubmittingResults] = React.useState(false);
-
+  const [isSubmittingResults, setIsSubmittingResults] = useState(false);
+  const [finalScore, setFinalScore] = useState(null);
   const handleStartTest = async () => {
     await startMockTest(subjectName);
   };
@@ -31,6 +31,9 @@ export function MockTest({ isOpen, onClose, subjectName }) {
       try {
         setIsSubmittingResults(true); // This should trigger second loading state
         const score = calculateScore();
+
+        setFinalScore(score)
+
         const hasWrongAnswers = score.wrongAnswers && score.wrongAnswers.length > 0;
         await submitResult(subjectName, score.percentage, hasWrongAnswers);
         console.log('Mock test result stored successfully!');
@@ -45,6 +48,7 @@ export function MockTest({ isOpen, onClose, subjectName }) {
   const handleClose = () => {
     resetTest();
     setIsSubmittingResults(false); // ADDED: Reset submission state
+    setFinalScore(null);
     onClose();
   };
 
@@ -277,7 +281,7 @@ export function MockTest({ isOpen, onClose, subjectName }) {
           )}
 
           {/* Results screen */}
-          {showResults && (
+          {showResults && finalScore && (
             <div style={{ textAlign: 'center', padding: '20px' }}>
               <h3 style={{
                 color: '#374151',
@@ -299,7 +303,7 @@ export function MockTest({ isOpen, onClose, subjectName }) {
                   color: '#7C3AED',
                   marginBottom: '15px'
                 }}>
-                  {calculateScore().correct}/{calculateScore().total}
+                  {finalScore.correct}/{finalScore.total}
                 </div>
                 <p style={{
                   fontSize: '24px',
@@ -307,15 +311,15 @@ export function MockTest({ isOpen, onClose, subjectName }) {
                   color: '#7C3AED',
                   marginBottom: '10px'
                 }}>
-                  {calculateScore().percentage}% Correct
+                  {finalScore.percentage}% Correct
                 </p>
                 <p style={{
                   color: '#6B7280',
                   fontSize: '16px',
                   margin: 0
                 }}>
-                  {calculateScore().percentage >= 80 ? "Excellent work! 🎉" :
-                    calculateScore().percentage >= 60 ? "Good job! Keep practicing! 👍" :
+                  {finalScore.percentage >= 80 ? "Excellent work! 🎉" :
+                    finalScore.percentage >= 60 ? "Good job! Keep practicing! 👍" :
                       "Keep studying and try again! 📚"}
                 </p>
               </div>

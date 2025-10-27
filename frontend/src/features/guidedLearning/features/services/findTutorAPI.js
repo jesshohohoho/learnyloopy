@@ -6,12 +6,14 @@ export const findTutorAPI = {
   findTutor: async (criteria) => {
     try {
       const payload = {
-        desired_teaching_style: criteria.teachingStyle ? [criteria.teachingStyle] : [],
+        desired_teaching_style: criteria.teachingStyle ? criteria.teachingStyle : [],
         subject: criteria.subject ? [criteria.subject] : [],
         desired_teaching_mode: criteria.tutoringMode ? [criteria.tutoringMode] : [],
         max_hourly_rate: criteria.maxHourlyRate ? parseFloat(criteria.maxHourlyRate) : 0,
         min_experience: criteria.minExperience ? parseInt(criteria.minExperience) : 0,
       };
+
+      console.log('Sending payload', payload)
 
       // Choose different backend endpoint based on ranking option (overall or specific)
       const endpoint = criteria.rankingOption === "best_overall" 

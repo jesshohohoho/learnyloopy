@@ -10,7 +10,10 @@ function RateTutor({ onClose }) {
     submitReview,
     loading,
     message,
-    success
+    success,
+    tutors,
+    loadingTutors,
+    availableSubjects
   } = useRateTutor();
 
   const handleSubmit = async (e) => {
@@ -100,41 +103,6 @@ function RateTutor({ onClose }) {
             >
               <span className="text-[#808080] text-[15px] font-bold mb-3 block text-left">RATING</span>
               
-              {/* Registered Course */}
-              <div className="mb-3 flex items-center">
-                <span style={{
-                  width: "157px", 
-                  minWidth: "157px", 
-                  fontFamily: "Open Sans, sans-serif", 
-                  fontWeight: 600, 
-                  fontSize: "20px", 
-                  color: "#222", 
-                  margin: "6px 12px 6px 0", 
-                  textAlign: "left"
-                }}>
-                  Registered Course
-                </span>
-                <input 
-                  style={{
-                    width: "307px", 
-                    height: "33px", 
-                    background: "#D9D9D9", 
-                    borderRadius: "10px", 
-                    padding: "0 12px", 
-                    border: "none", 
-                    fontFamily: "Open Sans, sans-serif", 
-                    fontWeight: 400, 
-                    fontSize: "18px", 
-                    color: "#222"
-                  }} 
-                  value={formData.courseName} 
-                  onChange={e => updateField('courseName', e.target.value)} 
-                  type="text" 
-                  placeholder="Enter course name"
-                  required
-                />
-              </div>
-
               {/* Your Tutor */}
               <div className="mb-3 flex items-center">
                 <span style={{
@@ -149,25 +117,94 @@ function RateTutor({ onClose }) {
                 }}>
                   Your Tutor
                 </span>
-                <input 
+                <select
+                  value={formData.tutorName}
+                  onChange={e => updateField('tutorName', e.target.value)}
+                  disabled={loading || loadingTutors}
+                  required
                   style={{
                     width: "307px", 
                     height: "33px", 
-                    background: "#D9D9D9", 
+                    background: loading || loadingTutors ? "#E5E5E5" : "#D9D9D9", 
                     borderRadius: "10px", 
                     padding: "0 12px", 
                     border: "none", 
                     fontFamily: "Open Sans, sans-serif", 
                     fontWeight: 400, 
                     fontSize: "18px", 
-                    color: "#222"
+                    color: formData.tutorName ? "#222" : "#888",
+                    cursor: loading || loadingTutors ? "not-allowed" : "pointer",
+                    appearance: "none",
+                    backgroundImage: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e")`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "right 8px center",
+                    backgroundSize: "16px",
+                    paddingRight: "32px"
                   }} 
-                  value={formData.tutorName} 
-                  onChange={e => updateField('tutorName', e.target.value)} 
-                  type="text" 
-                  placeholder="Enter tutor name"
+                >
+                  <option value="" disabled>
+                    {loadingTutors ? "Loading tutors..." : "Select a tutor"}
+                  </option>
+                  {tutors.map((tutor) => (
+                    <option key={tutor.id} value={tutor.name}>
+                      {tutor.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Registered Course */}
+              <div className="mb-3 flex items-center">
+                <span style={{
+                  width: "157px", 
+                  minWidth: "157px", 
+                  fontFamily: "Open Sans, sans-serif", 
+                  fontWeight: 600, 
+                  fontSize: "20px", 
+                  color: "#222", 
+                  margin: "6px 12px 6px 0", 
+                  textAlign: "left"
+                }}>
+                  Registered Course
+                </span>
+                <select
+                  value={formData.courseName}
+                  onChange={e => updateField('courseName', e.target.value)}
+                  disabled={loading || !formData.tutorName || availableSubjects.length === 0}
                   required
-                />
+                  style={{
+                    width: "307px", 
+                    height: "33px", 
+                    background: loading || !formData.tutorName ? "#E5E5E5" : "#D9D9D9", 
+                    borderRadius: "10px", 
+                    padding: "0 12px", 
+                    border: "none", 
+                    fontFamily: "Open Sans, sans-serif", 
+                    fontWeight: 400, 
+                    fontSize: "18px", 
+                    color: formData.courseName ? "#222" : "#888",
+                    cursor: loading || !formData.tutorName ? "not-allowed" : "pointer",
+                    appearance: "none",
+                    backgroundImage: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e")`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "right 8px center",
+                    backgroundSize: "16px",
+                    paddingRight: "32px"
+                  }}
+                >
+                  <option value="" disabled>
+                    {!formData.tutorName 
+                      ? "Select a tutor first" 
+                      : availableSubjects.length === 0 
+                      ? "No subjects available" 
+                      : "Select a course"}
+                  </option>
+                  {availableSubjects.map((subject, index) => (
+                    <option key={index} value={subject}>
+                      {subject}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               {/* Rating */}

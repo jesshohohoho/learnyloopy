@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRecommendation } from "../hooks/useRecommendation";
 import resume from '../../../assets/resume.png';
 import bulb from '../../../assets/bulb.png';
@@ -6,7 +6,7 @@ import LoadingSpinner from "../../../components/Loading";
 
 export default function Recommendation() {
     const { tutors, loading, error, getStarRating, formatDescription } = useRecommendation();
-    
+    const [showPopup, setShowPopup] = useState(false);
     if (loading) {
         return (
             <div style={{
@@ -69,6 +69,89 @@ export default function Recommendation() {
                 overflowY: "auto",
             }}
         >
+
+            {/* Popup message for developing feature */}
+            {showPopup && (
+                <div 
+                    style={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100vw",
+                        height: "100vh",
+                        background: "rgba(0, 0, 0, 0.5)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        zIndex: 9999
+                    }}
+                    onClick={() => setShowPopup(false)}
+                >
+                    <div
+                        onClick={(e) => e.stopPropagation()}
+                        style={{
+                            background: "#F3F3F3",
+                            borderRadius: "18px",
+                            padding: "40px",
+                            maxWidth: "400px",
+                            textAlign: "center",
+                            boxShadow: "0 10px 40px rgba(0,0,0,0.3)",
+                            position: "relative"
+                        }}
+                    >
+                        {/* Close button */}
+                        <button
+                            onClick={() => setShowPopup(false)}
+                            style={{
+                                position: "absolute",
+                                top: "12px",
+                                right: "12px",
+                                fontSize: "28px",
+                                background: "none",
+                                border: "none",
+                                cursor: "pointer",
+                                color: "#888"
+                            }}
+                        >
+                            ×
+                        </button>
+
+                        {/* Icon */}
+                        <div style={{ fontSize: "64px", marginBottom: "16px" }}>
+                            🚧
+                        </div>
+
+                        {/* Message */}
+                        <div style={{
+                            fontFamily: "Open Sans, sans-serif",
+                            fontSize: "20px",
+                            fontWeight: "bold",
+                            color: "#222",
+                            marginBottom: "24px"
+                        }}>
+                            This feature will be available soon.
+                        </div>
+
+                        {/* OK Button */}
+                        <button
+                            onClick={() => setShowPopup(false)}
+                            style={{
+                                padding: "12px 32px",
+                                background: "#6F48FF",
+                                color: "#fff",
+                                border: "none",
+                                borderRadius: "15px",
+                                fontSize: "18px",
+                                fontWeight: "bold",
+                                cursor: "pointer",
+                                boxShadow: "2px 2px 6px #DDD3D3"
+                            }}
+                        >
+                            Got it!
+                        </button>
+                    </div>
+                </div>
+            )}
             {/* Main Content */}
             <main style={{
                 flex: 1,
@@ -186,21 +269,37 @@ export default function Recommendation() {
                                     </div>
                                 </div>
 
-                                {/* Bottom Section - Resume Icon */}
+                                {/* Contact Button */}
                                 <div style={{ 
                                     textAlign: 'center',
-                                    marginTop: 'auto' // FIXED: Push to bottom
+                                    marginTop: 'auto'
                                 }}>
-                                    <img 
-                                        src={resume}
-                                        alt="Resume"
-                                        style={{ 
-                                            width: '80px', 
-                                            height: '80px', 
-                                            objectFit: 'contain', 
-                                            cursor: 'pointer'
-                                        }} 
-                                    />
+                                    <button
+                                        onClick={() => setShowPopup(true)}
+                                        style={{
+                                            padding: "10px 24px",
+                                            background: "#6F48FF",
+                                            color: "#fff",
+                                            border: "none",
+                                            borderRadius: "12px",
+                                            fontSize: "16px",
+                                            fontWeight: "bold",
+                                            cursor: "pointer",
+                                            boxShadow: "2px 2px 6px rgba(0,0,0,0.2)",
+                                            transition: "all 0.2s ease",
+                                            fontFamily: "Open Sans, sans-serif"
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.transform = "scale(1.05)";
+                                            e.currentTarget.style.background = "#5a38cc";
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.transform = "scale(1)";
+                                            e.currentTarget.style.background = "#6F48FF";
+                                        }}
+                                    >
+                                        Contact Tutor
+                                    </button>
                                 </div>
                             </div>
                         ))}

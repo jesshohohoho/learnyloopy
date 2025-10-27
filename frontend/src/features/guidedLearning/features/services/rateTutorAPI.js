@@ -3,6 +3,25 @@ import { API_ENDPOINTS } from "../../../../config/api";
 const API_BASE = `${API_ENDPOINTS.guidedLearning}`
 
 export const rateTutorAPI = {
+  // get all tutors for dropdown selection
+  getAllTutors: async () => {
+    try {
+      const response = await fetch(`${API_BASE}/tutors/`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch tutors');
+      }
+      return await response.json();
+    } catch (error) {
+      throw new Error(`Fetch tutors failed: ${error.message}`);
+    }
+  },
+
+  // Get subjects for selected tutor
+  getTutorSubjects: (tutors, tutorName) => {
+    const tutor = tutors.find(t => t.name === tutorName);
+    return tutor?.subject || [];
+  },
+
   // Find tutor by name to get their ID
   findTutorByName: async (tutorName) => {
     try {

@@ -59,6 +59,7 @@ export default function ForumPage() {
         boxSizing: "border-box",
         padding: "20px 45px 20px 20px", // right padding for breathing space
         gap: "32px", // space between main content & sidebar
+        overflowX: "auto",
       }}
     >
       {/* ===== Left Column (Main Content) ===== */}

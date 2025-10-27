@@ -364,7 +364,7 @@ def read_pdf(file=UploadFile):
     for page in reader.pages:
         page_text = page.extract_text()
         if page_text:
-            page_text = " ".join(page_text.split())
+            page_text = re.sub(r'\s+', ' ', page_text).strip()
             text += page_text + "\n"
     return text.strip()
 

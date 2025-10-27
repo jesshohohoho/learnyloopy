@@ -12,7 +12,7 @@ export const useFindTutor = () => {
     tutoringMode: "Online",
     budget: "",
     minExperience: "",
-    teachingStyle: "",
+    teachingStyle: [],
     maxHourlyRate: "",
     rankingOption: "best_overall"
   });
@@ -22,6 +22,7 @@ export const useFindTutor = () => {
   const [loadingSubjects, setLoadingSubjects] = useState(false);
   const [availableTeachingStyles, setAvailableTeachingStyles] = useState([]);
   const [loadingTeachingStyles, setLoadingTeachingStyles] = useState(false);   
+  const [showTeachingStyleDropdown, setShowTeachingStyleDropdown] = useState(false);
 
   // Request states
   const [result, setResult] = useState([]);
@@ -100,7 +101,7 @@ export const useFindTutor = () => {
       tutoringMode: "Online",
       budget: "",
       minExperience: "",
-      teachingStyle: "",
+      teachingStyle: [],
       maxHourlyRate: "",
       rankingOption: "best_overall"
     });
@@ -124,6 +125,8 @@ export const useFindTutor = () => {
     availableSubjects,
     loadingSubjects,
     availableTeachingStyles,
-    loadingTeachingStyles
+    loadingTeachingStyles,
+    showTeachingStyleDropdown,
+    setShowTeachingStyleDropdown
   };
 };

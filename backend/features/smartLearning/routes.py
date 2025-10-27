@@ -47,8 +47,10 @@ async def upload_material(subject: str = Form(...), file: UploadFile = File(...)
         else:
             raise HTTPException(status_code=400, detail="Unsupported file type")
         
+        word_count = len(text.split())
+        print(f"Word counts: {word_count} words")
         # Check if document is too large
-        if len(text) > 5000:  # ~50k characters limit
+        if word_count > 5000:  
             raise HTTPException(
                 status_code=400,
                 detail="Document is too large. Please upload a smaller document or split it into parts."

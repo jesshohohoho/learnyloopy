@@ -104,12 +104,19 @@ export const useMockTest = () => {
     try {
       const scoreData = calculateScore(); // Get the wrong answers
       
+      console.log('=== FRONTEND CALCULATION ===');
+      console.log('Score Data:', scoreData);
+      console.log('Percentage:', scoreData.percentage);
+      console.log('Correct:', scoreData.correct, '/', scoreData.total);
+      console.log('Wrong answers count:', scoreData.wrongAnswers.length);
       const response = await storeMockTestResult(subjectName, {
         result_percentage: scoreData.percentage,
         wrong_answers: scoreData.wrongAnswers, // Send wrong answers
         create_flashcards_from_wrong: createFlashcards // Send flashcard option
       });
       return response;
+
+      console.log('Payload:', response);
     } catch (err) {
       setError(err.message);
       throw err;

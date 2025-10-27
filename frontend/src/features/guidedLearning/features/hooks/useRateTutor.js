@@ -1,5 +1,5 @@
 // src/features/reviews/hooks/useRateTutor.js
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { rateTutorAPI } from '../services/rateTutorAPI';
 
 export const useRateTutor = () => {
@@ -11,10 +11,47 @@ export const useRateTutor = () => {
     comment: "",
   });
 
+  const [tutors, setTutors] = useState([]);
+  const [loadingTutors, setLoadingTutors] = useState(false);
+  const [availableSubjects, setAvailableSubjects] = useState([]);
   // Request states
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
+
+  // Fetch tutors 
+  useEffect(() => {
+    const fetchTutors = async () => {
+      setLoadingTutors(true);
+      try {
+        const tutorsList = await rateTutorAPI.getAllTutors();
+        const sortedTutors = tutorsList.sort((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+        setTutors(sortedTutors);
+      } catch (error) {
+        console.error('Failed to fetch tutors:', error);
+      } finally {
+        setLoadingTutors(false);
+      }
+    };
+
+    fetchTutors();
+  }, []);
+
+  // Update available subjects when tutor changes
+  useEffect(() => {
+    if (formData.tutorName) {
+      const subjects = rateTutorAPI.getTutorSubjects(tutors, formData.tutorName);
+      setAvailableSubjects(subjects);
+      // Reset courseName if it's not in new tutor's subjects
+      if (formData.courseName && !subjects.includes(formData.courseName)) {
+        setFormData(prev => ({ ...prev, courseName: "" }));
+      }
+    } else {
+      setAvailableSubjects([]);
+    }
+  }, [formData.tutorName, tutors]);
 
   const updateField = (field, value) => {
     setFormData(prev => ({
@@ -88,6 +125,11 @@ export const useRateTutor = () => {
     // States
     loading,
     message,
-    success
+    success,
+
+    // Tutors data
+    tutors,
+    loadingTutors,
+    availableSubjects
   };
 };

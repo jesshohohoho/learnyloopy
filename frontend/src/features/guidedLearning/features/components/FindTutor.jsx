@@ -1,4 +1,5 @@
-import React from "react";
+// src/features/tutors/components/FindTutor.jsx
+import React, { useState } from "react";
 import { useFindTutor } from "../hooks/useFindTutor";
 import { useNavigate } from "react-router-dom";
 
@@ -16,6 +17,8 @@ function FindTutor({ onClose }) {
     availableTeachingStyles,
     loadingTeachingStyles,
   } = useFindTutor();
+
+  const [showTeachingStyleDropdown, setShowTeachingStyleDropdown] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -406,47 +409,122 @@ function FindTutor({ onClose }) {
                 placeholder="Enter maximum hourly rate (RM)"
               />
             </div>
-
-            {/* Teaching Style */}
+            
+            {/* Teaching Style - Multi-select dropdown */}
             <div className="mb-3 flex items-center">
-              <span
-                style={{
-                  width: "157px",
-                  minWidth: "157px",
-                  fontFamily: "Open Sans, sans-serif",
-                  fontWeight: 600,
-                  fontSize: "20px",
-                  color: "#222",
-                  margin: "12px 12px 6px 0",
-                  textAlign: "left",
-                }}
-              >
+              <span style={{
+                width: "157px", 
+                minWidth: "157px", 
+                fontFamily: "Open Sans, sans-serif", 
+                fontWeight: 600, 
+                fontSize: "20px", 
+                color: "#222", 
+                margin: "12px 12px 6px 0", 
+                textAlign: "left"
+              }}>
                 Teaching Style
               </span>
-              <select
-                style={{
-                  width: "307px",
-                  height: "33px",
-                  background: "#D9D9D9",
-                  borderRadius: "10px",
-                  padding: "0 12px",
-                  border: "none",
-                  fontFamily: "Open Sans, sans-serif",
-                  fontWeight: 400,
-                  fontSize: "18px",
-                  color: "#222",
-                }}
-                value={formData.teachingStyle}
-                onChange={(e) => updateField("teachingStyle", e.target.value)}
-                disabled={loadingTeachingStyles}
-              >
-                <option value="">Select teaching style</option>
-                {availableTeachingStyles.map((style, index) => (
-                  <option key={index} value={style}>
-                    {style}
-                  </option>
-                ))}
-              </select>
+              
+              <div style={{ position: "relative", width: "307px" }}>
+                {/* Display/Toggle Button */}
+                <button
+                  type="button"
+                  onClick={() => setShowTeachingStyleDropdown(!showTeachingStyleDropdown)}
+                  style={{
+                    width: "100%",
+                    height: "33px",
+                    backgroundColor: "#D9D9D9",
+                    borderRadius: "10px",
+                    padding: "0 32px 0 12px",
+                    border: "none",
+                    fontFamily: "Open Sans, sans-serif",
+                    fontSize: "18px",
+                    color: formData.teachingStyle.length > 0 ? "#222" : "#888",
+                    textAlign: "left",
+                    cursor: "pointer",
+                    position: "relative",
+                    appearance: "none",
+                    backgroundImage: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e")`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "right 8px center",
+                    backgroundSize: "16px"
+                  }}
+                >
+                  {formData.teachingStyle.length === 0 
+                    ? "Select teaching styles..." 
+                    : formData.teachingStyle.length === 1
+                    ? formData.teachingStyle[0]
+                    : `${formData.teachingStyle.length} styles selected`}
+                </button>
+
+                {/* Dropdown Menu */}
+                {showTeachingStyleDropdown && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "36px",
+                      left: 0,
+                      width: "100%",
+                      maxHeight: "200px",
+                      overflowY: "auto",
+                      backgroundColor: "#fff",
+                      border: "1px solid #DDD3D3",
+                      borderRadius: "8px",
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                      zIndex: 100,
+                      padding: "8px"
+                    }}
+                  >
+                    {loadingTeachingStyles ? (
+                      <div style={{ padding: "8px", textAlign: "center", color: "#888" }}>
+                        Loading...
+                      </div>
+                    ) : (
+                      availableTeachingStyles.map((style, index) => (
+                        <label
+                          key={index}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            padding: "8px",
+                            cursor: "pointer",
+                            borderRadius: "4px",
+                            transition: "background 0.2s ease"
+                          }}
+                          onMouseEnter={(e) => e.currentTarget.style.background = "#F3F3F3"}
+                          onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={formData.teachingStyle.includes(style)}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                updateField('teachingStyle', [...formData.teachingStyle, style]);
+                              } else {
+                                updateField('teachingStyle', formData.teachingStyle.filter(s => s !== style));
+                              }
+                            }}
+                            style={{
+                              marginRight: "8px",
+                              width: "16px",
+                              height: "16px",
+                              cursor: "pointer",
+                              accentColor: "#6F48FF"
+                            }}
+                          />
+                          <span style={{
+                            fontFamily: "Open Sans, sans-serif",
+                            fontSize: "16px",
+                            color: "#222"
+                          }}>
+                            {style}
+                          </span>
+                        </label>
+                      ))
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Ranking */}

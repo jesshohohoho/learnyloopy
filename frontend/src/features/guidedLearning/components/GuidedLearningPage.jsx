@@ -1,5 +1,5 @@
 // src/features/guidedLearning/components/GuidedLearningPage.jsx
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import add2 from "../../../assets/add2.png";
 import idea from "../../../assets/idea.png";
 import FindTutor from "../features/components/FindTutor";
@@ -29,6 +29,8 @@ export default function GuidedLearningPage() {
     handleSubjectClick,
     getStarRating,
   } = useGuidedLearning();
+
+  const [selectedTestimonial, setSelectedTestimonial] = useState(null);
 
   if (loading) {
     return (
@@ -353,6 +355,7 @@ export default function GuidedLearningPage() {
             {testimonials.map((testimonial) => (
               <div
                 key={testimonial.id}
+                onClick={() => setSelectedTestimonial(testimonial)}
                 style={{
                   background: "#F1EDED",
                   border: "1px solid #DDD3D3",
@@ -365,8 +368,8 @@ export default function GuidedLearningPage() {
                   flex: "0 0 auto",
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "center", // center comment vertically
-                  overflow: "hidden",
+                  justifyContent: "space-between",
+                  cursor: "pointer",
                   boxSizing: "border-box",
                 }}
               >
@@ -374,7 +377,11 @@ export default function GuidedLearningPage() {
                   <img
                     src={idea}
                     alt="Light Bulb"
-                    style={{ width: "30px", height: "30px", marginBottom: "8px" }}
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      marginBottom: "8px",
+                    }}
                   />
                 </div>
                 <div
@@ -383,20 +390,84 @@ export default function GuidedLearningPage() {
                     color: "#000000",
                     fontStyle: "italic",
                     fontWeight: 600,
-                    padding: "0 8px",
                     lineHeight: "1.4",
-                    marginBottom: "12px", // spacing before author
+                    padding: "0 8px",
+                    marginBottom: "12px",
+                    display: "-webkit-box",
+                    WebkitLineClamp: 3,
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
                   }}
                 >
                   "{testimonial.text}"
                 </div>
-                <div style={{ fontSize: "15px", color: "#7048FF", fontStyle: "italic" }}>
+                <div
+                  style={{
+                    fontSize: "15px",
+                    color: "#7048FF",
+                    fontStyle: "italic",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
                   {testimonial.author}
                 </div>
               </div>
             ))}
           </div>
         </div>
+
+        {/* Full Testimonial Modal */}
+        {selectedTestimonial && (
+          <ModalWrapper onClose={() => setSelectedTestimonial(null)}>
+            <div
+              style={{
+                background: "#F1EDED",
+                borderRadius: "12px",
+                padding: "30px",
+                maxWidth: "500px",
+                width: "90%",
+                textAlign: "center",
+                boxSizing: "border-box",
+              }}
+            >
+              <div>
+                <img
+                  src={idea}
+                  alt="Light Bulb"
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                    marginBottom: "16px",
+                  }}
+                />
+              </div>
+              <div
+                style={{
+                  fontSize: "16px",
+                  color: "#000000",
+                  fontStyle: "italic",
+                  fontWeight: 600,
+                  lineHeight: "1.5",
+                  marginBottom: "20px",
+                }}
+              >
+                "{selectedTestimonial.text}"
+              </div>
+              <div
+                style={{
+                  fontSize: "15px",
+                  color: "#7048FF",
+                  fontStyle: "italic",
+                }}
+              >
+                {selectedTestimonial.author}
+              </div>
+            </div>
+          </ModalWrapper>
+        )}
 
         {/* Call to Action Buttons */}
         <div
@@ -452,7 +523,7 @@ export default function GuidedLearningPage() {
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = "rgba(199,199,199,0.3)";
                 e.currentTarget.style.transform = "scale(1)";
-                e.currentTarget.style.color = "#000000ff";
+                e.currentTarget.style.color = "#000000";
               }}
             >
               Learn With Tutor
@@ -482,7 +553,7 @@ export default function GuidedLearningPage() {
                 onMouseLeave={(e) => {
                   e.currentTarget.style.background = "rgba(199,199,199,0.3)";
                   e.currentTarget.style.transform = "scale(1)";
-                  e.currentTarget.style.color = "#000000ff";
+                  e.currentTarget.style.color = "#000000";
                 }}
               >
                 Become A Tutor
@@ -497,11 +568,13 @@ export default function GuidedLearningPage() {
             <FindTutor onClose={() => setShowFindTutor(false)} />
           </ModalWrapper>
         )}
+
         {showRateTutor && (
           <ModalWrapper onClose={() => setShowRateTutor(false)}>
             <RateTutor onClose={() => setShowRateTutor(false)} />
           </ModalWrapper>
         )}
+
         {showBecomeTutor && BecomeTutor && (
           <ModalWrapper onClose={() => setShowBecomeTutor(false)}>
             <BecomeTutor onClose={() => setShowBecomeTutor(false)} />
@@ -512,11 +585,12 @@ export default function GuidedLearningPage() {
   );
 }
 
+// Modal Wrapper
 function ModalWrapper({ children, onClose }) {
   useEffect(() => {
-    document.body.style.overflow = "hidden"; // disable background scroll
+    document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = "auto"; // restore scroll
+      document.body.style.overflow = "auto";
     };
   }, []);
 

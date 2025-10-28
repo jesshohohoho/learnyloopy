@@ -9,11 +9,11 @@ LearnLoop is an online application designed to support both students and tutors,
   - Students receive answers and basic guidances.
   - Students give an upvote for useful comments.
 
-- **Leaderboard**: Ranking platform to showcase high quality **tutors**.
+- **[Leaderboard](#leaderboard)**: Ranking platform to showcase high quality **tutors**.
   - Tutors will be ranked according to number of upvotes from students.
   - Students can recognize tutors with high credibility.
  
-- **Guided Learning**: Tutor selection platform for **students**.
+- **[Guided Learning](#guided-learning)**: Tutor selection platform for **students**.
     - Students can select their tutors by the dedicated filtering system according to subject, teaching style and ranking options.
     - Stdents can submit feedbacks of tutors to enhance the filtering system.
  
@@ -70,7 +70,7 @@ The sidebar is always displayed on the left side of every page, allowing users t
   </tr>
 </table>
 
-
+<a id="smart-learning"></a>
 ## 🧠 Smart Learning
 
 Smart learning is a virtual tutor platform to provide incentive revision based on the uploaded study materials. To use this feature, it is neccessary to provide your own study materials from your lecturer/teacher via format of .pdf, .txt or .docx. The intention of doing so is to give specific and reliable outcome from the LLM for revision purposes. The performance in mock test and study time will be stored and visualize in the [Past Performance Dashboard](#past-performance-dashboard).
@@ -245,5 +245,57 @@ To like or see how many likes, refer to the table below:
 
 - To like a comment on a post, follow a similar method to navigate to the comment section as shown in ***[Comment a Post](#comment-a-post)***.  
 - Click the like button located at the right of each comment.
+
+<a id="leaderboard"></a>
+## 🏆 Leaderboard
+
+Each like in the comment section of a post in the [Forum](#forum) is converted into an equal number of credits. Tutors with high interaction levels with students are displayed on the leaderboard as recognition for their contributions. This system encourages tutors to engage with students, fosters a sustainable learning ecosystem, and increases exposure and popularity for active tutors.
+
+< image here >
+
+- The ranking leaderboard contains the following information:  
+  - Rank  
+  - Tutor's name  
+  - Number of credits  
+  - Styles (classified by LLM in [Guided Learning](#guided-learning))  
+  - Rating (average rating from students)
+
+- To refresh the page, refer to the refresh button contain at the top-right of the interface.
+
+<a id="guided-learning"></a>
+## 👨‍🏫 Guided Learning
+
+Guided Learning is the platform where students can select tutors using a dedicated filtering system and submit feedback to generate tutors’ styles and ratings. Additionally, tutor registration is managed through this interface.
+
+< image here >
+
+<a id="subject-filtering"></a>
+### ***🎨 Subject Filtering***
+
+- Users can filter tutors by selecting their preferred subject from the filtering bar at the top or by clicking the subject buttons.  
+- The list of tutors will then be narrowed down based on the selected subjects.
+
+<a id="tutor-feedback"></a>
+### ***🎨 Tutor Feedback***
+
+- Click the **+** button under the section of ***Trusted by Thousands — Hear from Our Alumni***
+
+< image here >
+
+- Fill in the dropout cells, choose your rating score and leave a comment in the popout window.
+- Click the ***Submit Review***
+
+<a id="find-tutor"></a>
+### ***🎨 Find a Tutor***
+
+< image here >
+
+<a id="become-tutor"></a>
+### ***🎨 Become a Tutor***
+
+< image here >
+
+<a id="disclaimer"></a>
+## Disclaimer
 
 

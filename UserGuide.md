@@ -23,7 +23,7 @@ LearnLoop is an online application designed to support both students and tutors,
     - Flashcards Generator to revise weak topics from mock test.
     - Pomodoro Timer to trace study hours for particular subject.
  
-- **Past Performance Dashboard**: Visualization platform that displays **students'** academic progress and performance statistics.
+- **[Past Performance Dashboard](#past-performance-dashboard)**: Visualization platform that displays **students'** academic progress and performance statistics.
     - Students can identify their best and worst subjects, along with total study hours and average mock test accuracy to inform study performance.
     - Students can forecast the probability final grade of selected subject by Decision Tree model.
 
@@ -35,38 +35,119 @@ LearnLoop is an online application designed to support both students and tutors,
 - After verification, you will be redirected to the sign-in page. Enter the same email and password you used to register with LearnLoop.
 
 ## 🔑 Log In to LearnLoop
-Once logged in, you will be directed to the main page, which features the Past Performance Dashboard and a sidebar for navigating to other features of LearnLoop. If you are the first user, the dashboard will display everything as blank. You will have to study by our **[Smart Learning](#smart-learning)** Platform to get a summary of your study performance.
+Once logged in, you will be directed to the main page, which features the Past Performance Dashboard and a **[sidebar](##sidebar)** for navigating to other features of LearnLoop. If you are the first user, the dashboard will display everything as blank. You will have to study by our **[Smart Learning Platform](#smart-learning)** to get a summary of your study performance.
 
 < Image here >
 
+### ***📚 Sidebar*** 
+
+The sidebar is always displayed on the left side of every page, allowing users to navigate to any page at any time. The table below provides explanations for each button in the sidebar.
+
 <table align="center">
   <tr>
-    <td><img src="frontend/src/assets/S%20image%201.png" alt="Past Performance Dashboard" width="80"/></td>
+    <td><img src="frontend/src/assets/S%20image%201.png" alt="Past Performance Dashboard" width="60"/></td>
     <td><b>Past Performance Dashboard</b><br>Displays students' academic statistics and progress through clear visual summaries.</td>
   </tr>
   <tr>
-    <td><img src="frontend/src/assets/S%20image%202.png" alt="Leaderboard" width="80"/></td>
+    <td><img src="frontend/src/assets/S%20image%202.png" alt="Leaderboard" width="60"/></td>
     <td><b>Leaderboard</b><br>Highlights top-performing tutors based on their achievements and activity.</td>
   </tr>
   <tr>
-    <td><img src="frontend/src/assets/S%20image%203.png" alt="Forum" width="80"/></td>
+    <td><img src="frontend/src/assets/S%20image%203.png" alt="Forum" width="60"/></td>
     <td><b>Forum</b><br>Provides a communication platform where tutors and students share questions, resources, and ideas.</td>
   </tr>
   <tr>
-    <td><img src="frontend/src/assets/S%20image%206.png" alt="Smart Learning" width="80"/></td>
+    <td><img src="frontend/src/assets/S%20image%206.png" alt="Smart Learning" width="60"/></td>
     <td><b>Smart Learning</b><br>Offers virtual tutoring support with study material guidance, mock tests, flashcards, and a pomodoro timer.</td>
   </tr>
   <tr>
-    <td><img src="frontend/src/assets/S%20image%207.png" alt="Guided Learning" width="80"/></td>
+    <td><img src="frontend/src/assets/S%20image%207.png" alt="Guided Learning" width="60"/></td>
     <td><b>Guided Learning</b><br>Enables students to select their preferred tutors through a dedicated filtering system.</td>
   </tr>
   <tr>
-    <td><img src="frontend/src/assets/S%20image%208.png" alt="Exit" width="80"/></td>
+    <td><img src="frontend/src/assets/S%20image%208.png" alt="Exit" width="60"/></td>
     <td><b>Exit</b><br>Allows users to securely log out and end their session.</td>
   </tr>
 </table>
 
 
-## Smart Learning 
+## Smart Learning
 
-gh
+Smart learning is a virtual tutor platform to provide incentive revision based on the uploaded study materials. To use this feature, it is neccessary to provide your own study materials from your lecturer/teacher via format of .pdf, .txt or .docx. The intention of doing so is to give specific and reliable outcome from the LLM for revision purposes. The performance in mock test and study time will be stored and visualize in the [Past Performance Dashboard](#past-performance-dashboard).
+
+To reach out this feature, click the icon of smart learning as shown in the sidebar. 
+
+<table>
+  <tr>
+    <td><img src="frontend/src/assets/S%20image%206.png" alt="Smart Learning" width="40"/></td>
+    <td><b>Smart Learning Icon</b><br></td>
+  </tr>
+</table>
+
+You will be directed to the front page of smart learning platform as shown above. Next, click the upload icon as shown in buttom left in the *pick the subject* section. 
+
+<table>
+  <tr>
+    <td><img src="frontend/src/assets/image-146.png" alt="Upload Button" width="40"/></td>
+    <td><b>Upload Icon</b><br>Click this icon to reach the upload material page.</td>
+  </tr>
+</table>
+
+When you reach the upload material page, you can insert your subject name and browse your study material from your device. Click submit to finalise your uploaded material.
+
+If your material is uploaded successfully, it will be displayed in the *pick the subject* section.
+
+< image here >
+
+Now, your journey to use the features in Smart Learning begins! 
+
+To use the features:
+- Click the subject you wish to revision. The button will turn purple once you click it.
+- Select Mock Test/ Flashcard / Pomogoro Timer.
+
+### ***Mock Test***
+
+< Image Here >
+
+Once you finish answering the questions, the results will be shown and stored in the Past Performance Dashboard. Click the *Test again* if you wish to retake the mock test. Click the *Close* button if you wish to redirect to *Smart Learning* Page.
+
+### ***Flashcards***
+
+Suppose if you make mistakes in the mock test, the questions will be stored and shown in the form of flashcards.
+
+< Image Here >
+
+- Click or Press the *space* keyboard to flip the flashcards to get the answers.
+- Click your feedback of the flashcard according to your understanding (Again/Hard/Good/Easy), or press the *(1,2,3,4)* keyboard buttons. The flashcard will be rearranged according to your understanding when you revise via flashcard again.
+- Click the close button or press *Esc* to redirect to *Smart Learning* Page.
+
+### ***Pomogoro Timer***
+
+Suppose if you want to trace your study time, pomogoro timer will be your choice! It serves to record your study time, and remind you to take a rest. Clidk the button as shown below to be directed to the *Pomogoro Timer*
+
+<table>
+  <tr>
+    <td><img src="frontend/src/assets/pomodoro.png" alt="Pomodoro Button" width="50"/></td>
+    <td><b>Pomodoro Icon</b><br></td>
+  </tr>
+</table>
+
+- Choose the subject you wish to revise.
+- Press *Start 25-minute study session*
+- Refer to the list of buttons below in *Pomogoro Timer*.
+
+<table>
+      <tr>
+    <td><img src="frontend/src/assets/minimize-2.png" alt="Pomodoro Button" width="40"/></td>
+    <td><b>Minimize the pomogoro tab</b><br></td>
+  </tr>
+  <tr>
+    <td><img src="frontend/src/assets/Close.png" alt="Close Button" width="40"/></td>
+    <td><b>Redirect completely to Smart Learning Page</b><br></td>
+  </tr>
+</table>
+
+
+## Past Performance Dashboard
+
+The summary of your performance from **[Smart Learning Platform](#smart-learning)** will be displayed in this Past Performance Dashboard page. 

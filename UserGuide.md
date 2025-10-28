@@ -279,7 +279,7 @@ To reach out this feature, click the icon of Leaderboard as shown in the sidebar
 <table>
   <tr>
     <td><img src="frontend/src/assets/S%20image%202.png" alt="Past Performance Dashboard" width="40"/></td>
-    <td><b>Smart Learning Icon</b><br></td>
+    <td><b>Leaderboard Icon</b><br></td>
   </tr>
 </table>
 

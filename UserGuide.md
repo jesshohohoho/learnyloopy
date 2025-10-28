@@ -18,10 +18,10 @@ LearnLoop is an online application designed to support both students and tutors,
     - Stdents can submit feedbacks of tutors to enhance the filtering system.
  
 - **[Smart Learning](#smart-learning)**: Virtual AI tutoring platform for **students**.
-    - AI chatbox for subject material guidance.
-    - Instant Mock Test Generator for self-reflections.
-    - Flashcards Generator to revise weak topics from mock test.
-    - Pomodoro Timer to trace study hours for particular subject.
+  - Students can get subject material guidance through the AI chatbox.
+  - Students can have their instant mock tests via the Mock Test Generator for self-reflection.
+  - Students can get automatically generated flashcards to revise weak topics from the mock tests.
+  - Students can use the Pomodoro Timer to track their study hours for each subject.
  
 - **[Past Performance Dashboard](#past-performance-dashboard)**: Visualization platform that displays **students'** academic progress and performance statistics.
     - Students can identify their best and worst subjects, along with total study hours and average mock test accuracy to inform study performance.

@@ -148,7 +148,7 @@ Suppose if you want to trace your study time, pomogoro timer will be your choice
 </table>
 
 
-<h2 id="Past Performance Dashboard">📋 Past Performance Dashboard</h3> 
+<h2 id="Past Performance Dashboard">📋 Past Performance Dashboard</h2> 
 
 The summary of your performance from the **[Smart Learning Platform](#smart-learning)** is displayed on this Past Performance Dashboard page. The key function of this dashboard is a predictive decision tree model, which allows students to input their test and assignment scores along with data from the **[Smart Learning Platform](#smart-learning)** to predict the probability of achieving their desired grade in a subject.
 
@@ -191,6 +191,6 @@ The component below displays information similar to that shown above. The action
 - Click the *Predict Probability* button to generate the result, then return to the Past Performance Dashboard by clicking the *Close* button.
 
 
-<h2 id="Forum">📚 Forum</h3> 
+<h2 id="Forum">📚 Forum</h2> 
 
 Forum is a communication platform for

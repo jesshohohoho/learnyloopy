@@ -148,7 +148,7 @@ Suppose if you want to trace your study time, pomogoro timer will be your choice
 </table>
 
 
-## 📋 Past Performance Dashboard
+<h2 id="Past Performance Dashboard">📋 Past Performance Dashboard</h3> 
 
 The summary of your performance from the **[Smart Learning Platform](#smart-learning)** is displayed on this Past Performance Dashboard page. The key function of this dashboard is a predictive decision tree model, which allows students to input their test and assignment scores along with data from the **[Smart Learning Platform](#smart-learning)** to predict the probability of achieving their desired grade in a subject.
 
@@ -164,7 +164,8 @@ The summary of your performance from the **[Smart Learning Platform](#smart-lear
 
 The component below displays information similar to that shown above. The action buttons in the rightmost column allow users to edit self-inserted values, delete entries, or navigate to the predictive decision tree model.
 
-### 🔧 Functions in Past Performance Dashboard
+<h3 id="Functions in Past Performance Dashboard">🔧 Functions in Past Performance Dashboard</h3> 
+
 <table>
       <tr>
     <td><img src="frontend/src/assets/minimize-2.png" alt="Pomodoro Button" width="40"/></td>
@@ -180,7 +181,8 @@ The component below displays information similar to that shown above. The action
   </tr>
 </table>
 
-### ***Predictive Decision Tree Model***
+<h3 id="Predictive Decision Tree Model">🤖 Predictive Decision Tree Model</h3> 
+
 - Click the **Predictive Decision Tree Model** button in the [table](#functions-in-past-performance-dashboard) to open a **popup window** that displays the model interface.
 
 < image here >

@@ -375,9 +375,9 @@ This Disclaimer sets out the limits of responsibility and liability of LearnLoop
 LearnLoop is a prototype educational platform developed **solely for the CodeNection 2025 competition**. It is not a commercial product and is intended only for demonstration and evaluation purposes.
 
 ### General Notice  
-By using LearnLoop, Students and Tutors acknowledge and agree that the platform is an experimental prototype built for the CodeNection 2025.  
-LearnLoop incorporates artificial intelligence (AI), predictive models, and automated systems that are still under development and may not always produce accurate, consistent, or reliable results.  
-LearnLoop makes no representation, warranty, or guarantee regarding the accuracy, completeness, performance, or reliability of such outputs.
+- By using LearnLoop, Students and Tutors acknowledge and agree that the platform is an experimental prototype built for the CodeNection 2025.  
+- LearnLoop incorporates artificial intelligence (AI), predictive models, and automated systems which may not always produce accurate, consistent, or reliable results.  
+- LearnLoop makes no representation, warranty, or guarantee regarding the accuracy, completeness, performance, or reliability of such outputs.
 
 ### For Students  
 - LearnLoop does not guarantee the accuracy of any predictive results displayed in the **[Past Performance Dashboard](#past-performance-dashboard)** and AI contents created in **[Smart Learning](#smart-learning)**.  

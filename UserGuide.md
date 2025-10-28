@@ -71,7 +71,7 @@ The sidebar is always displayed on the left side of every page, allowing users t
 </table>
 
 
-## Smart Learning
+## 🧠 Smart Learning
 
 Smart learning is a virtual tutor platform to provide incentive revision based on the uploaded study materials. To use this feature, it is neccessary to provide your own study materials from your lecturer/teacher via format of .pdf, .txt or .docx. The intention of doing so is to give specific and reliable outcome from the LLM for revision purposes. The performance in mock test and study time will be stored and visualize in the [Past Performance Dashboard](#past-performance-dashboard).
 
@@ -148,6 +148,6 @@ Suppose if you want to trace your study time, pomogoro timer will be your choice
 </table>
 
 
-## Past Performance Dashboard
+## 📋 Past Performance Dashboard
 
 The summary of your performance from **[Smart Learning Platform](#smart-learning)** will be displayed in this Past Performance Dashboard page. 

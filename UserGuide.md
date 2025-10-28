@@ -165,7 +165,8 @@ The summary of your performance from the **[Smart Learning Platform](#smart-lear
 
 The component below displays information similar to that shown above. The action buttons in the rightmost column allow users to edit self-inserted values, delete entries, or navigate to the predictive decision tree model.
 
-<h3 id="Functions in Past Performance Dashboard">🔧 Functions in Past Performance Dashboard</h3> 
+<a id="functions-in-past-performance-dashboard"></a>
+### ***🔧 Functions in Past Performance Dashboard***
 
 <table>
       <tr>
@@ -191,7 +192,7 @@ The component below displays information similar to that shown above. The action
 - Select the desired grade from the dropdown menu.
 - Click the *Predict Probability* button to generate the result, then return to the Past Performance Dashboard by clicking the *Close* button.
 
-
-<h2 id="Forum">📚 Forum</h2> 
+<a id="forum"></a>
+## 📚 Forum
 
 Forum is a communication platform for

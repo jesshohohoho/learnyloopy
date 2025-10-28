@@ -189,6 +189,6 @@ The component below displays information similar to that shown above. The action
 - Click the *Predict Probability* button to generate the result, then return to the Past Performance Dashboard by clicking the *Close* button.
 
 
-## 💬 Forum 
+## Forum 
 
 Forum is a communication platform for

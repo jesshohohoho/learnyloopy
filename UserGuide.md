@@ -35,10 +35,11 @@ LearnLoop is an online application designed to support both students and tutors,
 - After verification, you will be redirected to the sign-in page. Enter the same email and password you used to register with LearnLoop.
 
 ## 🔑 Log In to LearnLoop
-Once logged in, you will be directed to the main page, which features the Past Performance Dashboard and a **[sidebar](##sidebar)** for navigating to other features of LearnLoop. If you are the first user, the dashboard will display everything as blank. You will have to study by our **[Smart Learning Platform](#smart-learning)** to get a summary of your study performance.
+Once logged in, you will be directed to the main page, which features the Past Performance Dashboard and a **[sidebar](#sidebar)** for navigating to other features of LearnLoop. If you are the first user, the dashboard will display everything as blank. You will have to study by our **[Smart Learning Platform](#smart-learning)** to get a summary of your study performance.
 
 < Image here >
 
+<a id="sidebar"></a>
 ### ***📚 Sidebar*** 
 
 The sidebar is always displayed on the left side of every page, allowing users to navigate to any page at any time. The table below provides explanations for each button in the sidebar.
@@ -105,12 +106,14 @@ To use the features:
 - Click the subject you wish to revision. The button will turn purple once you click it.
 - Select Mock Test/ Flashcard / Pomogoro Timer.
 
+<a id="mock-test"></a>
 ### ***Mock Test***
 
 < Image Here >
 
 Once you finish answering the questions, the results will be shown and stored in the Past Performance Dashboard. Click the *Test again* if you wish to retake the mock test. Click the *Close* button if you wish to redirect to *Smart Learning* Page.
 
+<a id="flashcards"></a>
 ### ***Flashcards***
 
 Suppose if you make mistakes in the mock test, the questions will be stored and shown in the form of flashcards.
@@ -121,6 +124,7 @@ Suppose if you make mistakes in the mock test, the questions will be stored and 
 - Click your feedback of the flashcard according to your understanding (Again/Hard/Good/Easy), or press the *(1,2,3,4)* keyboard buttons. The flashcard will be rearranged according to your understanding when you revise via flashcard again.
 - Click the close button or press *Esc* to redirect to *Smart Learning* Page.
 
+<a id="pomodoro-timer"></a>
 ### ***Pomodoro Timer***
 
 Suppose if you want to trace your study time, pomogoro timer will be your choice! It serves to record your study time, and remind you to take a rest. Clidk the button as shown below to be directed to the *Pomodoro Timer*
@@ -153,6 +157,15 @@ Suppose if you want to trace your study time, pomogoro timer will be your choice
 
 The summary of your performance from the **[Smart Learning Platform](#smart-learning)** is displayed on this Past Performance Dashboard page. The key function of this dashboard is a predictive decision tree model, which allows students to input their test and assignment scores along with data from the **[Smart Learning Platform](#smart-learning)** to predict the probability of achieving their desired grade in a subject.
 
+To reach out this feature, click the icon of Past Performance Dashboard as shown in the sidebar. 
+
+<table>
+  <tr>
+    <td><img src="frontend/src/assets/S%20image%201.png" alt="Past Performance Dashboard" width="40"/></td>
+    <td><b>Past Performance Dashboard Icon</b><br></td>
+  </tr>
+</table>
+
 < image here >
 
 - The component above displays the summary of your study performance which are:
@@ -183,7 +196,8 @@ The component below displays information similar to that shown above. The action
   </tr>
 </table>
 
-<h3 id="Predictive Decision Tree Model">🤖 Predictive Decision Tree Model</h3> 
+<a id="predictive-decision-tree-model"></a>
+### ***🤖 Predictive Decision Tree Model***
 
 - Click the **Predictive Decision Tree Model** button in the [table](#functions-in-past-performance-dashboard) to open a **popup window** that displays the model interface.
 
@@ -196,6 +210,15 @@ The component below displays information similar to that shown above. The action
 ## 📚 Forum
 
 The Forum is a communication platform for both students and tutors to ask and answer questions. It is mutually beneficial: students can have their questions answered, while tutors earn credits when their answers are liked by users.
+
+To reach out this feature, click the icon of Forum as shown in the sidebar. 
+
+<table>
+  <tr>
+    <td><img src="frontend/src/assets/S%20image%203.png" alt="Past Performance Dashboard" width="40"/></td>
+    <td><b>Forum Icon</b><br></td>
+  </tr>
+</table>
 
 < image here >
 
@@ -251,6 +274,15 @@ To like or see how many likes, refer to the table below:
 
 Each like in the comment section of a post in the [Forum](#forum) is converted into an equal number of credits. Tutors with high interaction levels with students are displayed on the leaderboard as recognition for their contributions. This system encourages tutors to engage with students, fosters a sustainable learning ecosystem, and increases exposure and popularity for active tutors.
 
+To reach out this feature, click the icon of Leaderboard as shown in the sidebar. 
+
+<table>
+  <tr>
+    <td><img src="frontend/src/assets/S%20image%202.png" alt="Past Performance Dashboard" width="40"/></td>
+    <td><b>Smart Learning Icon</b><br></td>
+  </tr>
+</table>
+
 < image here >
 
 - The ranking leaderboard contains the following information:  
@@ -267,16 +299,25 @@ Each like in the comment section of a post in the [Forum](#forum) is converted i
 
 Guided Learning is the platform where students can select tutors using a dedicated filtering system and submit feedback to generate tutors’ styles and ratings. Additionally, tutor registration is managed through this interface.
 
+To reach out this feature, click the icon of Forum as shown in the sidebar. 
+
+<table>
+  <tr>
+    <td><img src="frontend/src/assets/S%20image%207.png" alt="Guided Learning" width="40"/></td>
+    <td><b>Guided Learning</b><br></td>
+  </tr>
+</table>
+
 < image here >
 
 <a id="subject-filtering"></a>
-### ***🎨 Subject Filtering***
+### ***🔍 Subject Filtering***
 
 - Users can filter tutors by selecting their preferred subject from the filtering bar at the top or by clicking the subject buttons.  
 - The list of tutors will then be narrowed down based on the selected subjects.
 
 <a id="tutor-feedback"></a>
-### ***🎨 Tutor Feedback***
+### ***⭐ Tutor Feedback***
 
 - Click the **+** button under the section of ***Trusted by Thousands — Hear from Our Alumni***
 
@@ -286,16 +327,46 @@ Guided Learning is the platform where students can select tutors using a dedicat
 - Click the ***Submit Review***
 
 <a id="find-tutor"></a>
-### ***🎨 Find a Tutor***
+### ***🕵️ Find a Tutor***
+
+- Click the **Learn With Tutor** button located at the middle-bottom.
+- Fill in your personal information and preferences at the popup window.
+
+< image here >
+
+- Select your prefered tutor by clicking ***Contact Tutor***.
 
 < image here >
 
 <a id="become-tutor"></a>
-### ***🎨 Become a Tutor***
+### ***🧑‍🏫 Become a Tutor***
+
+- Click the **Become A Tutor** button located at the middle-bottom.
+- Fill in your basic and detail information at the popup window.
 
 < image here >
 
+- Click ***Submit Application*** to submit your application form.
+
 <a id="disclaimer"></a>
+
 ## Disclaimer
 
+To standardize terminology in this section:
+
+- Clients refers to Students
+- Service Providers refers to Tutors
+- Web Browser refers to LearnLoop
+
+- Disclaimer for Clients (Students)
+  - Students acknowledge that their personal information will be shared with Tutors once they select a Tutor.
+  - Students acknowledge that their personal information will be stored securely by LearnLoop.
+
+- Disclaimer for Service Providers (Tutors)
+  - Tutors acknowledge that their personal information, including full name, teaching experience, and hourly rates, will be publicly displayed.
+  - Tutors acknowledge that their contact information, such as email and phone number, will be shared with Students once a tutoring arrangement is made.
+
+- Responsibilities of Web Browser (LearnLoop)
+  - LearnLoop is responsible for securely storing personal information under its care.
+  - LearnLoop will not use personal information for any purpose other than those explicitly mentioned in this disclaimer.
 

@@ -195,4 +195,55 @@ The component below displays information similar to that shown above. The action
 <a id="forum"></a>
 ## 📚 Forum
 
-Forum is a communication platform for
+The Forum is a communication platform for both students and tutors to ask and answer questions. It is mutually beneficial: students can have their questions answered, while tutors earn credits when their answers are liked by users.
+
+< image here >
+
+- Users can search for posts using the filter bar above.  
+- The **+** button next to the filter bar allows users to create new posts.  
+- Trending topics are displayed at the top-right corner.
+
+
+<a id="Create-a-Post"></a>
+### ***🖊️ Create a Post***
+
+- Click the **+** button at the top-right of the interface.  
+- Enter the subject and question in the popup window.  
+- Submit your question by clicking the ***Post Question*** button.
+
+<a id="Like-a-Post"></a>
+### ***👍 Like a Post***
+
+To like or see how many likes, refer to the table below:
+
+<table>
+  <tr>
+    <td><img src="frontend/src/assets/like.png" alt="Like Button" width="30"/></td>
+    <td><b>Like Button</b><br>Located at the bottom-right of each comment.</td>
+  </tr>
+</table>
+
+<a id="Comment-a-Post"></a>
+### ***💬 Comment a Post***
+
+- To comment a post, click the entire cell of the comment, and it will be directed to the comment section. The number of comments are shown beside the comment icon.
+
+<table>
+  <tr>
+    <td><img src="frontend/src/assets/comment.png" alt="Comment Button" width="30"/></td>
+    <td><b>Comment Icon</b><br>Located at the bottom-right of each comment.</td>
+  </tr>
+</table>
+
+< image here >
+
+- Write your comment in the bottom-middle comment cell.  
+- Click ***Post Comment*** to submit your comment.
+
+<a id="Like-a-Comment"></a>
+### ***❤️ Like a Comment***
+
+- To like a comment on a post, follow a similar method to navigate to the comment section as shown in ***[Comment a Post](#comment-a-post)***.  
+- Click the like button located at the right of each comment.
+
+

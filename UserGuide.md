@@ -121,9 +121,9 @@ Suppose if you make mistakes in the mock test, the questions will be stored and 
 - Click your feedback of the flashcard according to your understanding (Again/Hard/Good/Easy), or press the *(1,2,3,4)* keyboard buttons. The flashcard will be rearranged according to your understanding when you revise via flashcard again.
 - Click the close button or press *Esc* to redirect to *Smart Learning* Page.
 
-### ***Pomogoro Timer***
+### ***Pomodoro Timer***
 
-Suppose if you want to trace your study time, pomogoro timer will be your choice! It serves to record your study time, and remind you to take a rest. Clidk the button as shown below to be directed to the *Pomogoro Timer*
+Suppose if you want to trace your study time, pomogoro timer will be your choice! It serves to record your study time, and remind you to take a rest. Clidk the button as shown below to be directed to the *Pomodoro Timer*
 
 <table>
   <tr>
@@ -150,4 +150,45 @@ Suppose if you want to trace your study time, pomogoro timer will be your choice
 
 ## 📋 Past Performance Dashboard
 
-The summary of your performance from **[Smart Learning Platform](#smart-learning)** will be displayed in this Past Performance Dashboard page. 
+The summary of your performance from the **[Smart Learning Platform](#smart-learning)** is displayed on this Past Performance Dashboard page. The key function of this dashboard is a predictive decision tree model, which allows students to input their test and assignment scores along with data from the **[Smart Learning Platform](#smart-learning)** to predict the probability of achieving their desired grade in a subject.
+
+< image here >
+
+- The component above displays the summary of your study performance which are:
+  - Best Subject
+  - Worst Subject
+  - Total Study Hour
+  - Average Accuracy of Mock Test
+
+- The component in the middle visualizes bar charts displaying the Test 1, Test 2, and Assignment scores (self-inserted), as well as the Mock Test and Study Hours (from the Smart Learning Platform). For extra remarks, study hour can also be manually inserted.
+
+The component below displays information similar to that shown above. The action buttons in the rightmost column allow users to edit self-inserted values, delete entries, or navigate to the predictive decision tree model.
+
+### 🔧 Functions in Past Performance Dashboard
+<table>
+      <tr>
+    <td><img src="frontend/src/assets/minimize-2.png" alt="Pomodoro Button" width="40"/></td>
+    <td><b>Edit</b><br></td>
+  </tr>
+  <tr>
+    <td><img src="frontend/src/assets/Close.png" alt="Close Button" width="40"/></td>
+    <td><b>Delete</b><br></td>
+  </tr>
+    <tr>
+    <td><img src="frontend/src/assets/Close.png" alt="Close Button" width="40"/></td>
+    <td><b>Direct to predictive decision tree model</b><br></td>
+  </tr>
+</table>
+
+### ***Predictive Decision Tree Model***
+- Click the **Predictive Decision Tree Model** button in the [table](#functions-in-past-performance-dashboard) to open a **popup window** that displays the model interface.
+
+< image here >
+
+- Select the desired grade from the dropdown menu.
+- Click the *Predict Probability* button to generate the result, then return to the Past Performance Dashboard by clicking the *Close* button.
+
+
+## 💬 Forum 
+
+Forum is a communication platform for

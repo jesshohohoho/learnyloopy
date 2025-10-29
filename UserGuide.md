@@ -94,7 +94,7 @@ You will be directed to the front page of smart learning platform as shown above
   </tr>
 </table>
 
-When you reach the upload material page, you can insert your subject name and browse your study material from your device. Click submit to finalise your uploaded material.
+When you reach the upload material window, you can insert your subject name and browse your study material from your device. Click submit to finalise your uploaded material.
 
 If your material is uploaded successfully, it will be displayed in the *pick the subject* section.
 
@@ -102,12 +102,25 @@ If your material is uploaded successfully, it will be displayed in the *pick the
 
 Now, your journey to use the features in Smart Learning begins! 
 
-To use the features:
-- Click the subject you wish to revision. The button will turn purple once you click it.
-- Select Mock Test/ Flashcard / Pomodoro Timer.
+<a id="ai-chatbox"></a>
+### ***💡 AI Chatbox***
+
+- Select the **subject** you wish to revise by clicking the subject button. The button will turn purple once you click it. 
+  - The system will use **LLM-RAG** (Large Language Model with Retrieval-Augmented Generation) to provide subject-based guidance and materials.  
+
+- If your question is **beyond the scope of LLM-RAG**, the chatbox will automatically switch to a **classical LLM** to generate an appropriate response.  
+
+- You may also choose **not to select a subject** before asking questions.  
+  - In this case, the AI chatbox will rely **solely on the classical LLM** to answer your queries.  
+
 
 <a id="mock-test"></a>
 ### ***📝 Mock Test***
+
+- Click the subject you wish to have mock test. The button will turn purple once you click it.
+- Click the *Mock Test/Quiz* to open a pop-up window.
+- Click the *Start Test* as shown in the pop-up window.
+- Begin your mock test journey!
 
 < Image Here >
 
@@ -127,7 +140,7 @@ Suppose if you make mistakes in the mock test, the questions will be stored and 
 <a id="pomodoro-timer"></a>
 ### ***🍅 Pomodoro Timer***
 
-Suppose if you want to trace your study time, pomogoro timer will be your choice! It serves to record your study time, and remind you to take a rest. Clidk the button as shown below to be directed to the *Pomodoro Timer*
+Suppose if you want to trace your study time, pomogoro timer will be your choice! It serves to record your study time, and remind you to take a rest. Click the button as shown below to be directed to the *Pomodoro Timer*
 
 <table>
   <tr>
@@ -136,7 +149,7 @@ Suppose if you want to trace your study time, pomogoro timer will be your choice
   </tr>
 </table>
 
-- Choose the subject you wish to revise.
+- Choose the subject you wish to revise from the dropdown menu.
 - Press *Start 25-minute study session*
 - Refer to the list of buttons below in *Pomogoro Timer*.
 
@@ -174,27 +187,35 @@ To reach out this feature, click the icon of Past Performance Dashboard as shown
   - Total Study Hour
   - Average Accuracy of Mock Test
 
-- The component in the middle visualizes bar charts displaying the Test 1, Test 2, and Assignment scores (self-inserted), as well as the Mock Test and Study Hours (from the Smart Learning Platform). For extra remarks, study hour can also be manually inserted.
+- The component in the middle visualizes bar charts displaying the Test 1, Test 2, and Assignment scores (self-inserted), as well as the Mock Test and Study Hours (from the Smart Learning Platform).
 
 The component below displays information similar to that shown above. The action buttons in the rightmost column allow users to edit self-inserted values, delete entries, or navigate to the predictive decision tree model.
 
 <a id="functions-in-past-performance-dashboard"></a>
 ### ***🔧 Functions in Past Performance Dashboard***
 
-<table>
-      <tr>
-    <td><img src="frontend/src/assets/minimize-2.png" alt="Pomodoro Button" width="40"/></td>
-    <td><b>Edit</b><br></td>
+<table style="border-collapse: collapse; width: 100%;">
+  <tr>
+    <td style="background-color: #0078D7; color: white; font-weight: bold; text-align: center; padding: 8px 16px; border-radius: 6px; width: 120px;">
+      Edit
+    </td>
+    <td><b>Insert the scores for Test 1, Test 2, and Assignments.</b></td>
   </tr>
   <tr>
-    <td><img src="frontend/src/assets/Close.png" alt="Close Button" width="40"/></td>
-    <td><b>Delete</b><br></td>
+    <td style="background-color: #E81123; color: white; font-weight: bold; text-align: center; padding: 8px 16px; border-radius: 6px;">
+      Delete
+    </td>
+    <td><b>Reset all study summaries for the selected subject.</b></td>
   </tr>
-    <tr>
-    <td><img src="frontend/src/assets/Close.png" alt="Close Button" width="40"/></td>
-    <td><b>Direct to predictive decision tree model</b><br></td>
+  <tr>
+    <td style="background-color: #107C10; color: white; font-weight: bold; text-align: center; padding: 8px 16px; border-radius: 6px;">
+      Predict
+    </td>
+    <td><b>Open the predictive decision tree model.</b></td>
   </tr>
 </table>
+
+
 
 <a id="predictive-decision-tree-model"></a>
 ### ***🤖 Predictive Decision Tree Model***

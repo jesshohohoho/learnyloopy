@@ -220,7 +220,7 @@ The component below displays information similar to that shown above. The action
 <a id="predictive-decision-tree-model"></a>
 ### ***🤖 Predictive Decision Tree Model***
 
-- Click the **Predictive Decision Tree Model** button in the [table](#functions-in-past-performance-dashboard) to open a **popup window** that displays the model interface.
+- Click the **Predict** button to open a **popup window** that displays the model interface.
 
 < image here >
 

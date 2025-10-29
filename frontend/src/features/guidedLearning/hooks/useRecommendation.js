@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
 import { findTutorAPI } from '../features/services/findTutorAPI';
 import {supabase} from '../../../lib/supabase'
+import { useGuidedLearning } from './useGuidedLearning';
+import { listTutorAPI } from '../services/listTutorAPI';
 
 export const useRecommendation = () => {
   const [tutors, setTutors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  const { getStarRating } = useGuidedLearning();
 
    useEffect(() => {
     const loadRecommendedTutors = async () => {
@@ -17,7 +21,27 @@ export const useRecommendation = () => {
         
         if (storedTutors) {
           const parsedTutors = JSON.parse(storedTutors);
-          setTutors(parsedTutors);
+          
+          // tutors with full details including reviews
+          const enrichedTutors = await Promise.all(
+            parsedTutors.map(async (tutor) => {
+              try {
+                const details = await listTutorAPI.getTutorDetails(tutor.id);
+                return {
+                  ...tutor,
+                  latest_review: details?.latest_review || "No review yet.",
+                  // Keep other fields from details if needed
+                };
+              } catch (err) {
+                console.error(`Failed to fetch details for tutor ${tutor.id}:`, err);
+                return {
+                  ...tutor,
+                  latest_review: "No review yet."
+                };
+              }
+            })
+          );
+          setTutors(enrichedTutors);
         } else {
           // If no cached results, show empty
           setTutors([]);
@@ -33,18 +57,6 @@ export const useRecommendation = () => {
     loadRecommendedTutors();
   }, []);
 
-  const getStarRating = (rating) => {
-    const fullStars = Math.floor(rating || 0);
-    const hasHalfStar = (rating || 0) % 1 >= 0.5;
-    
-    let stars = '★'.repeat(fullStars);
-    if (hasHalfStar) stars += '☆';
-    
-    const remainingStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-    stars += '☆'.repeat(remainingStars);
-    
-    return stars;
-  };
 
   const formatDescription = (tutor) => {
     const teachingStyle = Array.isArray(tutor.teaching_style) 

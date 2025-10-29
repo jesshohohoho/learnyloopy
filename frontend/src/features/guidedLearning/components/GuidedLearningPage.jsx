@@ -357,7 +357,7 @@ export default function GuidedLearningPage() {
                   background: "#F1EDED",
                   border: "1px solid #DDD3D3",
                   borderRadius: "12px",
-                  padding: "35px",
+                  padding: "20px",
                   minWidth: "250px",
                   maxWidth: "300px",
                   height: "220px",
@@ -365,33 +365,69 @@ export default function GuidedLearningPage() {
                   flex: "0 0 auto",
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "center", // center comment vertically
-                  overflow: "hidden",
+                  alignItems: "center",
                   boxSizing: "border-box",
                 }}
               >
-                <div>
+                {/* Lightbulb Icon - Fixed at top */}
+                <div style={{ 
+                  flexShrink: 0,
+                  marginBottom: '12px'
+                }}>
                   <img
                     src={idea}
                     alt="Light Bulb"
-                    style={{ width: "30px", height: "30px", marginBottom: "8px" }}
+                    style={{ 
+                      width: "30px", 
+                      height: "30px",
+                      display: 'block'
+                    }}
                   />
                 </div>
+
+
+                {/* Make text scrollable */}
                 <div
                   style={{
-                    fontSize: "16px",
-                    color: "#000000",
-                    fontStyle: "italic",
-                    fontWeight: 600,
-                    padding: "0 8px",
-                    lineHeight: "1.4",
-                    marginBottom: "12px", // spacing before author
+                    flex: 1,
+                    overflowY: 'auto',
+                    overflowX: 'hidden',
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '12px',
+                    paddingRight: '8px',
+                    scrollbarWidth: 'none',
+                    msOverflowStyle: "none",
                   }}
                 >
-                  "{testimonial.text}"
-                </div>
-                <div style={{ fontSize: "15px", color: "#7048FF", fontStyle: "italic" }}>
-                  {testimonial.author}
+                  {/* Testimonial Text */}
+                  <div
+                    style={{
+                      fontSize: "16px",
+                      color: "#000000",
+                      fontStyle: "italic",
+                      fontWeight: 600,
+                      lineHeight: "1.4",
+                      wordWrap: "break-word",
+                      wordBreak: "break-word",
+                      hyphens: "auto",
+                    }}
+                  >
+                    "{testimonial.text}"
+                  </div>
+  
+                  {/* Author Name */}
+                  <div 
+                    style={{ 
+                      fontSize: "15px", 
+                      color: "#7048FF", 
+                      fontStyle: "italic",
+                      marginTop: 'auto'
+                    }}
+                  >
+                    {testimonial.author}
+                  </div>
                 </div>
               </div>
             ))}

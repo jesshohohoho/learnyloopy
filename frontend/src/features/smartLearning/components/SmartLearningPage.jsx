@@ -105,6 +105,7 @@ function SmartLearningPage() {
             boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
             overflowY: "auto",
             maxHeight: "500px", // parent card scrollable
+            position: "relative"
           }}
         >
           <h3
@@ -117,56 +118,81 @@ function SmartLearningPage() {
           >
             Pick a subject
           </h3>
+          
+          {/* Scrollable content wrapper */}
+          <div
+            style={{
+              flex: 1,
+              overflowY: "auto",
+              paddingBottom: "48px", 
+            }}
+          >
+              
+            {loading ? (
+              <div style={{ textAlign: "center", color: "#666" }}>
+                Loading subjects...
+              </div>
+            ) : error ? (
+              <div style={{ textAlign: "center", color: "#d32f2f" }}>{error}</div>
+            ) : subjects.length === 0 ? (
+              <div
+                style={{
+                  textAlign: "center",
+                  color: "#666",
+                  fontStyle: "italic",
+                }}
+              >
+                No subjects available.
+                <br />
+                Upload documents to get started!
+              </div>
+            ) : (
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
+                  gap: "12px",
+                  justifyContent: "center",
+                  alignContent: "start",
+                  height: "auto",
+                  padding: "0 12px",
+                }}
+              >
+                {subjects.map((subject) => (
+                  <AppButton
+                    key={subject}
+                    onClick={() => setSelectedSubject(subject)}
+                    isSelected={selectedSubject === subject}
+                  >
+                    {subject}
+                  </AppButton>
+                ))}
+              </div>
+            )}
+          </div>
 
-          {loading ? (
-            <div style={{ textAlign: "center", color: "#666" }}>
-              Loading subjects...
-            </div>
-          ) : error ? (
-            <div style={{ textAlign: "center", color: "#d32f2f" }}>{error}</div>
-          ) : subjects.length === 0 ? (
-            <div
-              style={{
-                textAlign: "center",
-                color: "#666",
-                fontStyle: "italic",
-              }}
-            >
-              No subjects available.
-              <br />
-              Upload documents to get started!
-            </div>
-          ) : (
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
-                gap: "12px",
-                justifyContent: "center",
-                alignContent: "start",
-                height: "auto",
-                padding: "0 12px",
-              }}
-            >
-              {subjects.map((subject) => (
-                <AppButton
-                  key={subject}
-                  onClick={() => setSelectedSubject(subject)}
-                  isSelected={selectedSubject === subject}
-                >
-                  {subject}
-                </AppButton>
-              ))}
-            </div>
-          )}
-
-          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "12px" }}>
+          <div
+            style={{
+              position: "absolute",
+              bottom: "16px",
+              right: "16px",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
             <img
               src={uploadIcon}
               title="Upload material"
-              style={{ width: "24px", height: "24px", cursor: "pointer" }}
+              style={{
+                width: "24px",
+                height: "24px",
+                cursor: "pointer",
+                transition: "transform 0.2s ease",
+              }}
               alt="upload"
               onClick={() => setIsUploadModalOpen(true)}
+              onMouseEnter={(e) => (e.target.style.transform = "scale(1.1)")}
+              onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
             />
           </div>
         </div>

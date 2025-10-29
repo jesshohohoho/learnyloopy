@@ -9,7 +9,7 @@ from fsrs import Scheduler, Card, Rating
 from datetime import datetime, timedelta
 from features.smartLearning.schemas import ReviewRequest
 import numpy as np
-from typing import List, Dict
+from typing import List, Dict, Any, Optional
 import os
 from dotenv import load_dotenv
 from vertexai.language_models import TextEmbeddingInput, TextEmbeddingModel
@@ -71,8 +71,11 @@ class DocumentService:
         
         return [doc["text"] for doc in top_docs]
 
-    def ask_question(self, supabase, user_id: str, subject_name: str, question_text: str):
+    def ask_question(self, supabase, user_id: str, subject_name: str, question_text: str, conversation_history: Optional[List[dict]] = []):
         try:
+            # Debugging lines
+         
+
             # Get subject for this user
             subject_response = supabase.table("subjects").select("*").eq("name", subject_name).eq("user_id", user_id).execute()
             if not subject_response.data:
@@ -106,13 +109,36 @@ class DocumentService:
                     distance = np.linalg.norm(doc_emb - query_emb)
                     similarities.append((distance, doc))
             
-            # Sort by distance and take top 3
+            # Sort by distance
             similarities.sort(key=lambda x: x[0])
-            top_docs = [doc for _, doc in similarities[:3]]
+
+            # Filter irrelevant doc by restricting min distance
+            min_distance = 2.0
+            top_docs = [doc for dist, doc in similarities[:3] if dist < min_distance]
             
+            if not top_docs:
+            # FALLBACK TO regular LLM if No relevant docs found
+                print(f"⚠️ No relevant docs found for '{question_text}' in {subject_name}, using LLM fallback")
+                fallback_response = fallback_query_guidance_tutor(question_text, conversation_history)
+                try:
+                    guidance_json = json.loads(fallback_response)
+                    answer_text = guidance_json.get("hint") or guidance_json.get("steps") or "I recommend reviewing your materials on this topic."
+                except Exception:
+                    answer_text = "I recommend reviewing your materials on this topic."
+
+                return {
+                    "question": question_text,
+                    "subject": subject_name,
+                    "answer": answer_text,
+                    "retrieved_docs": [],
+                    "source": "llm_fallback"
+                }
             docs = [doc["text"] for doc in top_docs]
+
+            # truncate docs to prevent token limit exceedance
+
             context = "\n".join(docs)
-            guidance_response = query_guidance_tutor(question_text, context)
+            guidance_response = query_guidance_tutor(question_text, context, conversation_history)
             
             # Parse the JSON response
             try:
@@ -123,6 +149,8 @@ class DocumentService:
                     answer_text = guidance_json["hint"]
                 elif "steps" in guidance_json:
                     answer_text = guidance_json["steps"]
+                elif "answer" in guidance_json:
+                    answer_text = guidance_json["answer"]
                 else:
                     answer_text = "I'm having trouble processing your question. Try rephrasing it or asking more specifically."
                     
@@ -242,27 +270,79 @@ def query_groq(user_text: str, context: str = "") -> str:
                 detail="Failed to get an answer. Please try rephrasing your question or try again later."
             )
 
-def query_guidance_tutor(question_text: str, context: str = "") -> str:
+# Share prompt used by both RAG-LLM and LLM fallback
+GUIDANCE_TUTOR_SYSTEM_PROMPT = """You are a guidance-focused AI tutor. 
+Do NOT give direct solutions or definitions.
+UNLESS student EXPLICITLY ASKS for direct answer (e.g., "give me the answer", "just tell me"), then provide the direct answer.
+Instead, give hints or guiding steps that help the student think for themselves.
+
+When the student asks follow-up questions like 'give example', 'explain more', or 'what about...', MUST refer back to the previous conversation context.
+
+Always output valid JSON.
+
+Schema:
+- For conceptual/explanatory questions: { "hint": string }
+- For procedural/problem-solving questions: { "steps": string }
+- For direct answer requests: { "answer": string }
+
+Examples:
+
+Q: What is the difference between correlation and causation?
+A (correct): { "hint": "Ask yourself: do the variables just move together, or does one actually make the other happen?" }
+
+Q: Solve x² + 3x + 2 = 0
+A (correct): { "steps": "1. Think about factoring the quadratic. 2. What two numbers multiply to 2 and add to 3?" }
+
+Q: What is Newton's First Law? Give me the direct answer.
+A (correct): { "answer": "Newton's First Law states that an object at rest stays at rest, and an object in motion stays in motion with the same speed and direction, unless acted upon by an unbalanced force." }
+
+Q: Solve x² + 3x + 2 = 0. Just tell me the answer.
+A (correct): { "answer": "The solutions are x = -1 and x = -2. These come from factoring (x+1)(x+2) = 0." }
+
+Example with follow-up:
+Previous Q: What is Poisson distribution?
+Previous A: Consider events occurring independently at a constant rate...
+Current Q: give me an example
+A (correct): { "hint": "Think about real-world scenarios where events happen randomly but at a predictable average rate. What about phone calls at a call center or customers arriving per hour?" } """
+
+
+
+def query_guidance_tutor(question_text: str, context: str = "", conversation_history: Optional[List[dict]] = []) -> str:
     """Query the guidance-focused AI tutor that gives hints instead of direct answers"""
     try:
-        completion = groq_client.chat.completions.create(
-            model="qwen/qwen3-32b",
-            messages=[
+        # Define LLM instructions
+        messages: List[Dict[str, Any]] = [
                 {
                     "role": "system",
-                    "content": "You are a guidance-focused AI tutor. \nDo NOT give direct solutions or definitions. \nInstead, give hints or guiding steps that help the student think for themselves. \nAlways output valid JSON.\n\nSchema:\n- For conceptual/explanatory questions: { \"hint\": string }\n- For procedural/problem-solving questions: { \"steps\": string }\n\nExamples:\n\nQ: What is the difference between correlation and causation?  \nA (correct): { \"hint\": \"Ask yourself: do the variables just move together, or does one actually make the other happen?\" }  \nA (incorrect): { \"hint\": \"Correlation is when two variables change together, while causation means one causes the other.\" }  # Too direct\n\nQ: Solve x² + 3x + 2 = 0  \nA (correct): { \"steps\": \"1. Think about factoring the quadratic. 2. What two numbers multiply to 2 and add to 3?\" }  \nA (incorrect): { \"steps\": \"The factors are (x+1)(x+2), so the solutions are -1 and -2.\" }  # Too direct"
-                },
-                {
-                    "role": "user",
-                    "content": f"Context from materials: {context}\n\nStudent question: {question_text}"
+                    "content": GUIDANCE_TUTOR_SYSTEM_PROMPT
                 }
-            ],
-            temperature=0.6,
+        ]
+        # Add recent conversation histories
+        if conversation_history:
+            for entry in conversation_history[-3:]:
+                messages.append({
+                    "role": "user",
+                    "content": f"Previous question: {entry.get('question', '')}"
+                })
+                messages.append({
+                    "role": "assistant", 
+                    "content": entry.get('answer', '')
+                })
+
+        # Add current question to history
+        messages.append({
+                "role": "user",
+                "content": f"Context from materials: {context}\n\nCurrent question: {question_text}"
+        })          
+            
+        completion = groq_client.chat.completions.create(
+            model="qwen/qwen3-32b",
+            messages=messages,
+            temperature=0.7,
             max_completion_tokens=1024,
             top_p=0.95,
             stream=False,
             response_format={"type": "json_object"},
-            stop=None
         )
         
         return completion.choices[0].message.content
@@ -296,6 +376,38 @@ def query_guidance_tutor(question_text: str, context: str = "") -> str:
                 status_code=500,
                 detail="Failed to get guidance. Please try rephrasing your question or try again later."
             )
+
+# --- New: fallback wrapper that uses a simpler prompt if no docs found
+def fallback_query_guidance_tutor(question_text: str, conversation_history: Optional[List[dict]] = []) -> str:
+    """Fallback LLM-based guidance when no relevant docs are found"""
+    fallback_context = ""  # intentionally empty
+    # make a slightly more general system instruction
+    messages: List[Dict[str, Any]] = [
+        {
+            "role": "system",
+            "content": GUIDANCE_TUTOR_SYSTEM_PROMPT
+        }
+    ]
+    if conversation_history:
+        for entry in conversation_history[-3:]:
+            messages.append({"role": "user", "content": f"Previous question: {entry.get('question','')}"})
+            messages.append({"role": "assistant", "content": entry.get('answer','')})
+    messages.append({"role": "user", "content": f"Current question: {question_text}"})
+
+    completion = groq_client.chat.completions.create(
+        model="qwen/qwen3-32b",
+        messages=messages,
+        temperature=0.7,
+        max_completion_tokens=1024,
+        top_p=0.95,
+        stream=False,
+        response_format={"type": "json_object"},
+    )
+
+    try:
+        return completion.choices[0].message.content
+    except Exception:
+        return completion.choices[0].message["content"]
 
 def extract_json_array(text):
     """Extract and parse JSON array from LLM response"""
@@ -404,6 +516,12 @@ class FlashcardService:
         # Get all documents for this subject
         documents_response = supabase.table("uploaded_documents").select("text").eq("subject_id", subject["id"]).execute()
         all_text = " ".join([doc["text"] for doc in documents_response.data])
+        # Limit text size to avoid token limit errors
+        import re
+        words = re.findall(r'\S+', all_text)
+        if len(words) > 5000:
+            all_text = " ".join(words[:5000])
+
 
         prompt = f"""
         You are a flashcard generator. Read the material and output ONLY valid JSON in this exact format:
@@ -587,6 +705,9 @@ class MockTestService:
             # Get all documents for this subject
             documents_response = supabase.table("uploaded_documents").select("text").eq("subject_id", subject["id"]).execute()
             all_text = " ".join([doc["text"] for doc in documents_response.data])
+            
+            MAX_CONTENT_CHARS = 3000
+            all_text = all_text[:MAX_CONTENT_CHARS]
 
             if not all_text.strip():
                 return {"error": "No documents found for this subject"}

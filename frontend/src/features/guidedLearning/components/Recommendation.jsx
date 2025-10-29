@@ -248,7 +248,7 @@ export default function Recommendation() {
                                         fontSize: '25px', 
                                         marginBottom: '18px' 
                                     }}>
-                                        {getStarRating(tutor.average_rating)} ({tutor.average_rating || 0})
+                                        {getStarRating(tutor.avg_rating)} ({tutor.avg_rating || 0})
                                     </div>
 
                                     <div style={{ 
@@ -322,39 +322,65 @@ export default function Recommendation() {
                                     background: '#F1EDED', 
                                     border: '1px solid #C7C7C7', 
                                     borderRadius: '12px', 
-                                    padding: '24px', 
+                                    padding: '20px', 
                                     width: '299px',
                                     height: '180px',
-                                    boxShadow: '0 1px 4px #0001', 
-                                    textAlign: 'center',
+                                    boxShadow: '0 1px 4px rgba(0,0,0,0.1)', 
                                     flex: "0 0 auto",
                                     display: 'flex',
                                     flexDirection: 'column',
                                     alignItems: 'center',
-                                    justifyContent: 'center',
-                                    gap: '12px' // space between bulb and text
+                                    boxSizing: 'border-box'
                                 }}
                             >
-                                <img 
-                                    src={bulb}
-                                    alt="Idea"
-                                    style={{ width: '33px', height: '33px', objectFit: 'contain' }}
-                                />
-
+                                {/* Lightbulb Icon - Fixed at top */}
                                 <div style={{ 
-                                    fontSize: '16px', 
-                                    color: '#374151', 
-                                    fontWeight: "bold", 
-                                    fontStyle: 'italic',
-                                    textAlign: 'center',
-                                    lineHeight: '1.4'
+                                    flexShrink: 0,
+                                    marginBottom: '12px'
                                 }}>
-                                    "{tutor.latest_review || 'Excellent tutor with great teaching skills!'}"
+                                    <img 
+                                        src={bulb}
+                                        alt="Idea"
+                                        style={{ 
+                                            width: '36px', 
+                                            height: '36px', 
+                                            objectFit: 'contain',
+                                            display: 'block'
+                                        }}
+                                    />
+                                </div>
+
+                                {/* Review Text - Scrollable */}
+                                <div style={{ 
+                                    flex: 1,
+                                    overflowY: 'auto',
+                                    overflowX: 'hidden',
+                                    width: '100%',
+                                    paddingRight: '8px',
+                                    scrollbarWidth: 'none',
+                                    msOverflowStyle: "none",
+                                }}>
+                                    <div style={{ 
+                                        fontSize: '15px', 
+                                        color: '#374151', 
+                                        fontWeight: 600, 
+                                        fontStyle: 'italic',
+                                        textAlign: 'center',
+                                        lineHeight: '1.5',
+                                        wordWrap: 'break-word',
+                                        wordBreak: 'break-word',
+                                        hyphens: 'auto',
+                                        fontFamily: '"Open Sans", sans-serif'
+                                    }}>
+                                        "{tutor.latest_review || 'Excellent tutor with great teaching skills!'}"
+                                    </div>
                                 </div>
                             </div>
                         ))}
                     </div>
                 </div>
+
+                
 
             </main>
         </div>

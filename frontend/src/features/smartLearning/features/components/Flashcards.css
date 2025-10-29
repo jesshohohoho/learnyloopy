@@ -196,6 +196,7 @@
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .flashcard-front {
@@ -216,27 +217,55 @@
   margin-bottom: 16px;
   font-size: 1.2rem;
   font-weight: 600;
+  flex-shrink: 0;
 }
 
 .card-content {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  overflow-y: auto;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .card-content p {
   margin: 0;
-  font-size: 1.1rem;
-  line-height: 1.5;
+  padding: 0;
+  width: 100%;
   text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+
+/* Custom scrollbar styling  */
+.card-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.card-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  margin: 8px 0;
+}
+
+.card-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.card-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .hint {
   margin-top: auto;
+  padding-top: 12px;
   font-size: 0.9rem;
   opacity: 0.8;
   text-align: center;
+  flex-shrink: 0;
 }
 
 /* Response Buttons */
@@ -388,9 +417,14 @@
   .flashcard-front, .flashcard-back {
     padding: 16px;
   }
-  
+
+  .card-content {
+    padding: 0;
+  }
+ 
   .card-content p {
     font-size: 1rem;
+    padding: 16px;
   }
 }
 
@@ -401,6 +435,19 @@
   
   .flashcard {
     height: 200px;
+  }
+
+  .flashcard-front, .flashcard-back {
+    padding: 12px; /* less padding for small screens */
+  }
+  
+  .card-content {
+    padding: 0;
+  }
+ 
+  .card-content p {
+    font-size: 0.95rem; /* Slightly smaller text */
+    padding: 12px;
   }
   
   .response-btn {

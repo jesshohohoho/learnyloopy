@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { askQuestion } from '../services/chatServiceAPI';
 import { updateSubjectStudyHours } from '../features/services/studyHoursAPI';
 import { subjectsAPI } from '../features/services/subjectsAPI';
@@ -6,6 +6,8 @@ import { subjectsAPI } from '../features/services/subjectsAPI';
 export const useSmartLearning = () => {
   const [selectedSubject, setSelectedSubject] = useState("");
   const [messages, setMessages] = useState([]);
+  const [conversationHistory, setConversationHistory] = useState([]);
+  const conversationHistoryRef = useRef([]);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [isFlashcardsOpen, setIsFlashcardsOpen] = useState(false);
   const [showMockTest, setShowMockTest] = useState(false);
@@ -20,6 +22,10 @@ export const useSmartLearning = () => {
   useEffect(() => {
     loadUserSubjects();
   }, []);
+
+  useEffect(() => {
+    conversationHistoryRef.current = conversationHistory;
+  }, [conversationHistory]);
 
   const loadUserSubjects = async () => {
     try {
@@ -46,18 +52,44 @@ export const useSmartLearning = () => {
 
   const handleSendClick = async (text) => {
     if (!selectedSubject || !text) {
-      alert("Please select a subject and enter a question.");
-      return;
+      console.log("No subject selected - using general LLM");
     }
 
     setMessages((prev) => [...prev, { message: text, sender: "user" }]);
 
     try {
-      const data = await askQuestion(selectedSubject, text);
+      // use ref for latest history
+      const currentHistory = conversationHistoryRef.current;
+      console.log("📤 Sending question:", text);
+      console.log("📜 Current history being sent:", currentHistory);
+      const data = await askQuestion(
+        // if no subject selected, use general as fallback
+        selectedSubject || "General", 
+        text, 
+        currentHistory);
+      const botMessage = data.answer || "No answer received.";
       setMessages((prev) => [
         ...prev,
-        { message: data.answer || "No answer received.", sender: "bot" },
+        { message: botMessage, 
+          sender: "bot", 
+          source: data.source, 
+          isGeneral: !selectedSubject
+        },
       ]);
+
+      // New Q&A and historical Q&A
+      const newEntry = {
+        question: text,
+        answer: botMessage
+      };
+      
+      const newHistory = [...currentHistory, newEntry].slice(-5);
+
+      setConversationHistory(newHistory);
+      conversationHistoryRef.current = newHistory;
+        
+      console.log("📝 Updated history:", newHistory);
+
     } catch (error) {
       console.error("Error sending data to backend:", error);
       setMessages((prev) => [
@@ -65,10 +97,23 @@ export const useSmartLearning = () => {
         { 
           message: error.message || "Failed to get an answer.", 
           sender: "bot",
-          isError: true  // ✅ ADD: Flag as error for styling
+          isError: true  
         },
       ]);
       }
+  };
+
+  // Clear history & messages when changing subjects
+  const handleSubjectChange = (newSubject) => {
+    if (selectedSubject === newSubject){
+      setSelectedSubject("");
+    } else{
+      setSelectedSubject(newSubject);
+    }
+    
+    setConversationHistory([]); 
+    conversationHistoryRef.current = [];
+    setMessages([]);  
   };
 
   const handleFlashcardsClick = () => {
@@ -92,7 +137,7 @@ export const useSmartLearning = () => {
     }
   };
 
-  // ✅ Refresh subjects after upload
+  // Refresh subjects after upload
   const handleUploadSuccess = () => {
     console.log('Upload successful, refreshing subjects...');
     loadUserSubjects(); // Reload subjects after successful upload
@@ -102,6 +147,7 @@ export const useSmartLearning = () => {
     // State
     selectedSubject,
     messages,
+    conversationHistory,
     isUploadModalOpen,
     isFlashcardsOpen,
     showMockTest,
@@ -111,7 +157,7 @@ export const useSmartLearning = () => {
     error,
 
     // Actions
-    setSelectedSubject,
+    setSelectedSubject: handleSubjectChange,
     handleSendClick,
     handleFlashcardsClick,
     setIsUploadModalOpen,

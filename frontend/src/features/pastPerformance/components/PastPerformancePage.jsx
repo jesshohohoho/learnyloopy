@@ -460,14 +460,15 @@ export default function PastPerformancePage() {
                     {subject.name}
                   </td>
                   {isEditing ? (
-                    ["test1", "test2", "assignment", "mockTest", "totalStudyHours"].map((field) => (
-                      <td key={field} style={{ padding: "12px", textAlign: "center" }}>
+                    <>
+                      {/* Editable fields: test1, test2, assignment */}
+                      <td style={{ padding: "12px", textAlign: "center" }}>
                         <input
                           type="number"
                           min="0"
-                          max={field === "mockTest" ? "100" : "20"}
-                          value={editingSubject[field]}
-                          onChange={(e) => handleMarkChange(field, e.target.value)}
+                          max="20"
+                          value={editingSubject.test1 ?? ""}
+                          onChange={(e) => handleMarkChange("test1", e.target.value)}
                           style={{
                             width: "60px",
                             textAlign: "center",
@@ -477,14 +478,74 @@ export default function PastPerformancePage() {
                           }}
                         />
                       </td>
-                    ))
+                      <td style={{ padding: "12px", textAlign: "center" }}>
+                        <input
+                          type="number"
+                          min="0"
+                          max="20"
+                          value={editingSubject.test2 ?? ""}
+                          onChange={(e) => handleMarkChange("test2", e.target.value)}
+                          style={{
+                            width: "60px",
+                            textAlign: "center",
+                            border: "1px solid #DDD3D3",
+                            borderRadius: "4px",
+                            padding: "4px",
+                          }}
+                        />
+                      </td>
+                      <td style={{ padding: "12px", textAlign: "center" }}>
+                        <input
+                          type="number"
+                          min="0"
+                          max="20"
+                          value={editingSubject.assignment ?? ""}
+                          onChange={(e) => handleMarkChange("assignment", e.target.value)}
+                          style={{
+                            width: "60px",
+                            textAlign: "center",
+                            border: "1px solid #DDD3D3",
+                            borderRadius: "4px",
+                            padding: "4px",
+                          }}
+                        />
+                      </td>
+                      
+                      {/* ✅ READ-ONLY fields: mockTest and totalStudyHours */}
+                      <td style={{ 
+                        padding: "12px", 
+                        textAlign: "center",
+                        color: "#6B7280",
+                        fontStyle: "italic"
+                      }}>
+                        {editingSubject.mockTest ?? "-"}
+                        <div style={{ fontSize: "10px", color: "#9CA3AF", marginTop: "4px" }}>
+                          (Auto-updated)
+                        </div>
+                      </td>
+                      <td style={{ 
+                        padding: "12px", 
+                        textAlign: "center",
+                        color: "#6B7280",
+                        fontStyle: "italic"
+                      }}>
+                        {editingSubject.totalStudyHours ?? "-"}
+                        <div style={{ fontSize: "10px", color: "#9CA3AF", marginTop: "4px" }}>
+                          (Auto-updated)
+                        </div>
+                      </td>
+                    </>
                   ) : (
                     <>
                       <td style={{ padding: "12px", textAlign: "center" }}>{subject.test1 ?? "-"}</td>
                       <td style={{ padding: "12px", textAlign: "center" }}>{subject.test2 ?? "-"}</td>
                       <td style={{ padding: "12px", textAlign: "center" }}>{subject.assignment ?? "-"}</td>
-                      <td style={{ padding: "12px", textAlign: "center" }}>{subject.mockTest ?? "-"}</td>
-                      <td style={{ padding: "12px", textAlign: "center" }}>{subject.totalStudyHours ?? "-"}</td>
+                      <td style={{ padding: "12px", textAlign: "center" }}>
+                        {subject.mockTest ? `${subject.mockTest}%` : "-"}
+                      </td>
+                      <td style={{ padding: "12px", textAlign: "center" }}>
+                        {subject.totalStudyHours ? `${subject.totalStudyHours}h` : "-"}
+                      </td>
                     </>
                   )}
                   <td style={{ padding: "12px", textAlign: "center" }}>
@@ -530,6 +591,16 @@ export default function PastPerformancePage() {
                           >
                             Delete
                           </button>
+                          {/* PREDICT BUTTON */}
+                          <button
+                            onClick={() => predictGradeProbability(subject.id)}
+                            style={buttonStyle}
+                            onMouseEnter={(e) => Object.assign(e.target.style, hoverButtonStyle)}
+                            onMouseLeave={(e) => Object.assign(e.target.style, buttonStyle)}
+                            onFocus={(e) => e.target.blur()}
+                          >
+                            Predict
+                          </button>
                         </>
                       )}
                     </div>
@@ -546,68 +617,242 @@ export default function PastPerformancePage() {
         <div
           style={{
             position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            background: "#FFFFFF",
-            padding: "20px",
-            borderRadius: "10px",
-            border: "1px solid #DDD3D3",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(0,0,0,0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
             zIndex: 1000,
-            width: "90%",
-            maxWidth: "400px",
-            boxSizing: "border-box",
           }}
         >
-          <h3 style={{ marginBottom: "15px" }}>
-            Predict Probability for {selectedSubject?.name}
-          </h3>
-          <select
-            value={desiredGrade}
-            onChange={(e) => setDesiredGrade(e.target.value)}
-            style={{ padding: "8px", marginBottom: "10px", width: "100%" }}
-          >
-            {availableGrades.map((grade) => (
-              <option key={grade} value={grade}>
-                {grade}
-              </option>
-            ))}
-          </select>
-          <button
-            onClick={submitPrediction}
+          <div
             style={{
-              background: "#7048FF",
-              color: "white",
-              border: "none",
-              padding: "8px 16px",
-              borderRadius: "6px",
-              cursor: "pointer",
-              width: "100%",
-              marginBottom: "10px",
+              background: "white",
+              padding: "30px",
+              borderRadius: "12px",
+              width: "500px",
+              maxHeight: "80vh",
+              overflowY: "auto",
+              fontFamily: "Open Sans, sans-serif",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
             }}
           >
-            Predict
-          </button>
-          {predictionResult && (
-            <div style={{ marginTop: "10px", fontWeight: 600 }}>
-              Probability: {predictionResult}%
+            <h3
+              style={{
+                margin: "0 0 5px 0",
+                color: "#0369A1",
+                fontSize: "28px",
+                fontWeight: 700,
+              }}
+            >
+              Grade Probability Prediction - {selectedSubject?.name}
+            </h3>
+
+            {/* Current Performance Display */}
+            <div
+              style={{
+                background: "#ffffff",
+                padding: "5px",
+                borderRadius: "8px",
+                marginBottom: "20px",
+                width: "100%",
+              }}
+            >
+              <h4
+                style={{
+                  margin: "5px 0px 10px 5px",
+                  color: "#374151",
+                  fontSize: "22px",
+                  fontWeight: 600,
+                }}
+              >
+                Current Performance:
+              </h4>
+              <div style={{ fontSize: "18px", lineHeight: "1.8" }}>
+                <div style={{ color: "#9846e5ff" }}>
+                  • Test 1:{" "}
+                  {selectedSubject?.test1 != null
+                    ? `${selectedSubject.test1} / 20`
+                    : "Not taken"}
+                </div>
+                <div style={{ color: "#2563EB" }}>
+                  • Test 2:{" "}
+                  {selectedSubject?.test2 != null
+                    ? `${selectedSubject.test2} / 20`
+                    : "Not taken"}
+                </div>
+                <div style={{ color: "#10B981" }}>
+                  • Assignment:{" "}
+                  {selectedSubject?.assignment != null
+                    ? `${selectedSubject.assignment} / 20`
+                    : "Not submitted"}
+                </div>
+                <div style={{ color: "#F97316" }}>
+                  • Mock Test:{" "}
+                  {selectedSubject?.mockTest != null
+                    ? `${selectedSubject.mockTest}%`
+                    : "Not taken"}
+                </div>
+                <div style={{ color: "#E11D48" }}>
+                  • Study Hours:{" "}
+                  {selectedSubject?.totalStudyHours != null
+                    ? `${selectedSubject.totalStudyHours}h`
+                    : "0h"}
+                </div>
+              </div>
             </div>
-          )}
-          <button
-            onClick={() => setShowPredictionModal(false)}
-            style={{
-              background: "#6B7280",
-              color: "white",
-              border: "none",
-              padding: "8px 16px",
-              borderRadius: "6px",
-              cursor: "pointer",
-              width: "100%",
-              marginTop: "10px",
-            }}
-          >
-            Close
-          </button>
+
+            {/* Grade Selection */}
+            <div style={{ marginBottom: "20px" }}>
+              <label
+                style={{
+                  display: "block",
+                  marginBottom: "8px",
+                  fontSize: "22px",
+                  fontWeight: 600,
+                  color: "#0369A1",
+                }}
+              >
+                Select Desired Grade:
+              </label>
+              <select
+                value={desiredGrade}
+                onChange={(e) => setDesiredGrade(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  border: "1px solid #0EA5E9",
+                  borderRadius: "6px",
+                  fontSize: "18px",
+                  backgroundColor: "#F0F9FF",
+                  color: "#1E293B",
+                  fontWeight: 500,
+                  cursor: "pointer",
+                  fontFamily: "Open Sans, sans-serif",
+                }}
+              >
+                <option value="" style={{ fontSize: "18px" }}>
+                  Choose a grade...
+                </option>
+                {availableGrades.map((grade) => (
+                  <option
+                    key={grade}
+                    value={grade}
+                    style={{
+                      fontSize: "18px",
+                      padding: "8px",
+                    }}
+                  >
+                    {grade}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Prediction Result */}
+            {predictionResult && (
+              <>
+                <h4
+                  style={{
+                    margin: "0 0 10px 0",
+                    color: "#0369A1",
+                    fontSize: "22px",
+                    fontWeight: 600,
+                  }}
+                >
+                  Prediction Result:
+                </h4>
+                <div
+                  style={{
+                    background: "#F0F9FF",
+                    border: "1px solid #0EA5E9",
+                    padding: "15px",
+                    borderRadius: "8px",
+                    marginBottom: "20px",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "18px",
+                      fontWeight: 700,
+                      color: "#0369A1",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    Probability of scoring {predictionResult.desired_grade} or above:{" "}
+                    {predictionResult.percentage.toFixed(1)}%
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "14px",
+                      color:
+                        predictionResult.percentage <= 50
+                          ? "#E11D48"
+                          : predictionResult.percentage <= 80
+                          ? "#F97316"
+                          : "#10B981",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {predictionResult.percentage <= 50
+                      ? "You need to put more effort"
+                      : predictionResult.percentage <= 80
+                      ? "Keep going, you're almost there."
+                      : "You're on the right track!"}
+                  </div>
+                </div>
+              </>
+            )}
+
+            {/* Buttons */}
+            <div
+              style={{
+                display: "flex",
+                gap: "10px",
+                justifyContent: "flex-end",
+              }}
+            >
+              <button
+                onClick={submitPrediction}
+                style={{
+                  background: "#0369A1",
+                  color: "white",
+                  border: "none",
+                  padding: "10px 20px",
+                  borderRadius: "6px",
+                  cursor: "pointer",
+                  fontFamily: "Open Sans, sans-serif",
+                  fontWeight: 600,
+                  fontSize: "14px",
+                }}
+              >
+                Predict Probability
+              </button>
+              <button
+                onClick={() => {
+                  setShowPredictionModal(false);
+                  setDesiredGrade("");
+                  setPredictionResult(null);
+                }}
+                style={{
+                  background: "#6B7280",
+                  color: "white",
+                  border: "none",
+                  padding: "10px 20px",
+                  borderRadius: "6px",
+                  cursor: "pointer",
+                  fontFamily: "Open Sans, sans-serif",
+                  fontWeight: 600,
+                  fontSize: "14px",
+                }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

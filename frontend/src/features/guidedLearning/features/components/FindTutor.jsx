@@ -23,13 +23,16 @@ function FindTutor({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     localStorage.setItem("searchCriteria", JSON.stringify(formData));
-    onClose();
-    navigate("/recommendation");
-
     const response = await findTutor();
+
     if (response.success) {
       localStorage.setItem("recommendedTutors", JSON.stringify(response.data));
+      onClose();
+      navigate("/recommendation");
+    }else{
+      console.error("Failed to find tutors", response.error);
     }
+    
   };
 
   const handleModeToggle = (mode) => updateField("tutoringMode", mode);

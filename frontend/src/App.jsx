@@ -83,7 +83,7 @@ function App() {
         {/* direct logged in user to home page and not authenticated user to login page*/}
         <Route 
           path="/auth" 
-          element={session ? <Navigate to="/" replace /> : <CustomAuth />} 
+          element={session ? <Navigate to="/performance" replace /> : <CustomAuth />} 
         />
         
         {/* Guest route - accessible without authentication */}
@@ -130,17 +130,21 @@ function App() {
         {/* Routes require authentication */}
         {session ? (
           <>
-            <Route path="/" element={<SidebarLayout><PastPerformance /></SidebarLayout>} />
+            <Route path="/" element={<Navigate to="/performance" replace />} />
             <Route path="/performance" element={<SidebarLayout><PastPerformance /></SidebarLayout>} />
             <Route path="/learn" element={<SidebarLayout><SmartLearning /></SidebarLayout>} />
             <Route path="/recommendation" element={<SidebarLayout><Recommendation /></SidebarLayout>} />
             
             {/* CATCH-ALL for logged-in users */}
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<Navigate to="/performance" replace />} />
           </>
-        ) : (
-          // CATCH-ALL for non-logged-in users  
-          <Route path="*" element={<Navigate to="/auth" replace />} />
+        ) : (  
+          <>
+            {/* Root path redirects to auth for non-logged-in users */}
+            <Route path="/" element={<Navigate to="/auth" replace />} />
+            {/* CATCH-ALL for non-logged-in users */}
+            <Route path="*" element={<Navigate to="/auth" replace />} />
+          </>
         )}
       </Routes>
     </Router>

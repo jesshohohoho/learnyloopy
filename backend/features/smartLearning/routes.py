@@ -1,11 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from config.database import get_supabase
-from features.smartLearning.schemas import Question, ReviewRequest
-from features.smartLearning.services import read_pdf, read_docx, FlashcardService, DocumentService, MockTestService
+from features.smartLearning.schemas import Question, ReviewRequest, QuestionWithHistory
+from features.smartLearning.services import read_pdf, read_docx, FlashcardService, DocumentService, MockTestService, fallback_query_guidance_tutor
 from datetime import datetime, timezone
 from auth.dependencies import require_user_id, get_current_user
 from typing import Dict, Any, List
 from config.database import get_supabase
+import json
 
 
 router = APIRouter(prefix="/smart-learning", tags=["smart-learning"])
@@ -15,10 +16,35 @@ document_service = DocumentService()
 mock_test_service = MockTestService()
 
 @router.post("/ask_question")
-def ask_question(q: Question, user_id: str = Depends(require_user_id)):
+def ask_question(q: QuestionWithHistory, user_id: str = Depends(require_user_id)):
     try:
         supabase = get_supabase()
-        result = document_service.ask_question(supabase, user_id, q.subject, q.text)
+        # Handle "General" mode when no specific subject selected
+        if q.subject == "General":
+            print("💡 General tutor mode - no subject selected")
+            fallback_response = fallback_query_guidance_tutor(q.text, q.conversation_history)
+            
+            try:
+                guidance_json = json.loads(fallback_response)
+                answer_text = guidance_json.get("hint") or guidance_json.get("steps") or guidance_json.get("answer") or "I'm here to help you learn. What would you like to know?"
+            except Exception:
+                answer_text = "I'm here to help you learn. What would you like to know?"
+            
+            return {
+                "question": q.text,
+                "subject": "General",
+                "answer": answer_text,
+                "retrieved_docs": [],
+                "source": "general_tutor"
+            }
+        
+        # Normal flow with subject selected
+        result = document_service.ask_question(
+            supabase, 
+            user_id, 
+            q.subject, 
+            q.text,
+            q.conversation_history)
         return result
     except HTTPException:
         # Re-raise HTTP exceptions with proper error messages

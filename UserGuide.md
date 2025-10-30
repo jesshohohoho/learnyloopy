@@ -475,6 +475,7 @@ This notice explains how LearnLoop collects, uses, and shares personal informati
 
 ### ***Purpose***
 This Disclaimer sets out the limits of responsibility and liability of LearnLoop in relation to the services and features provided through the platform.  
+
 LearnLoop is a prototype educational platform developed **solely for the CodeNection 2025 competition**. It is not a commercial product and is intended only for demonstration and evaluation purposes.
 
 ### ***General Notice***  

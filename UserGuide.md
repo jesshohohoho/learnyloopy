@@ -3,38 +3,52 @@
 ## What is LearnLoop?
 LearnLoop is an online application designed to support both students and tutors, enhancing the overall learning and teaching experience. Unlike existing tutoring platforms in Malaysia, LearnLoop offers a more inspiring set of interconnected features. In addition, it fosters a sustainable ecosystem that provides long-term value for users, ensuring continuous learning opportunities for everyone.
 
-<span style="color:#2E86C1">• [Key Features](#key-features)</span>  
-<span style="color:#2E86C1">• [Log in as Guest](#log-in-as-guest)</span>  
-<span style="color:#2E86C1">• [Sign up an Account](#sign-up-an-account)</span>  
-<span style="color:#2E86C1">• [Log in to LearnLoop](#log-in-to-learnloop)</span>  
-<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Sidebar](#sidebar)</span>  
+<ul>
+  <li><span style="color:#2E86C1"><a href="#key-features">Key Features</a></span></li>
+  <li><span style="color:#2E86C1"><a href="#log-in-as-guest">Log in as Guest</a></span></li>
+  <li><span style="color:#2E86C1"><a href="#sign-up-an-account">Sign up an Account</a></span></li>
+  <li><span style="color:#2E86C1"><a href="#log-in-to-learnloop">Log in to LearnLoop</a></span>
+    <ul>
+      <li><span style="color:#5DADE2"><a href="#sidebar">Sidebar</a></span></li>
+    </ul>
+  </li>
+  <li><span style="color:#2E86C1"><a href="#smart-learning">Smart Learning</a></span>
+    <ul>
+      <li><span style="color:#5DADE2"><a href="#ai-chatbox">AI Chatbox</a></span></li>
+      <li><span style="color:#5DADE2"><a href="#mock-test">Mock Test</a></span></li>
+      <li><span style="color:#5DADE2"><a href="#flashcards">Flashcards</a></span></li>
+      <li><span style="color:#5DADE2"><a href="#pomodoro-timer">Pomodoro Timer</a></span></li>
+    </ul>
+  </li>
+  <li><span style="color:#2E86C1"><a href="#past-performance-dashboard">Past Performance Dashboard</a></span>
+    <ul>
+      <li><span style="color:#5DADE2"><a href="#functions-in-past-performance-dashboard">Functions in Past Performance Dashboard</a></span></li>
+      <li><span style="color:#5DADE2"><a href="#predictive-decision-tree-model">Predictive Decision Tree Model</a></span></li>
+    </ul>
+  </li>
+  <li><span style="color:#2E86C1"><a href="#forum">Forum</a></span>
+    <ul>
+      <li><span style="color:#5DADE2"><a href="#Create-a-Post">Create a Post</a></span></li>
+      <li><span style="color:#5DADE2"><a href="#Comment-a-Post">Comment a Post</a></span></li>
+      <li><span style="color:#5DADE2"><a href="#Like-a-Post">Like a Post</a></span></li>
+      <li><span style="color:#5DADE2"><a href="#Like-a-Comment">Like a Comment</a></span></li>
+    </ul>
+  </li>
+  <li><span style="color:#2E86C1"><a href="#leaderboard">Leaderboard</a></span></li>
+  <li><span style="color:#2E86C1"><a href="#guided-learning">Guided Learning</a></span>
+    <ul>
+      <li><span style="color:#5DADE2"><a href="#subject-filtering">Subject Filtering</a></span></li>
+      <li><span style="color:#5DADE2"><a href="#tutor-feedback">Tutor Feedback</a></span></li>
+      <li><span style="color:#5DADE2"><a href="#find-tutor">Find a Tutor</a></span></li>
+      <li><span style="color:#5DADE2"><a href="#become-tutor">Become a Tutor</a></span></li>
+    </ul>
+  </li>
+  <li><span style="color:#2E86C1"><a href="#known-issues">Known Issues</a></span></li>
+  <li><span style="color:#2E86C1"><a href="#troubleshooting">Troubleshooting</a></span></li>
+  <li><span style="color:#2E86C1"><a href="#privacy-and-data-protection-notice">Privacy and Data Protection Notice</a></span></li>
+  <li><span style="color:#2E86C1"><a href="#disclaimer">Disclaimer</a></span></li>
+</ul>
 
-<span style="color:#2E86C1">• [Smart Learning](#smart-learning)</span>  
-<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [AI Chatbox](#ai-chatbox)</span>  
-<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Mock Test](#mock-test)</span>  
-<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Flashcards](#flashcards)</span>  
-<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Pomodoro Timer](#pomodoro-timer)</span>  
-
-<span style="color:#2E86C1">• [Past Performance Dashboard](#past-performance-dashboard)</span>  
-<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Functions in Past Performance Dashboard](#functions-in-past-performance-dashboard)</span>  
-<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Predictive Decision Tree Model](#predictive-decision-tree-model)</span>  
-
-<span style="color:#2E86C1">• [Forum](#forum)</span>  
-<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Create a Post](#Create-a-Post)</span>  
-<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Comment a Post](#Comment-a-Post)</span>  
-<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Like a Post](#Like-a-Post)</span>  
-
-<span style="color:#2E86C1">• [Leaderboard](#leaderboard)</span>  
-
-<span style="color:#2E86C1">• [Guided Learning](#guided-learning)</span>  
-<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Subject Filtering](#subject-filtering)</span>  
-<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Tutor Feedback](#tutor-feedback)</span>  
-<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Find a Tutor](#find-tutor)</span>  
-<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Become a Tutor](#become-tutor)</span>  
-
-<span style="color:#2E86C1">• [Known Issues](#known-issues)</span>  
-<span style="color:#2E86C1">• [Privacy and Data Protection Notice](#privacy-and-data-protection-notice)</span>  
-<span style="color:#2E86C1">• [Disclaimer](#disclaimer)</span>
 
 <a id="key-features"></a>
 ## 🧩 Key Features
@@ -166,9 +180,12 @@ Now, your journey to use the features in Smart Learning begins!
 
 - If your question is **beyond the scope of LLM-RAG**, the chatbox will automatically switch to a **classical LLM** to generate an appropriate response.  
 
+![Figure 8](UserGuide_Fig/Fig8.png)
+
 - You may also choose **not to select a subject** before asking questions.  
   - In this case, the AI chatbox will rely **solely on the classical LLM** to answer your queries.  
 
+![Figure 9](UserGuide_Fig/Fig9.png)
 
 <a id="mock-test"></a>
 ### ***📝 Mock Test***
@@ -178,18 +195,23 @@ Now, your journey to use the features in Smart Learning begins!
 - Click the *Start Test* as shown in the pop-up window.
 - Begin your mock test journey!
 
-< Image Here >
+![Figure 10](UserGuide_Fig/Fig10.png)
 
 Once you finish answering the questions, the results will be shown and stored in the Past Performance Dashboard. Click the *Test again* if you wish to retake the mock test. Click the *Close* button if you wish to redirect to *Smart Learning* Page.
+
+![Figure11](UserGuide_Fig/Fig11.png)
 
 <a id="flashcards"></a>
 ### ***🗂️ Flashcards***
 
 Suppose if you make mistakes in the mock test, the questions will be stored and shown in the form of flashcards.
 
-< Image Here >
+![Figure12](UserGuide_Fig/Fig12.png)
 
 - Click or Press the *space* keyboard to flip the flashcards to get the answers.
+
+![Figure13](UserGuide_Fig/Fig13.png)
+
 - Click your feedback of the flashcard according to your understanding (Again/Hard/Good/Easy), or press the *(1,2,3,4)* keyboard buttons. The flashcard will be rearranged according to your understanding when you revise via flashcard again.
 - Click the close button or press *Esc* to redirect to *Smart Learning* Page.
 
@@ -206,8 +228,11 @@ Suppose if you want to trace your study time, pomogoro timer will be your choice
 </table>
 
 - Choose the subject you wish to revise from the dropdown menu.
+
+![Figure14](UserGuide_Fig/Fig14.png)
+
 - Press *Start 25-minute study session*
-- Refer to the list of buttons below in *Pomogoro Timer*.
+- Refer to the list of buttons as shown at table below for *Pomogoro Timer*.
 
 <table>
       <tr>
@@ -221,6 +246,16 @@ Suppose if you want to trace your study time, pomogoro timer will be your choice
 </table>
 
 **NOTE: After minimizing the *Pomogoro Timer*, you can continue accessing other functions in *Smart Learning*.**
+
+![Figure15](UserGuide_Fig/Fig15A.png)
+
+After 25 minutes, a 5-minute rest period will begin.
+
+![Figure16](UserGuide_Fig/Fig16.png)
+
+After the rest period ends, a congratulatory window will appear, and 0.5 hour will be recorded in the [Past Performance Dashboard](#past-performance-dashboard).
+
+![Figure17](UserGuide_Fig/Fig17.png)
 
 <a id="past-performance-dashboard"></a>
 ## 📋 Past Performance Dashboard
@@ -241,7 +276,7 @@ To reach out this feature, click the icon of Past Performance Dashboard as shown
 - The component above displays the summary of your study performance which are:
   - Best Subject
   - Worst Subject
-  - Total Study Hour
+  - Average Total Study Hour
   - Average Accuracy of Mock Test
 
 - The component in the middle visualizes bar charts displaying the Test 1, Test 2, and Assignment scores (self-inserted), as well as the Mock Test and Study Hours (from the Smart Learning Platform).
@@ -449,6 +484,15 @@ To reach out this feature, click the icon of Forum as shown in the sidebar.
 - The LLM-RAG in [Smart Learning Platform](#smart-learning) has limited processing capacity, with restrictions on requests and tokens per minute and per day, therefore users are advised to upload smaller documents (below 5000 words each) in multiple batches.
 
 - The function that enables students to access tutors’ contact information in [Guided Learning](#guided-learning) after a tutoring arrangement is made is not yet implemented. This remains a development limitation to be addressed in future updates.
+
+<a id="troubleshooting"></a>
+## 🛠️ Troubleshooting
+
+| **Issue** | **Solution** |
+|------------|--------------|
+| Users may encounter the error message ***"Not authenticated"*** when accessing specific features, despite being logged in. | Logging out and logging back in usually resolves this issue. |
+
+
 
 
 <a id="privacy-and-data-protection-notice"></a>

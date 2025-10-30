@@ -152,7 +152,7 @@ When you reach the upload material window, you can insert your subject name and 
 
 ![Figure 6](UserGuide_Fig/Fig6A.png)
 
-If your material is uploaded successfully, it will be displayed in the *pick the subject* section.
+If your material is uploaded successfully, it will be displayed in the *pick a subject* section.
 
 ![Figure 7](UserGuide_Fig/Fig7A.png)
 

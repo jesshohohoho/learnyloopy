@@ -64,22 +64,30 @@ LearnLoop is an online application designed to support both students and tutors,
 <a id="log-in-as-guest"></a>
 ## 👤 Log in as Guest
 - Access **LearnLoop** [here](https://learnyloopy-jesshohohohos-projects.vercel.app/auth), then click **Log in as Guest** on the page — no email, username, or password required.
+
+![Figure 1](UserGuide_Fig/Fig1.png)
+
 - Guests will be directed to the **[Guided Learning](#guided-learning)** page. They can only access the contents in **[Guided Learning](#guided-learning)**, **[Forum](#forum)**, and **[Leaderboard](#leaderboard)**.
 
+![Figure 2](UserGuide_Fig/Fig2.png)
 
 <a id="sign-up-an-account"></a>
  ## 🆕 Sign up an account
 - Sign up for LearnLoop [here](https://learnyloopy-jesshohohohos-projects.vercel.app/auth), by entering your email, and creating a username and password.
-  - < Insert Image Here >
+
+![Figure 1](UserGuide_Fig/Fig1.png)
+
 - Confirm your sign up by verifying the email sent to your inbox.
-    - < Insert Image Here >
-- After verification, you will be redirected to the sign-in page. Enter the same email and password you used to register with LearnLoop.
+
+![Figure 3](UserGuide_Fig/Fig3.png)
+
+- After verification, you will be signed in and directed to the the main page.
 
 <a id="log-in-to-learnloop"></a>
 ## 🔑 Log In to LearnLoop
 Once logged in, you will be directed to the main page, which features the Past Performance Dashboard and a **[sidebar](#sidebar)** for navigating to other features of LearnLoop. If you are the first user, the dashboard will display everything as blank. You will have to study by our **[Smart Learning Platform](#smart-learning)** to get a summary of your study performance.
 
-< Image here >
+![Figure 4](UserGuide_Fig/Fig4.png)
 
 <a id="sidebar"></a>
 ### ***📚 Sidebar*** 
@@ -127,7 +135,11 @@ To reach out this feature, click the icon of smart learning as shown in the side
   </tr>
 </table>
 
-You will be directed to the front page of smart learning platform as shown above. Next, click the upload icon as shown in buttom left in the *pick the subject* section. 
+You will be directed to the front page of smart learning platform as shown below. 
+
+![Figure 5](UserGuide_Fig/Fig5A.png)
+
+Next, click the upload icon as shown in buttom left in the *pick the subject* section. 
 
 <table>
   <tr>
@@ -138,9 +150,11 @@ You will be directed to the front page of smart learning platform as shown above
 
 When you reach the upload material window, you can insert your subject name and browse your study material from your device. Click submit to finalise your uploaded material.
 
+![Figure 6](UserGuide_Fig/Fig6A.png)
+
 If your material is uploaded successfully, it will be displayed in the *pick the subject* section.
 
-< image here >
+![Figure 7](UserGuide_Fig/Fig7A.png)
 
 Now, your journey to use the features in Smart Learning begins! 
 

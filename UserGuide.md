@@ -220,7 +220,7 @@ Suppose if you want to trace your study time, pomogoro timer will be your choice
   </tr>
 </table>
 
-NOTE: After minimizing the *Pomogoro Timer*, you can continue accessing other functions in *Smart Learning*.
+**NOTE: After minimizing the *Pomogoro Timer*, you can continue accessing other functions in *Smart Learning*.**
 
 <a id="past-performance-dashboard"></a>
 ## 📋 Past Performance Dashboard

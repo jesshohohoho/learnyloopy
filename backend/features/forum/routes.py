@@ -470,8 +470,9 @@ async def toggle_comment_like(
         current_likes = comment_check.data[0]["likes"] or 0
         # get who creates the comment
         comment_author_id = comment_data["user_id"]
-        # check whether the comment is from the current user
+        # check whether the comment comes from the current user
         is_own_comment = (comment_author_id == user_id)
+
 
         # Check if user already liked this comment
         existing_like = supabase.table("forum_comment_likes").select("id").eq(
@@ -490,7 +491,6 @@ async def toggle_comment_like(
             supabase.table("forum_comments").update({
                 "likes": new_likes
             }).eq("id", comment_id).execute()
-
 
             # Only update tutor credits if the comment is not from the current user
             if not is_own_comment:

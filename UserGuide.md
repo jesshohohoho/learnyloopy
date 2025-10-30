@@ -152,7 +152,7 @@ When you reach the upload material window, you can insert your subject name and 
 
 ![Figure 6](UserGuide_Fig/Fig6A.png)
 
-If your material is uploaded successfully, it will be displayed in the *pick the subject* section.
+If your material is uploaded successfully, it will be displayed in the *pick a subject* section.
 
 ![Figure 7](UserGuide_Fig/Fig7A.png)
 
@@ -220,7 +220,7 @@ Suppose if you want to trace your study time, pomogoro timer will be your choice
   </tr>
 </table>
 
-NOTE: After minimizing the *Pomogoro Timer*, you can continue accessing other functions in *Smart Learning*.
+**NOTE: After minimizing the *Pomogoro Timer*, you can continue accessing other functions in *Smart Learning*.**
 
 <a id="past-performance-dashboard"></a>
 ## 📋 Past Performance Dashboard
@@ -462,7 +462,7 @@ This notice explains how LearnLoop collects, uses, and shares personal informati
 - Students acknowledge that their personal information will be securely stored by LearnLoop.
 
 ### ***For Tutors***
-- Tutors acknowledge that their personal information, including full name, teaching experience, and hourly rates, will be publicly displayed.  
+- Tutors acknowledge that their personal information, such as full name, teaching experience, and hourly rates, will be publicly displayed.  
 - Tutors acknowledge that their contact information, such as email and phone number, will be shared with Students once a tutoring arrangement is made.
 
 ### ***Responsibilities of LearnLoop***
@@ -475,6 +475,7 @@ This notice explains how LearnLoop collects, uses, and shares personal informati
 
 ### ***Purpose***
 This Disclaimer sets out the limits of responsibility and liability of LearnLoop in relation to the services and features provided through the platform.  
+
 LearnLoop is a prototype educational platform developed **solely for the CodeNection 2025 competition**. It is not a commercial product and is intended only for demonstration and evaluation purposes.
 
 ### ***General Notice***  

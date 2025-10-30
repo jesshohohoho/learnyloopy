@@ -3,39 +3,38 @@
 ## What is LearnLoop?
 LearnLoop is an online application designed to support both students and tutors, enhancing the overall learning and teaching experience. Unlike existing tutoring platforms in Malaysia, LearnLoop offers a more inspiring set of interconnected features. In addition, it fosters a sustainable ecosystem that provides long-term value for users, ensuring continuous learning opportunities for everyone.
 
-- [Key Features](#key-features)
-- [Log in as Guest](#log-in-as-guest)
-- [Sign up an Account](#sign-up-an-account)
-- [Log in to Learnloop](#log-in-to-learnloop)
-  - [Sidebar](#sidebar)
+<span style="color:#2E86C1">• [Key Features](#key-features)</span>  
+<span style="color:#2E86C1">• [Log in as Guest](#log-in-as-guest)</span>  
+<span style="color:#2E86C1">• [Sign up an Account](#sign-up-an-account)</span>  
+<span style="color:#2E86C1">• [Log in to LearnLoop](#log-in-to-learnloop)</span>  
+<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Sidebar](#sidebar)</span>  
 
-- [Smart Learning](#smart-learning)
-  - [AI Chatbox](#ai-chatbox)
-  - [Mock Test](#mock-test)
-  - [Flashcards](#flashcards)
-  - [Pomodoro Timer](#pomodoro-timer)
+<span style="color:#2E86C1">• [Smart Learning](#smart-learning)</span>  
+<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [AI Chatbox](#ai-chatbox)</span>  
+<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Mock Test](#mock-test)</span>  
+<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Flashcards](#flashcards)</span>  
+<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Pomodoro Timer](#pomodoro-timer)</span>  
 
-- [Past Performance Dashboard](#past-performance-dashboard)
-  - [Functions in Past Performance Dashboard](functions-in-past-performance-dashboard)
-  - [Predictive Decision Tree Model](predictive-decision-tree-model)
-- 
-- [Forum](#forum)
-  - [Create a Post](#Create-a-Post)
-  - [Comment a Post](#Comment-a-Post)
-  - [Like a Post](#Like-a-Post)
-  
-- [Leaderboard](#leaderboard)
+<span style="color:#2E86C1">• [Past Performance Dashboard](#past-performance-dashboard)</span>  
+<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Functions in Past Performance Dashboard](#functions-in-past-performance-dashboard)</span>  
+<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Predictive Decision Tree Model](#predictive-decision-tree-model)</span>  
 
-- [Guided Learning](#guided-learning)
-  - [Subject Filtering](#subject-filtering)
-  - [Tutor Feedback](#tutor-feedback)
-  - [Find a Tutor](#find-tutor)
-  - [Become a Tutor](#become-tutor)
+<span style="color:#2E86C1">• [Forum](#forum)</span>  
+<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Create a Post](#Create-a-Post)</span>  
+<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Comment a Post](#Comment-a-Post)</span>  
+<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Like a Post](#Like-a-Post)</span>  
 
-- [Known Issues](#known-issues)
-- [Privacy and Data Protection Notice](#privacy-and-data-protection-notice)
-- [Disclaimer](#disclaimer)
+<span style="color:#2E86C1">• [Leaderboard](#leaderboard)</span>  
 
+<span style="color:#2E86C1">• [Guided Learning](#guided-learning)</span>  
+<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Subject Filtering](#subject-filtering)</span>  
+<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Tutor Feedback](#tutor-feedback)</span>  
+<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Find a Tutor](#find-tutor)</span>  
+<span style="color:#5DADE2">&nbsp;&nbsp;&nbsp;&nbsp;• [Become a Tutor](#become-tutor)</span>  
+
+<span style="color:#2E86C1">• [Known Issues](#known-issues)</span>  
+<span style="color:#2E86C1">• [Privacy and Data Protection Notice](#privacy-and-data-protection-notice)</span>  
+<span style="color:#2E86C1">• [Disclaimer](#disclaimer)</span>
 
 <a id="key-features"></a>
 ## 🧩 Key Features
@@ -327,12 +326,28 @@ To like or see how many likes, refer to the table below:
 
 - Write your comment in the bottom-middle comment cell.  
 - Click ***Post Comment*** to submit your comment.
+- Return to the main Forum page by clicking the return button as shown below.
+
+<table>
+  <tr>
+    <td><img src="frontend/src/assets/back.png" alt="Return Button" width="30"/></td>
+    <td><b>Return Icon</b><br>Located at the top-left of comment section.</td>
+  </tr>
+</table>
 
 <a id="Like-a-Comment"></a>
 ### ***❤️ Like a Comment***
 
 - To like a comment on a post, follow a similar method to navigate to the comment section as shown in ***[Comment a Post](#comment-a-post)***.  
 - Click the like button located at the right of each comment.
+- Return to the main Forum page by clicking the return button as shown below.
+
+<table>
+  <tr>
+    <td><img src="frontend/src/assets/back.png" alt="Return Button" width="30"/></td>
+    <td><b>Return Icon</b><br>Located at the top-left of comment section.</td>
+  </tr>
+</table>
 
 <a id="leaderboard"></a>
 ## 🏆 Leaderboard

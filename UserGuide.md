@@ -164,6 +164,7 @@ Suppose if you want to trace your study time, pomogoro timer will be your choice
   </tr>
 </table>
 
+NOTE: After minimizing the *Pomogoro Timer*, you can continue accessing other functions in *Smart Learning*.
 
 <a id="past-performance-dashboard"></a>
 ## 📋 Past Performance Dashboard
@@ -369,8 +370,14 @@ To reach out this feature, click the icon of Forum as shown in the sidebar.
 
 - Click ***Submit Application*** to submit your application form.
 
-<a id="disclaimer"></a>
 
+<a id="find-tutor"></a>
+## 🪫 Known Weaknesses
+
+- The LLM-RAG in [Smart Learning Platform](#smart-learning) has limited processing capacity, with restrictions on requests and tokens per minute and per day, therefore users are advised to upload smaller documents (below 5000 words each) in multiple batches.
+
+
+<a id="privacy-and-data-protection-notice"></a>
 ## Privacy and Data Protection Notice
 
 ### Purpose
@@ -389,6 +396,7 @@ This notice explains how LearnLoop collects, uses, and shares personal informati
 - LearnLoop will not use personal information for any purpose other than those explicitly mentioned in this notice.  
 - LearnLoop complies with applicable data protection regulations.
 
+<a id="disclaimer"></a>
 ## Disclaimer
 
 ### Purpose  
@@ -417,9 +425,6 @@ LearnLoop is a prototype educational platform developed **solely for the CodeNec
 - LearnLoop, to the fullest extent permitted by law, disclaims all liability for any direct, indirect, incidental, or consequential loss or damage arising from the use or inability to use the platform, including any reliance on AI-generated or predictive outputs.  
 - Nothing in this Disclaimer limits any statutory rights or obligations that cannot be excluded under applicable Malaysian law.  
 - If any provision of this Disclaimer is found to be invalid or unenforceable, the remaining provisions shall continue in full force and effect.
-
-### Acknowledgment  
-By accessing or using LearnLoop, Students and Tutors acknowledge that they understand and accept the inherent limitations of predictive and AI-generated information, and agree that LearnLoop cannot be held responsible for any inaccuracies or outcomes resulting from such automated systems.
 
 ### Competition Context  
 - This platform was created as part of the CodeNection 2025 competition to showcase innovative use of AI and Machine Learning (ML) models in application development.

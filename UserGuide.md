@@ -208,7 +208,7 @@ Suppose if you make mistakes in the mock test, the questions will be stored and 
 
 ![Figure12](UserGuide_Fig/Fig12.png)
 
-- Click or Press the *space* keyboard to flip the flashcards to get the answers.
+- Click the flashcard or press the *space* keyboard to flip the flashcards to get the answers.
 
 ![Figure13](UserGuide_Fig/Fig13.png)
 

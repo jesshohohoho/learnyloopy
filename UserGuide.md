@@ -21,12 +21,20 @@ LearnLoop is an online application designed to support both students and tutors,
 - 
 - [Forum](#forum)
   - [Create a Post](#Create-a-Post)
+  - [Comment a Post](#Comment-a-Post)
+  - [Like a Post](#Like-a-Post)
   
 - [Leaderboard](#leaderboard)
+
 - [Guided Learning](#guided-learning)
+  - [Subject Filtering](#subject-filtering)
+  - [Tutor Feedback](#tutor-feedback)
+  - [Find a Tutor](#find-tutor)
+  - [Become a Tutor](#become-tutor)
 
-
-
+- [Known Issues](#known-issues)
+- [Privacy and Data Protection Notice](#privacy-and-data-protection-notice)
+- [Disclaimer](#disclaimer)
 
 
 <a id="key-features"></a>
@@ -406,7 +414,7 @@ To reach out this feature, click the icon of Forum as shown in the sidebar.
 - Click ***Submit Application*** to submit your application form.
 
 
-<a id="find-tutor"></a>
+<a id="known-issues"></a>
 ## 🪫 Known Issues
 
 - The LLM-RAG in [Smart Learning Platform](#smart-learning) has limited processing capacity, with restrictions on requests and tokens per minute and per day, therefore users are advised to upload smaller documents (below 5000 words each) in multiple batches.

@@ -462,7 +462,7 @@ This notice explains how LearnLoop collects, uses, and shares personal informati
 - Students acknowledge that their personal information will be securely stored by LearnLoop.
 
 ### ***For Tutors***
-- Tutors acknowledge that their personal information, including full name, teaching experience, and hourly rates, will be publicly displayed.  
+- Tutors acknowledge that their personal information, such as full name, teaching experience, and hourly rates, will be publicly displayed.  
 - Tutors acknowledge that their contact information, such as email and phone number, will be shared with Students once a tutoring arrangement is made.
 
 ### ***Responsibilities of LearnLoop***

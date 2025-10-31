@@ -186,6 +186,8 @@ Now, your journey to use the features in **Smart Learning** begins!
 
 ![Figure 9](UserGuide_Fig/Fig9.png)
 
+***NOTE: If you want a direct answer from the AI chatbox, you can insert a prompt such as "Please give me a direct answer."***
+
 <a id="mock-test"></a>
 ### ***📝 Mock Test***
 Follow these steps to generate a set of questions in preparation for your upcoming examinations.
@@ -213,7 +215,7 @@ When users upload their study materials, flashcards are automatically generated.
 ![Figure13](UserGuide_Fig/Fig13.png)
 
 - Rate your understanding `(Again / Hard / Good / Easy)` by clicking a button or using the number keys `(1–4)`. The flashcards will be reordered based on your ratings for the next review.
-- Click the `Close` button or press `Esc` to redirect to [Smart Learning](#smart-learning) Page.
+- Click the `Close` button or press `Esc` to redirect to [Smart Learning](#smart-learning) page.
 
 <a id="pomodoro-timer"></a>
 ### ***🍅 Pomodoro Timer***
@@ -241,11 +243,11 @@ Suppose if you want to trace your study time, pomodoro timer will be your choice
   </tr>
   <tr>
     <td><img src="frontend/src/assets/Close.png" alt="Close Button" width="40"/></td>
-    <td><b>Redirect completely to Smart Learning Page</b><br></td>
+    <td><b>Redirect completely to Smart Learning page</b><br></td>
   </tr>
 </table>
 
-**NOTE: After minimizing the Pomodoro Timer, you can continue accessing other functions in Smart Learning, but page navigation will be disabled.**
+***NOTE: After minimizing the Pomodoro Timer, you can continue accessing other functions in Smart Learning, but page navigation will be disabled.***
 
 ![Figure15](UserGuide_Fig/Fig15A.png)
 
@@ -260,9 +262,9 @@ After the rest period ends, a congratulatory window will appear, and 0.5 hour wi
 <a id="past-performance-dashboard"></a>
 ## 📋 Past Performance Dashboard
 
-The summary of your performance from the **[Smart Learning Platform](#smart-learning)** is displayed on this Past Performance Dashboard page. The key function of this dashboard is a predictive decision tree model, which allows students to input their test and assignment scores along with data from the **[Smart Learning Platform](#smart-learning)** to predict the probability of achieving their desired grade in a subject.
+The summary of your performance from the [Smart Learning Platform](#smart-learning) is displayed on this Past Performance Dashboard page. The key function of this dashboard is a predictive decision tree model, which allows students to input their test and assignment scores along with data from the **Smart Learning Platform** to predict the probability of achieving their desired grade in a subject.
 
-To reach out this feature, click the icon of Past Performance Dashboard as shown in the sidebar. 
+To access this feature, click the icon below in the sidebar.
 
 <table>
   <tr>
@@ -277,17 +279,18 @@ To reach out this feature, click the icon of Past Performance Dashboard as shown
   - Average Total Study Hour
   - Average Accuracy of Mock Test
 
-- The panel in the middle visualizes bar charts displaying the Test 1, Test 2, and Assignment scores (self-inserted), as well as the Mock Test and Study Hours (from the Smart Learning Platform).
+- The panel in the middle visualizes bar charts displaying the **Test 1**, **Test 2**, and **Assignment** scores (self-inserted), as well as the **Mock Test** and **Study Hours** (from the Smart Learning Platform).
 
-- The panel below displays information similar to that shown above. The action buttons in the rightmost column allow users to edit self-inserted values, delete entries, or navigate to the predictive decision tree model.
+- The panel below displays information similar to that shown above. The action buttons in the rightmost column allow users to `Edit` self-inserted values, `Delete` entries, or `Predict` the grade using the predictive decision tree model.
 
 ![Figure_past1](UserGuide_Fig/past1.png)
 
-***NOTE: More than 1 subject is added to show the comparison between two subjects in the demonstration of this Past Performance Dashboard***
+***NOTE: More than one subject is added to show the comparison between two subjects in the demonstration of this Past Performance Dashboard***
 
 <a id="functions-in-past-performance-dashboard"></a>
 ### ***🔧 Functions in Past Performance Dashboard***
 
+Below are the detailed explanations of the buttons in the **Past Examinations** section:
 <table style="border-collapse: collapse; width: 100%;">
   <tr>
     <td style="background-color: #0078D7; color: white; font-weight: bold; text-align: center; padding: 8px 16px; border-radius: 6px; width: 120px;">
@@ -309,7 +312,7 @@ To reach out this feature, click the icon of Past Performance Dashboard as shown
   </tr>
 </table>
 
-- Suppose the values of Test 1, Test 2 and Assignment Sccores are added, the dashboard will display the the best and worst subject, for students to understand their strengths and weaknesses. 
+Suppose the values of Test 1, Test 2 and Assignment Sccores are added, the dashboard will display the the best and worst subject, for students to understand their strengths and weaknesses. 
 
 ![Figure_past2](UserGuide_Fig/past2.png)
 
@@ -318,12 +321,12 @@ To reach out this feature, click the icon of Past Performance Dashboard as shown
 <a id="predictive-decision-tree-model"></a>
 ### ***🤖 Predictive Decision Tree Model***
 
-- Click the **Predict** button to open a **popup window** that displays the model interface.
+- Click the `Predict` button to open a pop-up window that displays the model interface.
 
 ![Figure_past2A](UserGuide_Fig/past2A.png)
 
 - Select the desired grade from the dropdown menu.
-- Click the *Predict Probability* button to generate the result, then return to the Past Performance Dashboard by clicking the *Close* button.
+- Click the `Predict Probability` button to generate the result, then return to the **Past Performance Dashboard** by clicking the `Close` button.
 
 ![Figure_past3](UserGuide_Fig/past3.png)
 
@@ -353,7 +356,7 @@ Users can search for posts using the filter bar at the top, and view trending to
 
 ![Figure_forum2](UserGuide_Fig/forum2.png)
 
-- Enter the subject and question in the popup window.  
+- Enter the subject and question in the pop-up window.  
 - Submit your question by clicking the `Post Question` button. Your question will now be displayed in the forum.
 
 ![Figure_forum3](UserGuide_Fig/forum3.png)
@@ -373,7 +376,7 @@ Users can search for posts using the filter bar at the top, and view trending to
 <a id="Comment-a-Post"></a>
 ### ***💬 Comment a Post***
 
-- To comment a post, click the entire cell of the post, and it will be redirected to the comment section. The number of comments are shown beside the comment icon.
+- To comment on a post, click the entire cell of the post, and it will be redirected to the comment section. The number of comments is shown beside the comment icon.
 
 <table>
   <tr>
@@ -382,7 +385,7 @@ Users can search for posts using the filter bar at the top, and view trending to
   </tr>
 </table>
 
-- Write your comment in the white cell.
+- Insert your comment in the white cell.
 
 ![Figure_forum4](UserGuide_Fig/forum4.png)
   
@@ -390,7 +393,7 @@ Users can search for posts using the filter bar at the top, and view trending to
 
 ![Figure_forum5](UserGuide_Fig/forum5.png)
 
-- Return to the main **Forum** page by clicking the `return` button as shown below.
+- Return to the main **Forum** page by clicking the `Return` button as shown below.
 
 <table>
   <tr>
@@ -402,12 +405,9 @@ Users can search for posts using the filter bar at the top, and view trending to
 <a id="Like-a-Comment"></a>
 ### ***❤️ Like a Comment***
 
-- To like a comment on a post, follow a similar method to navigate to the comment section as shown in ***[Comment a Post](#comment-a-post)***.  
-- Click the like button located at the right of each comment.
-
-**NOTE: Credits are only earned when a comment receives likes from other users. Self-likes do not contribute to credits but will still be included in the total like count.**
-
-- Return to the main Forum page by clicking the return button as shown below.
+- To like a comment on a post, follow a similar method to navigate to the comment section as shown in [Comment a Post](#Comment-a-Post).  
+- Click the `like` button located at the right of each comment.
+- Return to the main **Forum** page by clicking the `Return` button as shown below.
 
 <table>
   <tr>
@@ -416,10 +416,12 @@ Users can search for posts using the filter bar at the top, and view trending to
   </tr>
 </table>
 
+***NOTE: Credits are only earned when a comment receives likes from other users. Self-likes do not contribute to credits but will still be included in the total like count.***
+
 <a id="leaderboard"></a>
 ## 🏆 Leaderboard
 
-Each like in the comment section of a post in the **[Forum](#forum)** is converted into an equal number of credits. Tutors with high interaction levels with students are displayed on the leaderboard as recognition for their contributions. This system encourages tutors to engage with students, fosters a sustainable learning ecosystem, and increases exposure and popularity for active tutors.
+Each like in the comment section of a post in the [Forum](#forum) is converted into an equal number of credits. Tutors with high interaction levels with students are displayed on the leaderboard as recognition for their contributions. This system encourages tutors to engage with students, fosters a sustainable learning ecosystem, and increases exposure and popularity for active tutors.
 
 To access this feature, click the icon below in the sidebar.
 
@@ -430,7 +432,7 @@ To access this feature, click the icon below in the sidebar.
   </tr>
 </table>
 
-- The leaderboard contains the following information:  
+- The **leaderboard** contains the following information:  
   - Rank  
   - Tutor's name  
   - Number of credits  
@@ -446,7 +448,7 @@ To access this feature, click the icon below in the sidebar.
 <a id="guided-learning"></a>
 ## 👨‍🏫 Guided Learning
 
-Guided Learning is the platform where students can select tutors using a dedicated filtering system and submit feedback to generate tutors’ styles and ratings. Additionally, tutor registration is managed through this interface.
+Guided Learning is a platform where students can select tutors using a dedicated filtering system and submit feedback to generate tutors’ styles and ratings. Additionally, tutor registration is managed through this interface.
 
 To access this feature, click the icon below in the sidebar.
 
@@ -478,7 +480,7 @@ To access this feature, click the icon below in the sidebar.
 <a id="tutor-feedback"></a>
 ### ***⭐ Tutor Feedback***
 
-- Click the `+` button under the section of ***Trusted by Thousands — Hear from Our Alumni***
+- Click the `+` button under the section of **Trusted by Thousands — Hear from Our Alumni**.
 - Fill in the dropout cells, choose your rating score and leave a comment in the popout window.
 
 ![Figure_guidedlearning3](UserGuide_Fig/guidedlearning3.png)
@@ -489,7 +491,7 @@ To access this feature, click the icon below in the sidebar.
 ### ***🕵️ Find a Tutor***
 
 - Click the `Learn With Tutor` button located at the middle-bottom.
-- Fill in your personal information and preferences at the popup window.
+- Fill in your personal information and preferences at the pop-up window.
 
 ![Figure_guidedlearning4](UserGuide_Fig/guidedlearning4.png)
 
@@ -504,7 +506,7 @@ To access this feature, click the icon below in the sidebar.
 ### ***🧑‍🏫 Become a Tutor***
 
 - Click the `Become A Tutor` button located at the middle-bottom.
-- Fill in your basic and detail information at the popup window.
+- Fill in your basic and detail information at the pop-up window.
 
 ![Figure_guidedlearning6](UserGuide_Fig/guidedlearning6.png)
 
@@ -561,7 +563,7 @@ LearnLoop is a prototype educational platform developed **solely for the CodeNec
 - LearnLoop makes no representation, warranty, or guarantee regarding the accuracy, completeness, performance, or reliability of such outputs.
 
 ### ***For Students***
-- LearnLoop does not guarantee the accuracy of any predictive results displayed in the **[Past Performance Dashboard](#past-performance-dashboard)** and AI contents created in **[Smart Learning](#smart-learning)**.  
+- LearnLoop does not guarantee the accuracy of any predictive results displayed in the [Past Performance Dashboard](#past-performance-dashboard) and AI contents created in [Smart Learning](#smart-learning).  
 - Any grade prediction or performance forecast generated by the system is for **informational and self-reflective purposes only** and should not be relied upon as an exact or guaranteed outcome.  
 - LearnLoop shall not be held responsible for any decision or action taken by Students based on these predictive results.  
 - LearnLoop shall not be responsible for any loss, damage, or issue arising from Students voluntarily disclosing their personal information (including but not limited to bank account details or passwords) to Tutors.  

@@ -75,7 +75,6 @@ function App() {
         console.log('User signed out, clearing session');
         localStorage.removeItem('access_token');
         setSession(null);
-        window.location.href = '/auth'
       }
 
       if (event === 'SIGNED_IN') {

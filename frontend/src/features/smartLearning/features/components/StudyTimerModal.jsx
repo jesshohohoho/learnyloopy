@@ -23,6 +23,23 @@ const StudyTimerModal = ({ isOpen, onClose, subjects, onUpdateStudyHours }) => {
     resetModal
   } = useStudyTimer({ subjects, onUpdateStudyHours });
 
+  // Prevent navigation to other pages when timer is running
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (isRunning && (currentPhase === 'FOCUS' || currentPhase === 'BREAK')) {
+        e.preventDefault();
+        e.returnValue = 'Timer is running. Are you sure you want to leave? Your progress will be lost.';
+        return e.returnValue;
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [isRunning, currentPhase]);
+
   // handle dragging 
   const handleMouseDown = (e) => {
     setIsDragging(true);

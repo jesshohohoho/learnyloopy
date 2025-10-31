@@ -3,6 +3,7 @@ import { useRecommendation } from "../hooks/useRecommendation";
 import resume from '../../../assets/resume.png';
 import bulb from '../../../assets/bulb.png';
 import LoadingSpinner from "../../../components/Loading";
+import TestimonialCard from "../shared/TestimonialCard";
 
 export default function Recommendation() {
     const { tutors, loading, error, getStarRating, formatDescription } = useRecommendation();
@@ -164,7 +165,7 @@ export default function Recommendation() {
                     textAlign: 'center', 
                     fontWeight: 'bold', 
                     fontSize: '25px', 
-                    marginBottom: '24px' 
+                    marginBottom: '48px' 
                 }}>
                     <span style={{ 
                         background: 'linear-gradient(90deg, #432B99 11.54%, #7048FF 36.54%, #E69696 83.65%)',
@@ -178,7 +179,7 @@ export default function Recommendation() {
                 </div>
 
                 {/* Tutor Cards */}
-                <div style={{ marginBottom: "12px" }}>
+                <div style={{ marginBottom: "24px" }}>
                     <div
                         style={{
                             display: "flex",
@@ -200,7 +201,7 @@ export default function Recommendation() {
                                     borderRadius: '16px', 
                                     padding: '24px', 
                                     height: '596px', 
-                                    width: '299px',
+                                    width: '320px',
                                     textAlign: 'center',
                                     flex: "0 0 auto",
                                     display: 'flex',
@@ -268,7 +269,8 @@ export default function Recommendation() {
                                 {/* Contact Button */}
                                 <div style={{ 
                                     textAlign: 'center',
-                                    marginTop: 'auto'
+                                    marginBottom: '10px'
+                                    // marginTop: 'auto'
                                 }}>
                                     <button
                                         onClick={() => setShowPopup(true)}
@@ -303,7 +305,7 @@ export default function Recommendation() {
                 </div>
 
                 {/* Review Cards */}
-                <div style={{ marginBottom: "40px" }}>
+                <div>
                     <div
                         style={{
                             display: "flex",
@@ -316,71 +318,15 @@ export default function Recommendation() {
                         className="hide-scrollbar"
                     >
                         {tutors.map((tutor, index) => (
-                            <div 
-                                key={`review-${tutor.id || index}`} 
-                                style={{ 
-                                    background: '#F1EDED', 
-                                    border: '1px solid #C7C7C7', 
-                                    borderRadius: '12px', 
-                                    padding: '20px', 
-                                    width: '299px',
-                                    height: '180px',
-                                    boxShadow: '0 1px 4px rgba(0,0,0,0.1)', 
-                                    flex: "0 0 auto",
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    boxSizing: 'border-box'
-                                }}
-                            >
-                                {/* Lightbulb Icon - Fixed at top */}
-                                <div style={{ 
-                                    flexShrink: 0,
-                                    marginBottom: '12px'
-                                }}>
-                                    <img 
-                                        src={bulb}
-                                        alt="Idea"
-                                        style={{ 
-                                            width: '36px', 
-                                            height: '36px', 
-                                            objectFit: 'contain',
-                                            display: 'block'
-                                        }}
-                                    />
-                                </div>
-
-                                {/* Review Text - Scrollable */}
-                                <div style={{ 
-                                    flex: 1,
-                                    overflowY: 'auto',
-                                    overflowX: 'hidden',
-                                    width: '100%',
-                                    paddingRight: '8px',
-                                    scrollbarWidth: 'none',
-                                    msOverflowStyle: "none",
-                                }}>
-                                    <div style={{ 
-                                        fontSize: '15px', 
-                                        color: '#374151', 
-                                        fontWeight: 600, 
-                                        fontStyle: 'italic',
-                                        textAlign: 'center',
-                                        lineHeight: '1.5',
-                                        wordWrap: 'break-word',
-                                        wordBreak: 'break-word',
-                                        hyphens: 'auto',
-                                        fontFamily: '"Open Sans", sans-serif'
-                                    }}>
-                                        "{tutor.latest_review || 'Excellent tutor with great teaching skills!'}"
-                                    </div>
-                                </div>
-                            </div>
+                            <TestimonialCard
+                                key={`review-${tutor.id || index}`}
+                                text={tutor.latest_review || 'Excellent tutor with great teaching skills!'}
+                                author={null}
+                                icon={bulb}
+                            />
                         ))}
                     </div>
                 </div>
-
-                
 
             </main>
         </div>

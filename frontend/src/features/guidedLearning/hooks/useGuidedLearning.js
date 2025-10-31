@@ -52,7 +52,7 @@ export const useGuidedLearning = () => {
     try {
       setLoading(true);
       
-      // Load subjects, tutors, and testimonials in parallel
+      // Load tutors and testimonials 
       await Promise.all([
         loadSubjects(),
         loadTutorsAndTestimonials()
@@ -65,31 +65,28 @@ export const useGuidedLearning = () => {
     }
   };
 
-  // ✅ Load real subjects (fallback to static for now)
+  // Load real subjects taught by tutors
   const loadSubjects = async () => {
     try {
       const subjectsData = await findTutorAPI.getAvailableSubjects();
       setSubjects(subjectsData);
     } catch (error) {
       console.error('Error loading subjects:', error);
-      // Fallback to static subjects
-      setSubjects([
-        "Statistics", "Mathematics", "Data Analytics", "Business", "Digital Marketing",
-        "Programming", "Cybersecurity", "Language", "Arts", "Law", "History"
-      ]);
+      setSubjects([]);
     }
   };
 
   // Load real tutors and extract testimonials from their reviews
   const loadTutorsAndTestimonials = async () => {
     try {
-      // Get top 6 tutors
-      const topTutors = await listTutorAPI.getAllTutors(6);
+      // Get top 10 tutors
+      const topTutors = await listTutorAPI.getAllTutors(10);
       
       if (!topTutors || topTutors.length === 0) {
         setAllTutors([]);
         setTutors([]);
         setTestimonials([]);
+        setSubjects([]);
         return;
       }
 
@@ -121,7 +118,7 @@ export const useGuidedLearning = () => {
           if (tutor.teaching_style && Array.isArray(tutor.teaching_style) && tutor.teaching_style.length > 0) {
             return tutor.teaching_style[0];
           }
-          return "experienced";
+          return "new";
         };
 
         const getSubject = () => {
@@ -157,6 +154,12 @@ export const useGuidedLearning = () => {
 
       setAllTutors(processedTutors);
 
+      // Extract unique subjects from the top tutors
+      const uniqueSubjects = [...new Set(
+        processedTutors.flatMap(tutor => tutor.subject || [])
+      )].sort();
+      setSubjects(uniqueSubjects);
+
       // Extract testimonials from tutors with reviews
       const testimonialsData = [];
       processedTutors.forEach((tutor) => {
@@ -171,7 +174,7 @@ export const useGuidedLearning = () => {
         }
       });
 
-      // ✅ fall back testtimonials (comments)
+      // fall back testtimonials 
       if (testimonialsData.length === 0) {
         testimonialsData.push(
           {
@@ -199,6 +202,7 @@ export const useGuidedLearning = () => {
       setAllTutors([]);
       setTutors([]);
       setTestimonials([]);
+      setSubjects([]);
     }
   };
 

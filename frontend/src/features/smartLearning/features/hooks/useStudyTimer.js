@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { supabase } from '../../../../lib/supabase';
 
 export const useStudyTimer = ({ subjects, onUpdateStudyHours }) => {
   const [currentPhase, setCurrentPhase] = useState('SELECT'); // SELECT SUBJECT, START TIMER, BREAK, STUDY SESSION ENDS
@@ -11,6 +12,26 @@ export const useStudyTimer = ({ subjects, onUpdateStudyHours }) => {
   // Timer intervals (in seconds)
   const FOCUS_TIME = TESTING_MODE ? 5 : 25 * 60; // 25 minutes
   const BREAK_TIME = TESTING_MODE ? 1: 5 * 60;  // 5 minutes
+
+  // Refresh session every 5 minutes to prevent timeout
+  useEffect(() => {
+    if (!isRunning) return;
+
+    const refreshInterval = setInterval(async () => {
+      try {
+        const { data, error } = await supabase.auth.refreshSession();
+        if (error) {
+          console.error('Failed to refresh session:', error);
+        } else {
+          console.log('Session refreshed successfully');
+        }
+      } catch (err) {
+        console.error('Error refreshing session:', err);
+      }
+    }, 5 * 60 * 1000); // Refresh every 5 minutes
+
+    return () => clearInterval(refreshInterval);
+  }, [isRunning]);
 
   // Timer effect
   useEffect(() => {

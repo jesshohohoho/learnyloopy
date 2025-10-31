@@ -315,46 +315,72 @@ async def get_performance_summary(user_id: str = Depends(require_user_id)):
         
         # Get all performance records for the user
         performance_response = supabase.table("performance").select("*").eq("user_id", user_id).execute()
-        
+
         if not performance_response.data:
             return {
                 "best_subject": {"name": "N/A", "score": 0},
                 "worst_subject": {"name": "N/A", "score": 0},
-                "avg_study_hours": 0,
+                "total_study_hours": 0,
                 "avg_mock_test": 0
             }
         
         performances = performance_response.data
-        
-        # Calculate best and worst subjects based on (test1 + test2 + assignment)
+
+        # Calculate best and worst subjects based on average of available scores
         valid_subjects_for_scores = []
         for perf in performances:
             test1 = perf.get("test1")
             test2 = perf.get("test2") 
             assignment = perf.get("assignment")
+            mock_test = perf.get("mock_test")
             
-            # Only include subjects where all three scores are not null/empty
-            if test1 is not None and test2 is not None and assignment is not None:
-                total_score = test1 + test2 + assignment
+            # Calculate total and count of available scores
+            total_score = 0
+            score_count = 0
+            
+            if test1 is not None:
+                total_score += test1
+                score_count += 1
+            if test2 is not None:
+                total_score += test2
+                score_count += 1
+            if assignment is not None:
+                total_score += assignment
+                score_count += 1
+            if mock_test is not None:
+                # Normalize mock_test from 0-100 to 0-20 scale
+                normalized_mock = (mock_test / 100) * 20
+                total_score += normalized_mock
+                score_count += 1
+            
+            # Include subject if it has at least one score
+            if score_count > 0:
+                avg_score = total_score / score_count
                 valid_subjects_for_scores.append({
                     "name": perf["subject_name"],
-                    "score": total_score
+                    "score": round(avg_score, 2)  # Average score for fair comparison
                 })
         
-        # Find best and worst subjects
-        if valid_subjects_for_scores:
-            best_subject = max(valid_subjects_for_scores, key=lambda x: x["score"])
-            worst_subject = min(valid_subjects_for_scores, key=lambda x: x["score"])
-        else:
+        # Find best and worst subjects (handle single subject case)
+        if len(valid_subjects_for_scores) == 0:
             best_subject = {"name": "N/A", "score": 0}
             worst_subject = {"name": "N/A", "score": 0}
+        elif len(valid_subjects_for_scores) == 1:
+            best_subject = {"name": "Only one subject", "score": 0}
+            worst_subject = {"name": "Only one subject", "score": 0}
+        else:
+            # Sort by score (descending), then by name (alphabetical) for ties
+            sorted_subjects = sorted(
+                valid_subjects_for_scores, 
+                key=lambda x: (-x["score"], x["name"])
+            )
+            best_subject = sorted_subjects[0]
+            worst_subject = sorted_subjects[-1]
         
-        # Calculate average study hours 
-        valid_study_hours = [
+        total_study_hours = sum([
             perf["total_study_hours"] for perf in performances 
-            if perf.get("total_study_hours") is not None and perf["total_study_hours"] > 0
-        ]
-        avg_study_hours = sum(valid_study_hours) / len(valid_study_hours) if valid_study_hours else 0
+            if perf.get("total_study_hours") is not None
+        ])
         
         # Calculate average mock test score
         valid_mock_tests = [
@@ -367,7 +393,7 @@ async def get_performance_summary(user_id: str = Depends(require_user_id)):
             "success": True,
             "best_subject": best_subject,
             "worst_subject": worst_subject,
-            "avg_study_hours": round(avg_study_hours, 1),
+            "total_study_hours": round(total_study_hours, 1),
             "avg_mock_test": round(avg_mock_test, 1)
         }
         

@@ -67,7 +67,7 @@ export default function PastPerformancePage() {
   const cardData = [
     { icon: bestSubject, label: "Best Subject", value: summaryData.bestSubject?.name || "N/A" },
     { icon: worstSubject, label: "Worst Subject", value: summaryData.worstSubject?.name || "N/A" },
-    { icon: Png1, label: "Total Study Hours (avg)", value: `${summaryData.avgStudyHours || 0}h` },
+    { icon: Png1, label: "Total Study Hours", value: `${summaryData.totalStudyHours || 0}h` },
     { icon: Png2, label: "Mock Test Accuracy (avg)", value: `${summaryData.avgMockTest || 0}%` },
   ];
 

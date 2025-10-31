@@ -56,6 +56,50 @@ export default function Recommendation() {
         );
     }
 
+    // Handle no tutors found
+    if (!tutors || tutors.length === 0) {
+        return (
+            <div style={{ 
+                marginLeft: "150px",             
+                width: "calc(100% - 150px)",
+                minHeight: '100vh', 
+                background: '#F3F3F3',
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                flexDirection: 'column' 
+            }}>
+                <div style={{ fontSize: '48px', marginBottom: '16px' }}>😔</div>
+                <div style={{ 
+                    fontSize: '20px', 
+                    color: '#666', 
+                    marginBottom: '24px',
+                    fontFamily: 'Open Sans, sans-serif',
+                    textAlign: 'center'
+                }}>
+                    Sorry, there's no suitable tutor available at this moment.
+                </div>
+                <button 
+                    onClick={() => window.history.back()} 
+                    style={{
+                        background: '#6F48FF',
+                        color: 'white',
+                        border: 'none',
+                        padding: '12px 24px',
+                        borderRadius: '12px',
+                        fontSize: '16px',
+                        fontWeight: 'bold',
+                        cursor: 'pointer',
+                        fontFamily: 'Open Sans, sans-serif',
+                        boxShadow: '2px 2px 6px rgba(0,0,0,0.2)'
+                    }}
+                >
+                    Go Back
+                </button>
+            </div>
+        );
+    }
+
     return (
         <div 
             className="recommendation-container" 

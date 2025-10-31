@@ -11,7 +11,7 @@ export const usePastPerformance = () => {
   const [summaryData, setSummaryData] = useState({
     bestSubject: { name: "N/A", score: 0 },
     worstSubject: { name: "N/A", score: 0 },
-    avgStudyHours: 0,
+    totalStudyHours: 0,
     avgMockTest: 0
   });
   const [editingSubject, setEditingSubject] = useState(null);
@@ -67,7 +67,7 @@ export const usePastPerformance = () => {
           setSummaryData({
             bestSubject: summaryResponse.best_subject,
             worstSubject: summaryResponse.worst_subject,
-            avgStudyHours: summaryResponse.avg_study_hours,
+            totalStudyHours: summaryResponse.total_study_hours,
             avgMockTest: summaryResponse.avg_mock_test
           });
         } else {
@@ -91,7 +91,7 @@ export const usePastPerformance = () => {
         setSummaryData({
           bestSubject: summaryResponse.best_subject,
           worstSubject: summaryResponse.worst_subject,
-          avgStudyHours: summaryResponse.avg_study_hours,
+          totalStudyHours: summaryResponse.total_study_hours,
           avgMockTest: summaryResponse.avg_mock_test
         });
       }
@@ -264,9 +264,21 @@ export const usePastPerformance = () => {
   };
 
   const handleMarkChange = (field, value) => {
+
+    // Parse the value
+    const numValue = value === '' ? null : parseFloat(value);
+    
+    // For test1, test2, and assignment, enforce 0-20 range
+    if (field === 'test1' || field === 'test2' || field === 'assignment') {
+      if (numValue !== null && (numValue < 0 || numValue > 20)) {
+        alert(`${field.charAt(0).toUpperCase() + field.slice(1)} score must be between 0 and 20`);
+        return; 
+      }
+    }
+
     setEditingSubject({
       ...editingSubject,
-      [field]: value === '' ? null : parseFloat(value)
+      [field]: numValue
     });
   };
 

@@ -52,7 +52,7 @@ LearnLoop is an online application designed to support both students and tutors,
 
 <a id="key-features"></a>
 ## 🧩 Key Features
-- **[Forum](#forum)**: Communication platform between **tutors** and **students**
+- **[Forum](#forum)**: Communication platform between **tutors** and **students**.
   - Tutors gain exposure via answering questions to get credits.
   - Students receive answers and basic guidances.
   - Students give an upvote for useful comments.
@@ -62,7 +62,7 @@ LearnLoop is an online application designed to support both students and tutors,
   - Students can recognize tutors with high credibility.
  
 - **[Guided Learning](#guided-learning)**: Tutor selection platform for **students**.
-    - Students can select their tutors by the dedicated filtering system according to subject, teaching style and ranking options.
+    - Students can select their tutors by using the dedicated filtering system according to subject, teaching style and ranking options.
     - Stdents can submit feedbacks of tutors to enhance the filtering system.
  
 - **[Smart Learning](#smart-learning)**: Virtual AI tutoring platform for **students**.
@@ -71,17 +71,17 @@ LearnLoop is an online application designed to support both students and tutors,
   - Students can get automatically generated flashcards to revise weak topics from the mock tests.
   - Students can use the Pomodoro Timer to track their study hours for each subject.
  
-- **[Past Performance Dashboard](#past-performance-dashboard)**: Visualization platform that displays **students'** academic progress and performance statistics.
+- **[Past Performance Dashboard](#past-performance-dashboard)**: Visualization platform that displays **students**' academic progress and performance statistics.
     - Students can identify their best and worst subjects, along with total study hours and average mock test accuracy to inform study performance.
     - Students can forecast the probability final grade of selected subject by Decision Tree model.
 
 <a id="log-in-as-guest"></a>
 ## 👤 Log in as Guest
-- Access **LearnLoop** [here](https://learnyloopy-jesshohohohos-projects.vercel.app/auth), then click **Log in as Guest** on the page — no email, username, or password required.
+- Access LearnLoop [here](https://learnyloopy-jesshohohohos-projects.vercel.app/auth), then click `Continue as Guest` on the page — no email, username, or password required.
 
 ![Figure 1](UserGuide_Fig/Fig1.png)
 
-- Guests will be directed to the **[Guided Learning](#guided-learning)** page. They can only access the contents in **[Guided Learning](#guided-learning)**, **[Forum](#forum)**, and **[Leaderboard](#leaderboard)**.
+- Guests will be redirected to the [Guided Learning](#guided-learning) page. They can only access the contents in [Guided Learning](#guided-learning), [Forum](#forum), and [Leaderboard](#leaderboard).
 
 ![Figure 2](UserGuide_Fig/Fig2.png)
 
@@ -95,11 +95,11 @@ LearnLoop is an online application designed to support both students and tutors,
 
 ![Figure 3](UserGuide_Fig/Fig3.png)
 
-- After verification, you will be signed in and directed to the the main page.
+- After verification, you will be signed in and redirected to the the main page.
 
 <a id="log-in-to-learnloop"></a>
 ## 🔑 Log In to LearnLoop
-Once logged in, you will be directed to the main page, which features the Past Performance Dashboard and a **[sidebar](#sidebar)** for navigating to other features of LearnLoop. If you are the first user, the dashboard will display everything as blank. You will have to study by our **[Smart Learning Platform](#smart-learning)** to get a summary of your study performance.
+Once logged in, you will be redirected to the main page, which features the [Past Performance Dashboard](#past-performance-dashboard) and a [sidebar](#sidebar) for navigating to other features of LearnLoop. If you are a first-time user, the dashboard will display everything as blank. Kickstart your learning using our [Smart Learning](#smart-learning) platform to get a summary of your study performance.
 
 ![Figure 4](UserGuide_Fig/Fig4.png)
 
@@ -138,9 +138,9 @@ The sidebar is always displayed on the left side of every page, allowing users t
 <a id="smart-learning"></a>
 ## 🧠 Smart Learning
 
-Smart learning is a virtual tutor platform to provide incentive revision based on the uploaded study materials. To use this feature, it is neccessary to provide your own study materials from your lecturer/teacher via format of .pdf, .txt or .docx. The intention of doing so is to give specific and reliable outcome from the LLM for revision purposes. The performance in mock test and study time will be stored and visualize in the [Past Performance Dashboard](#past-performance-dashboard).
+Smart learning is a virtual tutor platform to provide incentive revision based on the uploaded study materials. To use this feature, it is crucial to provide your own study materials in specified format (.pdf, .txt or .docx). The intention of doing so is to give specific and reliable outcome from the LLM for revision purposes. The performance in mock test and study time will be stored and visualized in the [Past Performance Dashboard](#past-performance-dashboard).
 
-To reach out this feature, click the icon of smart learning as shown in the sidebar. 
+To access this feature, click the icon below in the sidebar.
 
 <table>
   <tr>
@@ -149,11 +149,11 @@ To reach out this feature, click the icon of smart learning as shown in the side
   </tr>
 </table>
 
-You will be directed to the front page of smart learning platform as shown below. 
+You will be redirected to the front page of **Smart Learning** platform as shown below. 
 
 ![Figure 5](UserGuide_Fig/Fig5A.png)
 
-Next, click the upload icon as shown in buttom left in the *pick the subject* section. 
+Next, click the upload icon as shown in the bottom right of the **Pick a subject** section. 
 
 <table>
   <tr>
@@ -162,23 +162,22 @@ Next, click the upload icon as shown in buttom left in the *pick the subject* se
   </tr>
 </table>
 
-When you reach the upload material window, you can insert your subject name and browse your study material from your device. Click submit to finalise your uploaded material.
+When you reach the upload material window, you can insert your subject name and browse your study material from your device. Click `Submit` to finalize your uploaded material.
 
 ![Figure 6](UserGuide_Fig/Fig6A.png)
 
-If your material is uploaded successfully, it will be displayed in the *pick a subject* section.
+If your material is uploaded successfully, it will be displayed in the **Pick a subject** section.
 
 ![Figure 7](UserGuide_Fig/Fig7A.png)
 
-Now, your journey to use the features in Smart Learning begins! 
+Now, your journey to use the features in **Smart Learning** begins! 
 
 <a id="ai-chatbox"></a>
 ### ***💡 AI Chatbox***
 
-- Select the **subject** you wish to revise by clicking the subject button. The button will turn purple once you click it. 
+- **Select a subject** you wish to revise by clicking the `Subject` button. The button will turn purple once you click it. 
   - The system will use **LLM-RAG** (Large Language Model with Retrieval-Augmented Generation) to provide subject-based guidance and materials.  
-
-- If your question is **beyond the scope of LLM-RAG**, the chatbox will automatically switch to a **classical LLM** to generate an appropriate response.  
+  - If your question is **beyond the scope of LLM-RAG**, the chatbox will automatically switch to a **classical LLM** to generate an appropriate response.  
 
 ![Figure 8](UserGuide_Fig/Fig8.png)
 
@@ -189,15 +188,16 @@ Now, your journey to use the features in Smart Learning begins!
 
 <a id="mock-test"></a>
 ### ***📝 Mock Test***
+Follow these steps to generate a set of questions in preparation for your upcoming examinations.
+- Click the `Subject` you wish to have mock test. The button will turn purple once you click it.
+- Click the `Mock Test/Quiz` to open a pop-up window.
+- Click the `Start Test` as shown in the pop-up window.
 
-- Click the subject you wish to have mock test. The button will turn purple once you click it.
-- Click the *Mock Test/Quiz* to open a pop-up window.
-- Click the *Start Test* as shown in the pop-up window.
-- Begin your mock test journey!
+Begin your mock test journey!
 
 ![Figure 10](UserGuide_Fig/Fig10.png)
 
-Once you finish answering the questions, the results will be shown and stored in the Past Performance Dashboard. Click the *Test again* if you wish to retake the mock test. Click the *Close* button if you wish to redirect to *Smart Learning* Page.
+Once you finish answering the questions, the results will be shown and stored in the [Past Performance Dashboard](#past-performance-dashboard). Click the `Test Again` if you wish to retake the mock test. Click the `Close` button if you wish to redirect to [Smart Learning](#smart-learning) page.
 
 ![Figure11](UserGuide_Fig/Fig11.png)
 
@@ -208,17 +208,17 @@ Suppose if you make mistakes in the mock test, the questions will be stored and 
 
 ![Figure12](UserGuide_Fig/Fig12.png)
 
-- Click the flashcard or press the *space* keyboard to flip the flashcards to get the answers.
+- Click the flashcard or press the `Spacebar` on your keyboard to flip the flashcards to get the answers.
 
 ![Figure13](UserGuide_Fig/Fig13.png)
 
-- Click your feedback of the flashcard according to your understanding (Again/Hard/Good/Easy), or press the *(1,2,3,4)* keyboard buttons. The flashcard will be rearranged according to your understanding when you revise via flashcard again.
-- Click the close button or press *Esc* to redirect to *Smart Learning* Page.
+- Rate your understanding `(Again / Hard / Good / Easy)` by clicking a button or using the number keys `(1–4)`. The flashcards will be reordered based on your ratings for the next review.
+- Click the `Close` button or press `Esc` to redirect to [Smart Learning](#smart-learning) Page.
 
 <a id="pomodoro-timer"></a>
 ### ***🍅 Pomodoro Timer***
 
-Suppose if you want to trace your study time, pomogoro timer will be your choice! It serves to record your study time, and remind you to take a rest. Click the button as shown below to be directed to the *Pomodoro Timer*
+Suppose if you want to trace your study time, pomodoro timer will be your choice! It serves to record your study time, and remind you to take a rest. Click the button as shown below to be redirected to the Pomodoro Timer.
 
 <table>
   <tr>
@@ -231,13 +231,13 @@ Suppose if you want to trace your study time, pomogoro timer will be your choice
 
 ![Figure14](UserGuide_Fig/Fig14.png)
 
-- Press *Start 25-minute study session*
-- Refer to the list of buttons as shown at table below for *Pomogoro Timer*.
+- Press `Start 25-Minute Study Session`.
+- Refer to the list of buttons as shown at table below for Pomodoro Timer.
 
 <table>
       <tr>
     <td><img src="frontend/src/assets/minimize-2.png" alt="Pomodoro Button" width="40"/></td>
-    <td><b>Minimize the pomogoro tab</b><br></td>
+    <td><b>Minimize the pomodoro tab</b><br></td>
   </tr>
   <tr>
     <td><img src="frontend/src/assets/Close.png" alt="Close Button" width="40"/></td>
@@ -245,7 +245,7 @@ Suppose if you want to trace your study time, pomogoro timer will be your choice
   </tr>
 </table>
 
-**NOTE: After minimizing the *Pomogoro Timer*, you can continue accessing other functions in *Smart Learning*.**
+**NOTE: After minimizing the Pomodoro Timer, you can continue accessing other functions in Smart Learning, but page navigation will be disabled.**
 
 ![Figure15](UserGuide_Fig/Fig15A.png)
 
@@ -322,9 +322,9 @@ The component below displays information similar to that shown above. The action
 <a id="forum"></a>
 ## 📚 Forum
 
-The Forum is a communication platform for both students and tutors to ask and answer questions. It is mutually beneficial: students can have their questions answered, while tutors earn credits when their answers are liked by users.
+Forum is a communication platform for both students and tutors to ask and answer questions. It is mutually beneficial: students can have their questions answered, while tutors earn credits when their answers are liked by users.
 
-To reach out this feature, click the icon of Forum as shown in the sidebar. 
+To access this feature, click the icon below in the sidebar.
 
 <table>
   <tr>
@@ -333,28 +333,26 @@ To reach out this feature, click the icon of Forum as shown in the sidebar.
   </tr>
 </table>
 
-- Users can search for posts using the filter bar above.  
-- The **+** button next to the filter bar allows users to create new posts.  
-- Trending topics are displayed at the top-right corner.
+Users can search for posts using the filter bar at the top, and view trending topics in the top-right corner.
 
 ![Figure_forum1](UserGuide_Fig/forum1.png)
 
 <a id="Create-a-Post"></a>
 ### ***🖊️ Create a Post***
 
-- Click the **+** button at the top-right of the interface.
+- Click the `+` button at the top-right of the interface.
 
 ![Figure_forum2](UserGuide_Fig/forum2.png)
 
 - Enter the subject and question in the popup window.  
-- Submit your question by clicking the ***Post Question*** button. Your question will now be displayed in the **Forum**.
+- Submit your question by clicking the `Post Question` button. Your question will now be displayed in the forum.
 
 ![Figure_forum3](UserGuide_Fig/forum3.png)
 
 <a id="Like-a-Post"></a>
 ### ***👍 Like a Post***
 
-To like or see how many likes, refer to the table below:
+- To like or see how many likes, refer to the table below:
 
 <table>
   <tr>
@@ -366,7 +364,7 @@ To like or see how many likes, refer to the table below:
 <a id="Comment-a-Post"></a>
 ### ***💬 Comment a Post***
 
-- To comment a post, click the entire cell of the comment, and it will be directed to the comment section. The number of comments are shown beside the comment icon.
+- To comment a post, click the entire cell of the post, and it will be redirected to the comment section. The number of comments are shown beside the comment icon.
 
 <table>
   <tr>
@@ -375,15 +373,15 @@ To like or see how many likes, refer to the table below:
   </tr>
 </table>
 
-- Write your comment in the bottom-middle comment cell.
+- Write your comment in the white cell.
 
 ![Figure_forum4](UserGuide_Fig/forum4.png)
   
-- Click ***Post Comment*** to submit your comment.
+- Click `Post Comment` to submit your comment.
 
 ![Figure_forum5](UserGuide_Fig/forum5.png)
 
-- Return to the main Forum page by clicking the return button as shown below.
+- Return to the main **Forum** page by clicking the `return` button as shown below.
 
 <table>
   <tr>
@@ -396,8 +394,8 @@ To like or see how many likes, refer to the table below:
 ### ***❤️ Like a Comment***
 
 - To like a comment on a post, follow a similar method to navigate to the comment section as shown in ***[Comment a Post](#comment-a-post)***.  
-- Click the like button located at the right of each comment.
-- Return to the main Forum page by clicking the return button as shown below.
+- Click the `like` button located at the right of each comment.
+- Return to the main **Forum** page by clicking the `return` button as shown below.
 
 <table>
   <tr>
@@ -409,9 +407,9 @@ To like or see how many likes, refer to the table below:
 <a id="leaderboard"></a>
 ## 🏆 Leaderboard
 
-Each like in the comment section of a post in the [Forum](#forum) is converted into an equal number of credits. Tutors with high interaction levels with students are displayed on the leaderboard as recognition for their contributions. This system encourages tutors to engage with students, fosters a sustainable learning ecosystem, and increases exposure and popularity for active tutors.
+Each like in the comment section of a post in the **[Forum](#forum)** is converted into an equal number of credits. Tutors with high interaction levels with students are displayed on the leaderboard as recognition for their contributions. This system encourages tutors to engage with students, fosters a sustainable learning ecosystem, and increases exposure and popularity for active tutors.
 
-To reach out this feature, click the icon of Leaderboard as shown in the sidebar. 
+To access this feature, click the icon below in the sidebar.
 
 <table>
   <tr>
@@ -420,7 +418,7 @@ To reach out this feature, click the icon of Leaderboard as shown in the sidebar
   </tr>
 </table>
 
-- The ranking leaderboard contains the following information:  
+- The leaderboard contains the following information:  
   - Rank  
   - Tutor's name  
   - Number of credits  
@@ -429,14 +427,14 @@ To reach out this feature, click the icon of Leaderboard as shown in the sidebar
 
 ![Figure_leaderboard](UserGuide_Fig/leaderboard.png)
 
-- To refresh the page, refer to the refresh button contain at the top-right of the interface.
+- To refresh the page, refer to the `refresh` button located at the top-right of the interface.
 
 <a id="guided-learning"></a>
 ## 👨‍🏫 Guided Learning
 
 Guided Learning is the platform where students can select tutors using a dedicated filtering system and submit feedback to generate tutors’ styles and ratings. Additionally, tutor registration is managed through this interface.
 
-To reach out this feature, click the icon of Forum as shown in the sidebar. 
+To access this feature, click the icon below in the sidebar.
 
 <table>
   <tr>
@@ -445,7 +443,7 @@ To reach out this feature, click the icon of Forum as shown in the sidebar.
   </tr>
 </table>
 
-- The ***Guided Learning*** page contains the following information:
+- The **Guided Learning** page contains the following information:
   - Subject filtering bar.
   - Tutors' name, teaching subject, teaching experience, hourly rate and number of credits.
   - Students' feedback.
@@ -466,37 +464,37 @@ To reach out this feature, click the icon of Forum as shown in the sidebar.
 <a id="tutor-feedback"></a>
 ### ***⭐ Tutor Feedback***
 
-- Click the **+** button under the section of ***Trusted by Thousands — Hear from Our Alumni***
+- Click the `+` button under the section of ***Trusted by Thousands — Hear from Our Alumni***
 - Fill in the dropout cells, choose your rating score and leave a comment in the popout window.
 
 ![Figure_guidedlearning3](UserGuide_Fig/guidedlearning3.png)
 
-- Click the ***Submit Review***
+- Click `Submit Review`.
 
 <a id="find-tutor"></a>
 ### ***🕵️ Find a Tutor***
 
-- Click the **Learn With Tutor** button located at the middle-bottom.
+- Click the `Learn With Tutor` button located at the middle-bottom.
 - Fill in your personal information and preferences at the popup window.
 
 ![Figure_guidedlearning4](UserGuide_Fig/guidedlearning4.png)
 
-- Click ***Find Tutor*** to search for tutors.
+- Click `Find Tutor` to search for tutors.
 
 ![Figure_guidedlearning5](UserGuide_Fig/guidedlearning5.png)
 
-- Select your prefered tutor by clicking ***Contact Tutor***.
+- Select your preferred tutor by clicking `Contact Tutor`.
 
 
 <a id="become-tutor"></a>
 ### ***🧑‍🏫 Become a Tutor***
 
-- Click the **Become A Tutor** button located at the middle-bottom.
+- Click the `Become A Tutor` button located at the middle-bottom.
 - Fill in your basic and detail information at the popup window.
 
 ![Figure_guidedlearning6](UserGuide_Fig/guidedlearning6.png)
 
-- Click ***Submit Application*** to submit your application form.
+- Click `Submit Application` to submit your application form.
 
 
 <a id="known-issues"></a>

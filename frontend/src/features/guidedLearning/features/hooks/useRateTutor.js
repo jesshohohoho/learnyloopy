@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { rateTutorAPI } from '../services/rateTutorAPI';
 
-export const useRateTutor = () => {
+export const useRateTutor = (onSuccess) => {
   // Rate tutor form
   const [formData, setFormData] = useState({
     courseName: "",
@@ -85,6 +85,10 @@ export const useRateTutor = () => {
       setSuccess(true);
       setMessage("Review submitted successfully!");
       
+      if (onSuccess) {
+        await onSuccess();
+      }
+
       // Reset form after successful submission
       setTimeout(() => {
         resetForm();

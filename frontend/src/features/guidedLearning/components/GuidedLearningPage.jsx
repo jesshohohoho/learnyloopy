@@ -7,6 +7,7 @@ import RateTutor from "../features/components/RateTutor";
 import BecomeTutor from "../features/components/BecomeTutor";
 import { useGuidedLearning } from "../hooks/useGuidedLearning";
 import LoadingSpinner from "../../../components/Loading";
+import TestimonialCard from "../shared/TestimonialCard";
 
 export default function GuidedLearningPage() {
   const {
@@ -28,6 +29,7 @@ export default function GuidedLearningPage() {
     handleSearchChange,
     handleSubjectClick,
     getStarRating,
+    refreshData,
   } = useGuidedLearning();
 
   if (loading) {
@@ -183,8 +185,8 @@ export default function GuidedLearningPage() {
                 <div
                   key={tutor.id}
                   style={{
-                    minWidth: "250px",
-                    maxWidth: "304px",
+                    // minWidth: "250px",
+                    // maxWidth: "304px",
                     height: "320px",
                     background: "#F1EDED",
                     border: "1px solid #DDD3D3",
@@ -192,6 +194,7 @@ export default function GuidedLearningPage() {
                     padding: "18px",
                     textAlign: "center",
                     flex: "0 0 auto",
+                    width: "320px"
                   }}
                 >
                   <div
@@ -349,87 +352,14 @@ export default function GuidedLearningPage() {
                 style={{ width: "30px", height: "30px", objectFit: "contain" }}
               />
             </div>
-
+            {/* Use shared testimonials */}
             {testimonials.map((testimonial) => (
-              <div
+              <TestimonialCard
                 key={testimonial.id}
-                style={{
-                  background: "#F1EDED",
-                  border: "1px solid #DDD3D3",
-                  borderRadius: "12px",
-                  padding: "20px",
-                  minWidth: "250px",
-                  maxWidth: "300px",
-                  height: "220px",
-                  textAlign: "center",
-                  flex: "0 0 auto",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  boxSizing: "border-box",
-                }}
-              >
-                {/* Lightbulb Icon - Fixed at top */}
-                <div style={{ 
-                  flexShrink: 0,
-                  marginBottom: '12px'
-                }}>
-                  <img
-                    src={idea}
-                    alt="Light Bulb"
-                    style={{ 
-                      width: "30px", 
-                      height: "30px",
-                      display: 'block'
-                    }}
-                  />
-                </div>
-
-
-                {/* Make text scrollable */}
-                <div
-                  style={{
-                    flex: 1,
-                    overflowY: 'auto',
-                    overflowX: 'hidden',
-                    width: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '12px',
-                    paddingRight: '8px',
-                    scrollbarWidth: 'none',
-                    msOverflowStyle: "none",
-                  }}
-                >
-                  {/* Testimonial Text */}
-                  <div
-                    style={{
-                      fontSize: "16px",
-                      color: "#000000",
-                      fontStyle: "italic",
-                      fontWeight: 600,
-                      lineHeight: "1.4",
-                      wordWrap: "break-word",
-                      wordBreak: "break-word",
-                      hyphens: "auto",
-                    }}
-                  >
-                    "{testimonial.text}"
-                  </div>
-  
-                  {/* Author Name */}
-                  <div 
-                    style={{ 
-                      fontSize: "15px", 
-                      color: "#7048FF", 
-                      fontStyle: "italic",
-                      marginTop: 'auto'
-                    }}
-                  >
-                    {testimonial.author}
-                  </div>
-                </div>
-              </div>
+                text={testimonial.text}
+                author={testimonial.author}
+                icon={idea}
+              />
             ))}
           </div>
         </div>
@@ -534,8 +464,14 @@ export default function GuidedLearningPage() {
           </ModalWrapper>
         )}
         {showRateTutor && (
-          <ModalWrapper onClose={() => setShowRateTutor(false)}>
-            <RateTutor onClose={() => setShowRateTutor(false)} />
+          <ModalWrapper onClose={async () => {
+            setShowRateTutor(false)
+            await refreshData();
+          }}>
+            <RateTutor onClose={async () => {
+              setShowRateTutor(false)
+              await refreshData();
+            }} />
           </ModalWrapper>
         )}
         {showBecomeTutor && BecomeTutor && (

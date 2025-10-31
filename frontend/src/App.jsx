@@ -1,5 +1,5 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from 'react';
 import SmartLearning from "./features/smartLearning/components/SmartLearningPage";
 import PastPerformance from "./features/pastPerformance/components/PastPerformancePage";
 import GuidedLearning from "./features/guidedLearning/components/GuidedLearningPage";
@@ -13,6 +13,7 @@ import './App.css';
 import { supabase } from "./lib/supabase";
 import Leaderboard from "./features/leaderboard/components/LeaderboardPage";
 import LoadingSpinner from "./components/Loading";
+import AuthCallback from "./components/AuthCallback";
 
 // Layout component for pages with sidebar
 function SidebarLayout({ children }) {
@@ -22,6 +23,28 @@ function SidebarLayout({ children }) {
       <div style={{ flex: 1 }}>{children}</div>
     </div>
   );
+}
+
+// Show alert for protected routes before directing to log in page
+function ProtectedRoute({ children }) {
+  const navigate = useNavigate();
+  const hasShownAlert = useRef(false);
+
+  useEffect(() => {
+    // Add a small delay to check if this is part of a logout flow
+    const timer = setTimeout(() => {
+      if (!hasShownAlert.current) {
+        hasShownAlert.current = true;
+        alert("You need to log in to access this feature");
+        navigate("/auth", { replace: true });
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [navigate]);
+  
+  // Return blank page with alert message
+  return <div style={{ height: '100vh', background: 'white' }}></div>;
 }
 
 function App() {
@@ -52,6 +75,7 @@ function App() {
         console.log('User signed out, clearing session');
         localStorage.removeItem('access_token');
         setSession(null);
+        window.location.href = '/auth'
       }
 
       if (event === 'SIGNED_IN') {
@@ -84,6 +108,12 @@ function App() {
         <Route 
           path="/auth" 
           element={session ? <Navigate to="/performance" replace /> : <CustomAuth />} 
+        />
+
+        {/* Auth callback route - handles email confirmation */}
+        <Route 
+          path="/auth/callback" 
+          element={<AuthCallback />} 
         />
         
         {/* Guest route - accessible without authentication */}
@@ -142,6 +172,12 @@ function App() {
           <>
             {/* Root path redirects to auth for non-logged-in users */}
             <Route path="/" element={<Navigate to="/auth" replace />} />
+            
+            {/* ✅ Protected routes that show alert for non-logged-in users */}
+            <Route path="/performance" element={<ProtectedRoute />} />
+            <Route path="/learn" element={<ProtectedRoute />} />
+            <Route path="/recommendation" element={<ProtectedRoute />} />
+            
             {/* CATCH-ALL for non-logged-in users */}
             <Route path="*" element={<Navigate to="/auth" replace />} />
           </>

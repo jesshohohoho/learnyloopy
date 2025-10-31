@@ -2,7 +2,7 @@ import React from "react";
 import { useRateTutor } from "../hooks/useRateTutor";
 import LoadingSpinner from "../../../../components/Loading"; // ADD: Import LoadingSpinner
 
-function RateTutor({ onClose }) {
+function RateTutor({ onClose, onSuccess }) {
   const {
     formData,
     updateField,
@@ -21,6 +21,10 @@ function RateTutor({ onClose }) {
     const result = await submitReview();
     
     if (result.success) {
+
+      if (onSuccess) {
+        await onSuccess();
+      }
       // Auto-close modal after 2 seconds on success
       setTimeout(() => {
         onClose();

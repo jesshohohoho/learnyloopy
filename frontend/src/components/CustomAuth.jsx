@@ -32,7 +32,8 @@ export default function CustomAuth() {
           options: {
             data: {
               display_name: username  
-            }
+            },
+            emailRedirectTo: `${import.meta.env.VITE_APP_URL}/auth/callback`
           }
         });
 
@@ -57,7 +58,6 @@ export default function CustomAuth() {
       setLoading(false);
     }
   };
-
 
 
   return (

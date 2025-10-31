@@ -333,19 +333,23 @@ To reach out this feature, click the icon of Forum as shown in the sidebar.
   </tr>
 </table>
 
-< image here >
-
 - Users can search for posts using the filter bar above.  
 - The **+** button next to the filter bar allows users to create new posts.  
 - Trending topics are displayed at the top-right corner.
 
+![Figure_forum1](UserGuide_Fig/forum1.png)
 
 <a id="Create-a-Post"></a>
 ### ***🖊️ Create a Post***
 
-- Click the **+** button at the top-right of the interface.  
+- Click the **+** button at the top-right of the interface.
+
+![Figure_forum2](UserGuide_Fig/forum2.png)
+
 - Enter the subject and question in the popup window.  
-- Submit your question by clicking the ***Post Question*** button.
+- Submit your question by clicking the ***Post Question*** button. Your question will now be displayed in the **Forum**.
+
+![Figure_forum3](UserGuide_Fig/forum3.png)
 
 <a id="Like-a-Post"></a>
 ### ***👍 Like a Post***
@@ -371,10 +375,14 @@ To like or see how many likes, refer to the table below:
   </tr>
 </table>
 
-< image here >
+- Write your comment in the bottom-middle comment cell.
 
-- Write your comment in the bottom-middle comment cell.  
+![Figure_forum4](UserGuide_Fig/forum4.png)
+  
 - Click ***Post Comment*** to submit your comment.
+
+![Figure_forum5](UserGuide_Fig/forum5.png)
+
 - Return to the main Forum page by clicking the return button as shown below.
 
 <table>
@@ -412,14 +420,14 @@ To reach out this feature, click the icon of Leaderboard as shown in the sidebar
   </tr>
 </table>
 
-< image here >
-
 - The ranking leaderboard contains the following information:  
   - Rank  
   - Tutor's name  
   - Number of credits  
   - Styles (classified by LLM in [Guided Learning](#guided-learning))  
   - Rating (average rating from students)
+
+![Figure_leaderboard](UserGuide_Fig/leaderboard.png)
 
 - To refresh the page, refer to the refresh button contain at the top-right of the interface.
 
@@ -437,22 +445,32 @@ To reach out this feature, click the icon of Forum as shown in the sidebar.
   </tr>
 </table>
 
-< image here >
+- The ***Guided Learning*** page contains the following information:
+  - Subject filtering bar.
+  - Tutors' name, teaching subject, teaching experience, hourly rate and number of credits.
+  - Students' feedback.
+  - [Find a tutor](#find-tutor) button to select desired tutor.
+  - [Become a Tutor](#become-tutor) button to submit tutor application.
+
+![Figure_guidedlearning](UserGuide_Fig/guidedlearning.png)
 
 <a id="subject-filtering"></a>
 ### ***🔍 Subject Filtering***
 
-- Users can filter tutors by selecting their preferred subject from the filtering bar at the top or by clicking the subject buttons.  
+- Users can filter tutors by selecting their preferred subject from the filtering bar at the top or by clicking the subject buttons.
+
+![Figure_guidedlearning2](UserGuide_Fig/guidedlearning2.png)
+
 - The list of tutors will then be narrowed down based on the selected subjects.
 
 <a id="tutor-feedback"></a>
 ### ***⭐ Tutor Feedback***
 
 - Click the **+** button under the section of ***Trusted by Thousands — Hear from Our Alumni***
-
-< image here >
-
 - Fill in the dropout cells, choose your rating score and leave a comment in the popout window.
+
+![Figure_guidedlearning3](UserGuide_Fig/guidedlearning3.png)
+
 - Click the ***Submit Review***
 
 <a id="find-tutor"></a>
@@ -461,11 +479,14 @@ To reach out this feature, click the icon of Forum as shown in the sidebar.
 - Click the **Learn With Tutor** button located at the middle-bottom.
 - Fill in your personal information and preferences at the popup window.
 
-< image here >
+![Figure_guidedlearning4](UserGuide_Fig/guidedlearning4.png)
+
+- Click ***Find Tutor*** to search for tutors.
+
+![Figure_guidedlearning5](UserGuide_Fig/guidedlearning5.png)
 
 - Select your prefered tutor by clicking ***Contact Tutor***.
 
-< image here >
 
 <a id="become-tutor"></a>
 ### ***🧑‍🏫 Become a Tutor***
@@ -473,7 +494,7 @@ To reach out this feature, click the icon of Forum as shown in the sidebar.
 - Click the **Become A Tutor** button located at the middle-bottom.
 - Fill in your basic and detail information at the popup window.
 
-< image here >
+![Figure_guidedlearning6](UserGuide_Fig/guidedlearning6.png)
 
 - Click ***Submit Application*** to submit your application form.
 

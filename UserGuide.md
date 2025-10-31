@@ -73,7 +73,7 @@ LearnLoop is an online application designed to support both students and tutors,
  
 - **[Past Performance Dashboard](#past-performance-dashboard)**: Visualization platform that displays **students**' academic progress and performance statistics.
     - Students can identify their best and worst subjects, along with total study hours and average mock test accuracy to inform study performance.
-    - Students can forecast the probability final grade of selected subject by Decision Tree model.
+    - Students can forecast the probability of their desired final grade for a selected subject using a Decision Tree model.
 
 <a id="log-in-as-guest"></a>
 ## 👤 Log in as Guest
@@ -276,7 +276,7 @@ To access this feature, click the icon below in the sidebar.
 - The panel above displays the summary of your study performance which are:
   - Best Subject
   - Worst Subject
-  - Total Study Hour
+  - Total Study Hours
   - Average Accuracy of Mock Test
 
 - The panel in the middle visualizes bar charts displaying the **Test 1**, **Test 2**, and **Assignment** scores (self-inserted), as well as the **Mock Test** and **Study Hours** (from the Smart Learning Platform).
@@ -416,7 +416,7 @@ Users can search for posts using the filter bar at the top, and view trending to
   </tr>
 </table>
 
-***NOTE: Credits are only earned when a comment receives likes from other users. Self-likes do not contribute to credits but will still be included in the total like count.***
+***NOTE: Credits are only earned when a tutor’s comment receives likes from other users. Self-likes do not contribute to credits but will still be included in the total like count.***
 
 <a id="leaderboard"></a>
 ## 🏆 Leaderboard
@@ -436,7 +436,7 @@ To access this feature, click the icon below in the sidebar.
   - Rank  
   - Tutor's name  
   - Number of credits  
-  - Styles (classified by LLM in [Guided Learning](#guided-learning))  
+  - Styles (classified by the LLM based on students’ reviews in [Guided Learning](#guided-learning))
   - Rating (average rating from students)
 
 ![Figure_leaderboard](UserGuide_Fig/leaderboard.png)

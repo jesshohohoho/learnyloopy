@@ -204,7 +204,7 @@ Once you finish answering the questions, the results will be shown and stored in
 <a id="flashcards"></a>
 ### ***🗂️ Flashcards***
 
-Suppose if you make mistakes in the mock test, the questions will be stored and shown in the form of flashcards.
+When users upload their study materials, flashcards are automatically generated. Additionally, any questions answered incorrectly in mock tests will also be converted into flashcards and stored for future review.
 
 ![Figure12](UserGuide_Fig/Fig12.png)
 
@@ -255,7 +255,7 @@ After 25 minutes, a 5-minute rest period will begin.
 
 After the rest period ends, a congratulatory window will appear, and 0.5 hour will be recorded in the [Past Performance Dashboard](#past-performance-dashboard).
 
-![Figure17](UserGuide_Fig/Fig17.png)
+![Figure17](UserGuide_Fig/Fig17A.png)
 
 <a id="past-performance-dashboard"></a>
 ## 📋 Past Performance Dashboard
@@ -271,17 +271,19 @@ To reach out this feature, click the icon of Past Performance Dashboard as shown
   </tr>
 </table>
 
-< image here >
-
-- The component above displays the summary of your study performance which are:
+- The panel above displays the summary of your study performance which are:
   - Best Subject
   - Worst Subject
   - Average Total Study Hour
   - Average Accuracy of Mock Test
 
-- The component in the middle visualizes bar charts displaying the Test 1, Test 2, and Assignment scores (self-inserted), as well as the Mock Test and Study Hours (from the Smart Learning Platform).
+- The panel in the middle visualizes bar charts displaying the Test 1, Test 2, and Assignment scores (self-inserted), as well as the Mock Test and Study Hours (from the Smart Learning Platform).
 
-The component below displays information similar to that shown above. The action buttons in the rightmost column allow users to edit self-inserted values, delete entries, or navigate to the predictive decision tree model.
+- The panel below displays information similar to that shown above. The action buttons in the rightmost column allow users to edit self-inserted values, delete entries, or navigate to the predictive decision tree model.
+
+![Figure_past1](UserGuide_Fig/past1.png)
+
+***NOTE: More than 1 subject is added to show the comparison between two subjects in the demonstration of this Past Performance Dashboard***
 
 <a id="functions-in-past-performance-dashboard"></a>
 ### ***🔧 Functions in Past Performance Dashboard***
@@ -307,17 +309,24 @@ The component below displays information similar to that shown above. The action
   </tr>
 </table>
 
+- Suppose the values of Test 1, Test 2 and Assignment Sccores are added, the dashboard will display the the best and worst subject, for students to understand their strengths and weaknesses. 
 
+![Figure_past2](UserGuide_Fig/past2.png)
+
+***NOTE: The figure above illustrates how values are inserted.***
 
 <a id="predictive-decision-tree-model"></a>
 ### ***🤖 Predictive Decision Tree Model***
 
 - Click the **Predict** button to open a **popup window** that displays the model interface.
 
-< image here >
+![Figure_past2A](UserGuide_Fig/past2A.png)
 
 - Select the desired grade from the dropdown menu.
 - Click the *Predict Probability* button to generate the result, then return to the Past Performance Dashboard by clicking the *Close* button.
+
+![Figure_past3](UserGuide_Fig/past3.png)
+
 
 <a id="forum"></a>
 ## 📚 Forum
@@ -394,8 +403,11 @@ Users can search for posts using the filter bar at the top, and view trending to
 ### ***❤️ Like a Comment***
 
 - To like a comment on a post, follow a similar method to navigate to the comment section as shown in ***[Comment a Post](#comment-a-post)***.  
-- Click the `like` button located at the right of each comment.
-- Return to the main **Forum** page by clicking the `return` button as shown below.
+- Click the like button located at the right of each comment.
+
+**NOTE: Credits are only earned when a comment receives likes from other users. Self-likes do not contribute to credits but will still be included in the total like count.**
+
+- Return to the main Forum page by clicking the return button as shown below.
 
 <table>
   <tr>
@@ -427,7 +439,9 @@ To access this feature, click the icon below in the sidebar.
 
 ![Figure_leaderboard](UserGuide_Fig/leaderboard.png)
 
-- To refresh the page, refer to the `refresh` button located at the top-right of the interface.
+- The ranking is based on the number of credits, followed by the average rating. If both are the same, the ranking will be determined alphabetically by name.
+
+- To refresh the page, refer to the refresh button contain at the top-right of the interface.
 
 <a id="guided-learning"></a>
 ## 👨‍🏫 Guided Learning

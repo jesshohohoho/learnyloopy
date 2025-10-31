@@ -276,14 +276,14 @@ To access this feature, click the icon below in the sidebar.
 - The panel above displays the summary of your study performance which are:
   - Best Subject
   - Worst Subject
-  - Average Total Study Hour
+  - Total Study Hour
   - Average Accuracy of Mock Test
 
 - The panel in the middle visualizes bar charts displaying the **Test 1**, **Test 2**, and **Assignment** scores (self-inserted), as well as the **Mock Test** and **Study Hours** (from the Smart Learning Platform).
 
 - The panel below displays information similar to that shown above. The action buttons in the rightmost column allow users to `Edit` self-inserted values, `Delete` entries, or `Predict` the grade using the predictive decision tree model.
 
-![Figure_past1](UserGuide_Fig/past1.png)
+![Figure_past1](UserGuide_Fig/past1A.png)
 
 ***NOTE: More than one subject is added to show the comparison between two subjects in the demonstration of this Past Performance Dashboard***
 
@@ -314,7 +314,7 @@ Below are the detailed explanations of the buttons in the **Past Examinations** 
 
 Suppose the values of Test 1, Test 2 and Assignment Sccores are added, the dashboard will display the the best and worst subject, for students to understand their strengths and weaknesses. 
 
-![Figure_past2](UserGuide_Fig/past2.png)
+![Figure_past2B](UserGuide_Fig/past2B.png)
 
 ***NOTE: The figure above illustrates how values are inserted.***
 
@@ -323,12 +323,12 @@ Suppose the values of Test 1, Test 2 and Assignment Sccores are added, the dashb
 
 - Click the `Predict` button to open a pop-up window that displays the model interface.
 
-![Figure_past2A](UserGuide_Fig/past2A.png)
+![Figure_past3A](UserGuide_Fig/past3A.png)
 
 - Select the desired grade from the dropdown menu.
 - Click the `Predict Probability` button to generate the result, then return to the **Past Performance Dashboard** by clicking the `Close` button.
 
-![Figure_past3](UserGuide_Fig/past3.png)
+![Figure_past4](UserGuide_Fig/past4.png)
 
 
 <a id="forum"></a>
